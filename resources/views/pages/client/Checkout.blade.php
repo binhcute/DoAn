@@ -1,7 +1,7 @@
 @extends('layout_client')
 @section('content')
 @section('title','Thanh Toán')
-<form method="post" action="{{route('DatHang.store')}}" enctype="multipart/form-data" class="submit-form-checkout">
+<form method="post" action="{{route('Dat-Hang')}}" enctype="multipart/form-data" class="submit-form-checkout">
     @csrf
     <!-- Page Title/Header Start -->
     <div class="page-title-section section" data-bg-image="{{asset('client/images/bg/page-title-1.jpg')}}">
@@ -59,6 +59,7 @@
                         <label for="bdOrderNote">Ghi Chú</label>
                         <textarea id="ckeditor" name="note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                     </div>
+                    <button type="submit" class="btn btn-dark btn-outline-hover-dark">Đặt hàng ngay</button>
                 </div>
             </form>
             <div class="section-title2 text-center">

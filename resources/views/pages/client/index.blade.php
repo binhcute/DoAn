@@ -213,7 +213,7 @@
                 </div>
                 <!-- Product Images End -->
 
-                <!-- Product Summery Start -->
+                <!-- Product Summery Start Modal -->
                 <div class="col-lg-6 col-12 overflow-hidden learts-mb-30">
                     <div class="product-summery customScroll">
                         <div class="product-ratings">

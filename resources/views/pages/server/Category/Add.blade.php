@@ -59,7 +59,7 @@
               <label class="col-sm-3 col-form-label">Chọn ảnh</label>
               <div class="col-sm-9">
                 <input class="form-control imageItem" id="imgItem" type="file" name="img" data-bs-original-title="" title="">
-                <img id="imgShow" src="{{URL::to('/')}}/image/example/add.jpg" alt="image" width="100%" height="32e0px">
+                <img id="imgShow" src="{{URL::to('/')}}/image/example/add.jpg" alt="image" width="50%" height="320px">
               </div>
             </div>
 

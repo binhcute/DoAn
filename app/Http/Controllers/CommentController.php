@@ -52,20 +52,24 @@ class CommentController extends Controller
         $comment->comment_description = $request->comment_description;
         $comment->status = 1;
         $comment->save();
-        if($comment->save()){
+        if ($comment->save()) {
             $comment = Comment::queryStatusBinhLuan($request->product_id)->get();
             $product_detail = DB::table('tpl_product')
-                            ->join('tpl_portfolio', 'tpl_portfolio.port_id', 'tpl_product.port_id')
-                            ->join('tpl_category', 'tpl_category.cate_id', '=', 'tpl_product.cate_id')
-                            ->where('tpl_product.product_id', $request->product_id)->first();
-            $giao_dien = view('pages.client.load-comment', compact(['comment', 'product_detail']))->render();
+                ->join('tpl_portfolio', 'tpl_portfolio.port_id', 'tpl_product.port_id')
+                ->join('tpl_category', 'tpl_category.cate_id', '=', 'tpl_product.cate_id')
+                ->where('tpl_product.product_id', $request->product_id)->first();
+            if ($request->role == 1) {
+                $giao_dien = view('pages.client.load-comment', compact(['comment', 'product_detail']))->render();
+            } else {
+                $giao_dien = view('pages.client.comment-article', compact(['comment', 'product_detail']))->render();
+            }
             return response()->json([
                 'status' => 'success',
                 'giao_dien' =>  $giao_dien,
             ]);
         }
         // dd($comment);
-        return ;
+        return;
     }
 
     public function disabled($id)
@@ -73,32 +77,32 @@ class CommentController extends Controller
         $comment = Comment::find($id);
         $comment->status = 0;
         $comment->save();
-        if($comment->save()){
+        if ($comment->save()) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Ẩn Bình Luận Thành Công'
-            ],200);
+            ], 200);
         }
         return response()->json([
             'status' => 'error',
             'message' => 'Đã Ẩn Bình Luận Thất Bại'
-        ],200);
+        ], 200);
     }
     public function enabled($id)
     {
         $comment = Comment::find($id);
         $comment->status = 1;
         $comment->save();
-        if($comment->save()){
+        if ($comment->save()) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Hiển Thị Bình Luận Thành Công'
-            ],200);
+            ], 200);
         }
         return response()->json([
             'status' => 'error',
             'message' => 'Hiển Thị Bình Luận Thất Bại'
-        ],200);
+        ], 200);
     }
     /**
      * Display the specified resource.
@@ -111,10 +115,10 @@ class CommentController extends Controller
         $comment = DB::table('tpl_comment')
             ->join('users', 'users.id', 'tpl_comment.user_id')
             ->leftJoin('tpl_product', 'tpl_product.product_id', 'tpl_comment.product_id')
-            ->orwhere('tpl_comment.role',1)
+            ->orwhere('tpl_comment.role', 1)
             ->where('tpl_comment.comment_id', $id)
             ->leftJoin('tpl_article', 'tpl_article.article_id', 'tpl_comment.article_id')
-            ->orwhere('tpl_comment.role',0)
+            ->orwhere('tpl_comment.role', 0)
             ->where('tpl_comment.comment_id', $id)
             ->select(
                 'tpl_comment.*',
