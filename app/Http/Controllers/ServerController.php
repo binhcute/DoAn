@@ -57,6 +57,25 @@ class ServerController extends Controller
             ->with('orderList', $orderList);
     }
 
+    public function ckeditorUpload(Request $request)
+    {
+        if($request->hasFile('upload')){
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+
+            $request -> file('upload')->move(public_path('server/assets/image/img_ckeditor'), $fileName);
+
+            $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+            $url = asset('server/assets/image/img_ckeditor/' . $fileName);
+            $msg = 'Image Upload Successfully';
+            $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg');</script>";
+            @header('Content-type: text/html; charset=utf-8');
+            echo $response;
+        }
+    }
+
     public function api()
     {
         return view('pages.server.api');

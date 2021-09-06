@@ -41,7 +41,7 @@ class ClientController extends Controller
     public function product()
     {
         $product = Product::queryStatusOne()
-            ->orderBy('product_id', 'asc')->get();
+            ->orderBy('product_id', 'asc')->paginate(8);
         $product_hot = Product::queryStatusOne()
             ->orderBy('product_price', 'desc')->limit(6)->get();
         $product_new = Product::queryStatusOne()

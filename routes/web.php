@@ -30,8 +30,6 @@ Route::group(['middleware' => 'levellogin'], function () {
     Route::get('/XoaBaiViet/{LoaiBaiViet}', 'ArticleController@destroy');
     Route::put('/BaiViet/disabled/{BaiViet}', 'ArticleController@disabled');
     Route::put('/BaiViet/enabled/{BaiViet}', 'ArticleController@enabled');
-    Route::post('/ckeditor/upload', 'ArticleController@ckeditorUpload')
-        ->name('ckeditor.upload');
     //Order
     Route::resource('/HoaDon', 'OrderController')->only('index', 'show');
     Route::put('/HoaDon/danggiao/{HoaDon}', 'OrderController@update_status_0');
@@ -71,6 +69,9 @@ Route::group(['middleware' => 'levellogin'], function () {
 
     //API
     Route::get('/QuanLyAPI', 'ServerController@api');
+    //Upload Ckeditor
+    Route::post('ckeditor/upload', 'ServerController@ckeditorUpload')
+    ->name('ckeditor.upload');
 });
 
 Auth::routes();
@@ -78,7 +79,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('LoginCheck', 'CheckLoginController@check');
 
-Route::resource('/DatHang', 'CheckOutController')->only('store');
+Route::post('/DatHang', 'CheckOutController@store')->name('Dat-Hang');
 Route::resource('/BinhLuan', 'CommentController')->only('store');
 //Client
 Route::resource('/', 'ClientController');

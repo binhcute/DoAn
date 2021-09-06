@@ -281,8 +281,12 @@
                             <!-- <span class="product-badges">
                                     <span class="onsale">-13%</span>
                                 </span> -->
+                            @if($item->product_img_hover !=null)
                             <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
                             <img class="image-hover " src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
+                            @else
+                            <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
+                            @endif
                         </a>
                         <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
                     </div>
@@ -336,7 +340,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $('.add-comment').submit(function(event){
+    $('.add-comment').submit(function(event) {
         event.preventDefault();
         var form = $(this);
         var url = form.attr('action');
@@ -374,6 +378,5 @@
             }
         });
     });
-   
 </script>
 @endsection

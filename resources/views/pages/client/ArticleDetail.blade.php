@@ -91,28 +91,12 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="Comments-wrapper" id="dataCmt">
+                <div class="Comments-wrapper">
                     <div class="block-title pb-0 border-bottom-0">
                         <h2 class="title">Bình Luận <span class="text-muted">({{count($comment)}})</span></h2>
                     </div>
-                    <ul class="comment-list">
-                        @foreach($comment as $cmt)
-                        <li>
-                            <div class="comment">
-                                <div class="thumbnail">
-                                    <img src="{{URL::to('/') }}/server/assets/image/account/{{$cmt->avatar}}" alt="">
-                                </div>
-                                <div class="content">
-                                    <h4 class="name">{{$cmt->firstName}} {{$cmt->lastName}}</h4>
-                                    <p>{!!$cmt->comment_description!!}</p>
-                                    <div class="actions">
-                                        <span class="date">{{$cmt->updated_at}}</span>
-                                        <a class="reply-link" href="#">Reply</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        @endforeach
+                    <ul class="comment-list" id="tab-comment">
+                        @include('pages.client.comment-article')
                     </ul>
                     <div class="block-title pb-0 border-bottom-0">
                         <h2 class="title">Hãy để lại suy nghĩ của bạn</h2>
@@ -220,35 +204,40 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    function addComment(event) {
+    $('.add-comment').submit(function(event) {
         event.preventDefault();
-    var form = $(this);
-    var url = form.attr('action');
-    console.log(form.serialize());
-    $.ajax({
+        var form = $(this);
+        var url = form.attr('action');
+        console.log(form.serialize());
+        $.ajax({
             type: "POST",
             url: url,
             data: form.serialize(),
             success: function(data) {
-
+                if (data.status == 'error') {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Thất Bại',
+                        text: data.message,
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
+                }
+                if (data.status == 'success') {
+                    $('#tab-comment').empty();
+                    $('#tab-comment').html(data.giao_dien);
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
                         title: 'Thành Công',
-                        text: 'Thêm Bình Luận Thành Công',
+                        text: data.message,
                         showConfirmButton: true,
                         timer: 2500
-                    });
+                    })
+                }
             }
-        }).done(function(dataCmt) {
-            $("#dataCmt").empty();
-            $("#dataCmt").html(response);
         });
-    }
-
-    $(function() {
-        $(document).on('click', '.add-comment', addComment);
-
     });
 </script>
 @endsection
