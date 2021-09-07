@@ -89,7 +89,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Thêm Sản Phẩm Thành Công'
-        ],200);
+        ], 200);
     }
 
     /**
@@ -194,36 +194,41 @@ class ProductController extends Controller
             'message' => 'Xóa Sản Phẩm Thành Công'
         ], 200);
     }
-    public function disabled($id)
+    public function change_status($id)
     {
-        $product = Product::find($id);
-        $product->status = 0;
-        $product->save();
-        if($product->save()){
+        $change = Product::find($id);
+        $product = Product::all();
+        $giao_dien = view('pages.server.product.list-item', compact(['product']))->render();
+        if ($change->status == 1) {
+            $change->status = 0;
+            $change->save();
+            if ($change->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Ẩn Sản Phẩm Thành Công',
+                    'giao_dien' => $giao_dien,
+                ], 200);
+            }
             return response()->json([
-                'status' => 'success',
-                'message' => 'Ẩn Sản Phẩm Thành Công'
-            ],200);
-        }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Đã Ẩn Sản Phẩm Thất Bại'
-        ],200);
-    }
-    public function enabled($id)
-    {
-        $product = Product::find($id);
-        $product->status = 1;
-        $product->save();
-        if($product->save()){
+                'status' => 'error',
+                'message' => 'Đã Ẩn Sản Phẩm Thất Bại',
+                'giao_dien' => $giao_dien,
+            ], 200);
+        } else {
+            $change->status = 1;
+            $change->save();
+            if ($change->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Hiển Thị Sản Phẩm Thành Công',
+                    'giao_dien' => $giao_dien,
+                ], 200);
+            }
             return response()->json([
-                'status' => 'success',
-                'message' => 'Hiển Thị Sản Phẩm Thành Công'
-            ],200);
+                'status' => 'error',
+                'message' => 'Hiển Thị Sản Phẩm Thất Bại',
+                'giao_dien' => $giao_dien,
+            ], 200);
         }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Hiển Thị Sản Phẩm Thất Bại'
-        ],200);
     }
 }

@@ -40,14 +40,14 @@
               <td>
                 @if($item->status==1)
 
-                <form action="{{URL::to('/BaiViet/disabled/'.$item->article_id)}}" class="change_status_tri" method="post">
+                <form action="{{URL::to('/BaiViet/change_status/'.$item->article_id)}}" class="change_status_tri" method="post">
                   <input type="hidden" name="_token" value="{{csrf_token()}}">
                   <input type="hidden" name="_method" value="put" />
                   <button class="btn btn-outline-light" type="submit"><i class="icofont icofont-ui-check" style="font-size:20px;color:blue"></i></button>
                   <p>Đang hiển thị</p>
                 </form>
                 @else
-                <form action="{{URL::to('/BaiViet/enabled/'.$item->article_id)}}" class="change_status_tri" method="post">
+                <form action="{{URL::to('/BaiViet/change_status/'.$item->article_id)}}" class="change_status_tri" method="post">
                   <input type="hidden" name="_token" value="{{csrf_token()}}">
                   <input type="hidden" name="_method" value="put" />
                   <button class="btn btn-outline-light" type="submit"><i class="icofont icofont-ui-close" style="font-size:20px;color:red"></i></button>

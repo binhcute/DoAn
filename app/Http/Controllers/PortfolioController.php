@@ -175,36 +175,35 @@ class PortfolioController extends Controller
         ], 200);
     }
 
-    public function disabled($id)
+    public function change_status($id)
     {
         $port = Portfolio::find($id);
-        $port->status = 0;
-        $port->save();
-        if ($port->save()) {
+        if ($port->status == 1) {
+            $port->status = 0;
+            $port->save();
+            if ($port->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Ẩn Nhà Cung Cấp Thành Công'
+                ], 200);
+            }
             return response()->json([
-                'status' => 'success',
-                'message' => 'Ẩn Nhà Cung Cấp Thành Công'
+                'status' => 'error',
+                'message' => 'Đã Ẩn Nhà Cung Cấp Thất Bại'
+            ], 200);
+        } else {
+            $port->status = 1;
+            $port->save();
+            if ($port->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Hiển Thị Nhà Cung Cấp Thành Công'
+                ], 200);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hiển Thị Nhà Cung Cấp Thất Bại'
             ], 200);
         }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Đã Ẩn Nhà Cung Cấp Thất Bại'
-        ], 200);
-    }
-    public function enabled($id)
-    {
-        $port = Portfolio::find($id);
-        $port->status = 1;
-        $port->save();
-        if ($port->save()) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Hiển Thị Nhà Cung Cấp Thành Công'
-            ], 200);
-        }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Hiển Thị Nhà Cung Cấp Thất Bại'
-        ], 200);
     }
 }

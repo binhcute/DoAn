@@ -122,8 +122,18 @@ class CategoryController extends Controller
             $cate->cate_img = "$profileImage";
         }
         $cate->save();
-        Session::put('message', 'Cập Nhật Loại Sản Phẩm Thành Công');
-        return redirect()->route('LoaiSanPham.index');
+        if($cate->save()){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Đã chỉnh sửa danh mục'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Không thể chỉnh sửa loại sản phẩm'
+            ], 200);
+        }
     }
 
     /**
@@ -142,36 +152,35 @@ class CategoryController extends Controller
         ], 200);
     }
 
-    public function disabled($id)
+    public function change_status($id)
     {
         $cate = Category::find($id);
-        $cate->status = 0;
-        $cate->save();
-        if ($cate->save()) {
+        if ($cate->status == 1) {
+            $cate->status = 0;
+            $cate->save();
+            if ($cate->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Ẩn Danh Mục Thành Công'
+                ], 200);
+            }
             return response()->json([
-                'status' => 'success',
-                'message' => 'Ẩn Danh Mục Thành Công'
+                'status' => 'error',
+                'message' => 'Đã Ẩn Danh Mục Thất Bại'
+            ], 200);
+        } else {
+            $cate->status = 1;
+            $cate->save();
+            if ($cate->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Hiển Thị Danh Mục Thành Công'
+                ], 200);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hiển Thị Danh Mục Thất Bại'
             ], 200);
         }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Đã Ẩn Danh Mục Thất Bại'
-        ], 200);
-    }
-    public function enabled($id)
-    {
-        $cate = Category::find($id);
-        $cate->status = 1;
-        $cate->save();
-        if ($cate->save()) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Hiển Thị Danh Mục Thành Công'
-            ], 200);
-        }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Hiển Thị Danh Mục Thất Bại'
-        ], 200);
     }
 }
