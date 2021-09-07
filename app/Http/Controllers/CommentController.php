@@ -72,37 +72,36 @@ class CommentController extends Controller
         return;
     }
 
-    public function disabled($id)
+    public function change_status($id)
     {
         $comment = Comment::find($id);
-        $comment->status = 0;
-        $comment->save();
-        if ($comment->save()) {
+        if ($comment->status == 1) {
+            $comment->status = 0;
+            $comment->save();
+            if ($comment->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Ẩn Bình Luận Thành Công'
+                ], 200);
+            }
             return response()->json([
-                'status' => 'success',
-                'message' => 'Ẩn Bình Luận Thành Công'
+                'status' => 'error',
+                'message' => 'Đã Ẩn Bình Luận Thất Bại'
+            ], 200);
+        } else {
+            $comment->status = 1;
+            $comment->save();
+            if ($comment->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Hiển Thị Bình Luận Thành Công'
+                ], 200);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hiển Thị Bình Luận Thất Bại'
             ], 200);
         }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Đã Ẩn Bình Luận Thất Bại'
-        ], 200);
-    }
-    public function enabled($id)
-    {
-        $comment = Comment::find($id);
-        $comment->status = 1;
-        $comment->save();
-        if ($comment->save()) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Hiển Thị Bình Luận Thành Công'
-            ], 200);
-        }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Hiển Thị Bình Luận Thất Bại'
-        ], 200);
     }
     /**
      * Display the specified resource.

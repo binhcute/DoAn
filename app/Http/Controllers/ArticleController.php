@@ -80,7 +80,7 @@ class ArticleController extends Controller
     {
         $article = DB::table('tpl_article')
             ->join('users', 'users.id', '=', 'tpl_article.user_id')
-            ->where('article_id', $id)->first(); 
+            ->where('article_id', $id)->first();
         return view('pages.server.article.show')
             ->with('article', $article);
     }
@@ -147,36 +147,35 @@ class ArticleController extends Controller
         ], 200);
     }
 
-    public function disabled($id)
+    public function change_status($id)
     {
         $article = article::find($id);
-        $article->status = 0;
-        $article->save();
-        if ($article->save()) {
+        if ($article->status == 1) {
+            $article->status = 0;
+            $article->save();
+            if ($article->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Ẩn Bài Viết Thành Công'
+                ], 200);
+            }
             return response()->json([
-                'status' => 'success',
-                'message' => 'Ẩn Bài Viết Thành Công'
+                'status' => 'error',
+                'message' => 'Đã Ẩn Bài Viết Thất Bại'
+            ], 200);
+        } else {
+            $article->status = 1;
+            $article->save();
+            if ($article->save()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Hiển Thị Bài Viết Thành Công'
+                ], 200);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hiển Thị Bài Viết Thất Bại'
             ], 200);
         }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Đã Ẩn Bài Viết Thất Bại'
-        ], 200);
-    }
-    public function enabled($id)
-    {
-        $article = article::find($id);
-        $article->status = 1;
-        $article->save();
-        if ($article->save()) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Hiển Thị Bài Viết Thành Công'
-            ], 200);
-        }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Hiển Thị Bài Viết Thất Bại'
-        ], 200);
     }
 }

@@ -68,13 +68,17 @@
           <div class="mb-3 row">
             <label class="col-sm-3 col-form-label">Chọn Avatar</label>
             <div class="col-sm-9">
-              <input class="form-control imageAvatar" type="file" name="avatar" data-bs-original-title="" title="">
+              <label id="id-label-0" for="event__input-0" class="form-control">Thêm avatar</label>
+              <input hidden class="form-control imageAvatar" id="event__input-0" name="avatar" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
+              <img id="event__img-0" src="{{asset('image/example/add.jpg')}}" alt="slider" width="50%" height="320px">
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-3 col-form-label">Chọn ảnh</label>
             <div class="col-sm-9">
-              <input class="form-control imageItem" type="file" name="img" data-bs-original-title="" title="">
+              <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh</label>
+              <input hidden class="form-control imageItem" id="event__input-hover-0" name="img" type="file" onchange="uploadFile(this, 0)" accept=".jpg, .png">
+              <img id="event__img-hover-0" src="{{asset('image/example/add.jpg')}}" alt="slider" width="50%" height="320px">
             </div>
           </div>
         </div>
@@ -91,7 +95,37 @@
 @endsection
 
 @section('page-js')
+<!-- delete and choose file -->
+<script type="text/javascript">
+  function uploadBannerFile(input, tam) {
+    $('#id-label-' + tam).html(input.files[0].name);
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#event__img-' + tam).attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+    $('#event__input-' + tam).change(function() {
+      readURL(this);
+    });
+  }
 
+  function uploadFile(input, tam) {
+    $('#id-label-hover-' + tam).html(input.files[0].name);
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#event__img-hover-' + tam).attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+    $('#event__input-hover-' + tam).change(function() {
+      readURL(this);
+    });
+  }
+</script>
+<!-- /delete and choose file -->
 <!-- CKEDITOR -->
 <script>
   CKEDITOR.replace('ckeditor', {
@@ -160,9 +194,17 @@
         $.each(response.responseJSON.errors, function(field_name, error) {
             $('#noti-validate').after('<div class="alert alert-danger noti-alert-danger" role="alert" style="font-size: 1.5rem;">' + error + '</div>');
           }),
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thất bại',
+            text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
+            showConfirmButton: true,
+            timer: 2500
+          }),
           window.setTimeout(function() {
             $('.alert.alert-danger.noti-alert-danger').remove();
-          }, 10000);
+          }, 20000);
       }
     });
   })

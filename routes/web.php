@@ -18,18 +18,15 @@ Route::group(['middleware' => 'levellogin'], function () {
     //Product
     Route::resource('/SanPham', 'ProductController');
     Route::get('/XoaSanPham/{SanPham}', 'ProductController@destroy');
-    Route::put('/SanPham/disabled/{SanPham}', 'ProductController@disabled');
-    Route::put('/SanPham/enabled/{SanPham}', 'ProductController@enabled');
+    Route::put('/SanPham/change_status/{SanPham}', 'ProductController@change_status');
     //Cate
     Route::resource('/LoaiSanPham', 'CategoryController');
     Route::get('/XoaLoaiSanPham/{LoaiSanPham}', 'CategoryController@destroy');
-    Route::put('/LoaiSanPham/disabled/{LoaiSanPham}', 'CategoryController@disabled');
-    Route::put('/LoaiSanPham/enabled/{LoaiSanPham}', 'CategoryController@enabled');
+    Route::put('/LoaiSanPham/change_status/{LoaiSanPham}', 'CategoryController@change_status');
     //Article
     Route::resource('/BaiViet', 'ArticleController');
     Route::get('/XoaBaiViet/{LoaiBaiViet}', 'ArticleController@destroy');
-    Route::put('/BaiViet/disabled/{BaiViet}', 'ArticleController@disabled');
-    Route::put('/BaiViet/enabled/{BaiViet}', 'ArticleController@enabled');
+    Route::put('/BaiViet/change_status/{BaiViet}', 'ArticleController@change_status');
     //Order
     Route::resource('/HoaDon', 'OrderController')->only('index', 'show');
     Route::put('/HoaDon/danggiao/{HoaDon}', 'OrderController@update_status_0');
@@ -39,16 +36,13 @@ Route::group(['middleware' => 'levellogin'], function () {
     //Portfolio
     Route::resource('/NhaCungCap', 'PortfolioController');
     Route::get('/XoaNhaCungCap/{NhaCungCap}', 'PortfolioController@destroy');
-    Route::put('/NhaCungCap/disabled/{NhaCungCap}', 'PortfolioController@disabled');
-    Route::put('/NhaCungCap/enabled/{NhaCungCap}', 'PortfolioController@enabled');
+    Route::put('/NhaCungCap/change_status/{NhaCungCap}', 'PortfolioController@change_status');
     //CMT
     Route::resource('/BinhLuan', 'CommentController')->except('store');
-    Route::put('/BinhLuan/disabled/{BinhLuan}', 'CommentController@disabled');
-    Route::put('/BinhLuan/enabled/{BinhLuan}', 'CommentController@enabled');
+    Route::put('/BinhLuan/change_status/{BinhLuan}', 'CommentController@change_status');
     //Account
     Route::resource('/TaiKhoan', 'AccountController');
-    Route::put('/TaiKhoan/disabled/{TaiKhoan}', 'AccountController@disabled');
-    Route::put('/TaiKhoan/enabled/{TaiKhoan}', 'AccountController@enabled');
+    Route::put('/TaiKhoan/change_status/{TaiKhoan}', 'AccountController@change_status');
 
     //Slider
 

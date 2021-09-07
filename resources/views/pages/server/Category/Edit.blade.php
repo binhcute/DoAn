@@ -20,25 +20,7 @@
     <div class="card-header">
       <h5>Chỉnh Sửa Danh Mục</h5>
     </div>
-    @if ($message = Session::get('success'))
-    <div class="alert alert-success alert-block">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <strong>{{ $message }}</strong>
-    </div>
-    <img src="images/{{ Session::get('image') }}">
-    @endif
-
-    @if (count($errors) > 0)
-    <div class="alert alert-danger">
-      <strong>Whoops!</strong> Có một vài lỗi trong quá trình nhập liệu.
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
-    <form class="form theme-form" action="{{ route('LoaiSanPham.update',$cate->cate_id)}}" method="post" enctype="multipart/form-data">
+    <form class="form theme-form" action="{{ route('LoaiSanPham.update',$cate->cate_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
       @csrf
       <input type="hidden" name="_method" value="put" />
       <div class="card-body">
@@ -53,7 +35,7 @@
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Tên Loại Sản Phẩm</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên loại sản phẩm" value="{{ $cate->cate_name }}" name="name">
+                <input class="form-control" type="text" placeholder="Nhập tên loại sản phẩm" value="{{ $cate->cate_name }}" name="name" id="name">
               </div>
             </div>
             <div class="mb-3 row">
@@ -65,8 +47,9 @@
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Chọn ảnh</label>
               <div class="col-sm-9">
-                <input class="form-control imageItem" id="imgItem" type="file" name="img" data-bs-original-title="" title="">
-                <img id="imgShow" src="{{URL::to('/') }}/server/assets/image/category/{{ $cate->cate_img }}" alt="image" width="100%" height="100%">
+                <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
+                <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
+                <img id="event__img-0" src="{{URL::to('/')}}/server/assets/image/category/{{$cate->cate_img}}" alt="slider" width="50%" height="250px">
               </div>
             </div>
           </div>
@@ -84,7 +67,21 @@
 @endsection
 
 @section('page-js')
-
+<script type="text/javascript">
+  function uploadBannerFile(input, tam) {
+    $('#id-label-' + tam).html(input.files[0].name);
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#event__img-' + tam).attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+    $('#event__input-' + tam).change(function() {
+      readURL(this);
+    });
+  }
+</script>
 <!-- CKEDITOR -->
 <script>
   CKEDITOR.replace('ckeditor', {
@@ -110,5 +107,61 @@
   $("#imgItem").change(function() {
     readURL(this);
   });
+</script>
+<script>
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $('#edit-data').submit(function(event) {
+    event.preventDefault();
+    console.log('aaa');
+    var form = $(this);
+    var url = form.attr('action');
+    let imageItem = document.getElementsByClassName('imageItem');
+    //Ckeditor
+    var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
+    //Khai bao formData
+    var formData = new FormData($(this)[0]);
+    formData.append('data_input_item', imageItem[0].files[0]);
+    formData.append('name', $('#name').val());
+    formData.append('description', data_ckeditor);
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: formData,
+      async: false,
+      cache: false,
+      contentType: false,
+      enctype: 'multipart/form-data',
+      processData: true,
+      success: function(data) {
+        if (data.status == 'error') {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thất Bại',
+            text: data.message,
+            showConfirmButton: true,
+            timer: 2500
+          })
+        }
+        if (data.status == 'success') {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thành Công',
+            text: data.message,
+            showConfirmButton: true,
+            timer: 2500
+          })
+          window.setTimeout(function() {
+            window.location.replace("{{route('LoaiSanPham.index')}}");
+          }, 2500);
+        }
+      }
+    });
+  })
 </script>
 @endsection

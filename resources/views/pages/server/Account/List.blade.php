@@ -17,30 +17,6 @@
       </div>
     </div>
   </div>
-  @if ($message = Session::get('message'))
-  <div class="alert alert-success alert-block">
-    <strong>{{ $message }}</strong>
-    <?php
-    Session::put('message', null);
-    ?>
-  </div>
-  @endif
-  @if ($destroy = Session::get('destroy'))
-  <div class="alert alert-danger alert-block">
-    <strong>{{ $destroy }}</strong>
-    <?php
-    Session::put('destroy', null);
-    ?>
-  </div>
-  @endif
-  @if ($info = Session::get('info'))
-  <div class="alert alert-primary alert-block">
-    <strong>{{ $info }}</strong>
-    <?php
-    Session::put('info', null);
-    ?>
-  </div>
-  @endif
   <div class="card">
     @if(count($account)!=0)
     <div class="card-body">
