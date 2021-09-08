@@ -105,6 +105,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd('aaj');
         $cate = Category::find($id);
         $cate->user_id = Auth::user()->id;
         $cate->cate_name = $request->name;
@@ -146,22 +147,36 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Xóa Loại Sản Phẩm Thành Công'
-        ], 200);
+        if($category->delete()){
+            $cate = Category::all();
+            $giao_dien = view('pages.server.category.list-item', compact(['cate']))->render();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xóa Loại Sản Phẩm Thành Công',
+                'giao_dien' => $giao_dien
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Xóa Loại Sản Phẩm Thất Bại'
+            ], 200);
+        }
     }
 
     public function change_status($id)
     {
-        $cate = Category::find($id);
-        if ($cate->status == 1) {
-            $cate->status = 0;
-            $cate->save();
-            if ($cate->save()) {
+        $change = Category::find($id);
+        if ($change->status == 1) {
+            $change->status = 0;
+            $change->save();
+            if ($change->save()) {
+                $cate = Category::all();
+                $giao_dien = view('pages.server.category.list-item',compact(['cate']))->render();
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Ẩn Danh Mục Thành Công'
+                    'message' => 'Ẩn Danh Mục Thành Công',
+                    'giao_dien' => $giao_dien
                 ], 200);
             }
             return response()->json([
@@ -169,12 +184,15 @@ class CategoryController extends Controller
                 'message' => 'Đã Ẩn Danh Mục Thất Bại'
             ], 200);
         } else {
-            $cate->status = 1;
-            $cate->save();
-            if ($cate->save()) {
+            $change->status = 1;
+            $change->save();
+            if ($change->save()) {
+                $cate = Category::all();
+                $giao_dien = view('pages.server.category.list-item',compact(['cate']))->render();
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Hiển Thị Danh Mục Thành Công'
+                    'message' => 'Hiển Thị Danh Mục Thành Công',
+                    'giao_dien' => $giao_dien
                 ], 200);
             }
             return response()->json([

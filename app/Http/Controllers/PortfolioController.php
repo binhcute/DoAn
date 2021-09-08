@@ -167,42 +167,59 @@ class PortfolioController extends Controller
      */
     public function destroy($id)
     {
-        $port = Portfolio::find($id);
-        $port->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Xóa Nhà Cung Cấp Thành Công'
-        ], 200);
+        $destroy = Portfolio::find($id);
+        $destroy->delete();
+        if($destroy->delete()){
+            $port = Portfolio::all();
+            $giao_dien = view('pages.server.portfolio.list-item', compact(['port']))->render();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xóa Nhà Cung Cấp Thành Công',
+                'giao_dien' => $giao_dien
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Xóa Nhà Cung Cấp Thất Bại'
+            ], 200);
+        }
     }
 
     public function change_status($id)
     {
-        $port = Portfolio::find($id);
-        if ($port->status == 1) {
-            $port->status = 0;
-            $port->save();
-            if ($port->save()) {
+        $change = Portfolio::find($id);
+        if ($change->status == 1) {
+            $change->status = 0;
+            $change->save();
+            if ($change->save()) {
+                $port = Portfolio::all();
+                $giao_dien = view('pages.server.portfolio.list-item', compact(['port']))->render();
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Ẩn Nhà Cung Cấp Thành Công'
+                    'message' => 'Đã Ẩn Nhà Cung Cấp',
+                    'giao_dien' => $giao_dien
                 ], 200);
             }
             return response()->json([
                 'status' => 'error',
-                'message' => 'Đã Ẩn Nhà Cung Cấp Thất Bại'
+                'message' => 'Chưa Ẩn Được Nhà Cung Cấp'
             ], 200);
         } else {
-            $port->status = 1;
-            $port->save();
-            if ($port->save()) {
+            $change->status = 1;
+            $change->save();
+            if ($change->save()) {
+            $port = Portfolio::all();
+            $giao_dien = view('pages.server.portfolio.list-item', compact(['port']))->render();
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Hiển Thị Nhà Cung Cấp Thành Công'
+                    'message' => 'Đã Hiển Thị Nhà Cung Cấp',
+                    'giao_dien' => $giao_dien
                 ], 200);
             }
             return response()->json([
                 'status' => 'error',
-                'message' => 'Hiển Thị Nhà Cung Cấp Thất Bại'
+                'message' => 'Chưa Hiển Thị Được Nhà Cung Cấp'
             ], 200);
         }
     }

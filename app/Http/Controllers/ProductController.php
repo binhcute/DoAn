@@ -7,7 +7,6 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Alert;
 use App\Http\Requests\Admin\StoreProductRequest;
 
 
@@ -187,22 +186,32 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
-        $product->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Xóa Sản Phẩm Thành Công'
-        ], 200);
+        $destroy = Product::find($id);
+        $destroy->delete();
+        if ($destroy->delete()) {
+            $product = Product::all();
+            $giao_dien = view('pages.server.product.list-item', compact(['product']))->render();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xóa Sản Phẩm Thành Công',
+                'giao_dien' => $giao_dien
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xóa Sản Phẩm Thất Bại'
+            ], 200);
+        }
     }
     public function change_status($id)
     {
         $change = Product::find($id);
-        $product = Product::all();
-        $giao_dien = view('pages.server.product.list-item', compact(['product']))->render();
         if ($change->status == 1) {
             $change->status = 0;
             $change->save();
             if ($change->save()) {
+                $product = Product::all();
+                $giao_dien = view('pages.server.product.list-item', compact(['product']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Ẩn Sản Phẩm Thành Công',
@@ -212,12 +221,13 @@ class ProductController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Đã Ẩn Sản Phẩm Thất Bại',
-                'giao_dien' => $giao_dien,
             ], 200);
         } else {
             $change->status = 1;
             $change->save();
             if ($change->save()) {
+                $product = Product::all();
+                $giao_dien = view('pages.server.product.list-item', compact(['product']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Hiển Thị Sản Phẩm Thành Công',
@@ -227,7 +237,6 @@ class ProductController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Hiển Thị Sản Phẩm Thất Bại',
-                'giao_dien' => $giao_dien,
             ], 200);
         }
     }
