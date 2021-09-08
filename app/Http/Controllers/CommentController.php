@@ -79,9 +79,14 @@ class CommentController extends Controller
             $comment->status = 0;
             $comment->save();
             if ($comment->save()) {
+                $cmt = DB::table('tpl_comment')
+                ->select('tpl_comment.*', 'users.firstName', 'users.lastName', 'users.username')
+                ->join('users', 'users.id', '=', 'tpl_comment.user_id')->get();
+                $giao_dien = view('pages.server.comment.list-item', compact(['cmt']))->render();
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Ẩn Bình Luận Thành Công'
+                    'message' => 'Ẩn Bình Luận Thành Công',
+                    'giao_dien' => $giao_dien
                 ], 200);
             }
             return response()->json([
@@ -92,9 +97,14 @@ class CommentController extends Controller
             $comment->status = 1;
             $comment->save();
             if ($comment->save()) {
+                $cmt = DB::table('tpl_comment')
+                ->select('tpl_comment.*', 'users.firstName', 'users.lastName', 'users.username')
+                ->join('users', 'users.id', '=', 'tpl_comment.user_id')->get();
+                $giao_dien = view('pages.server.comment.list-item', compact(['cmt']))->render();
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Hiển Thị Bình Luận Thành Công'
+                    'message' => 'Hiển Thị Bình Luận Thành Công',
+                    'giao_dien' => $giao_dien
                 ], 200);
             }
             return response()->json([

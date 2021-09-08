@@ -94,7 +94,7 @@ class ArticleController extends Controller
     public function edit($id)
     {
 
-        $article = article::find($id);
+        $article = Article::find($id);
         return view('pages.server.article.edit')
             ->with('article', $article);
     }
@@ -139,24 +139,37 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        $article = article::find($id);
-        $article->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Xóa Bài Viết Thành Công'
-        ], 200);
+        $destroy = Article::find($id);
+        $destroy->delete();
+        if ($destroy->delete()) {
+            $article = Article::all();
+            $giao_dien = view('pages.server.article.list-item', compact(['article']))->render();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xóa Bài Viết Thành Công',
+                'giao_dien' => $giao_dien
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Xóa Bài Viết Thất Bại'
+            ], 200);
+        }
     }
 
     public function change_status($id)
     {
-        $article = article::find($id);
-        if ($article->status == 1) {
-            $article->status = 0;
-            $article->save();
-            if ($article->save()) {
+        $change = Article::find($id);
+        if ($change->status == 1) {
+            $change->status = 0;
+            $change->save();
+            if ($change->save()) {
+                $article = Article::all();
+                $giao_dien = view('pages.server.article.list-item', compact(['article']))->render();
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Ẩn Bài Viết Thành Công'
+                    'message' => 'Ẩn Bài Viết Thành Công',
+                    'giao_dien' => $giao_dien
                 ], 200);
             }
             return response()->json([
@@ -164,12 +177,15 @@ class ArticleController extends Controller
                 'message' => 'Đã Ẩn Bài Viết Thất Bại'
             ], 200);
         } else {
-            $article->status = 1;
-            $article->save();
-            if ($article->save()) {
+            $change->status = 1;
+            $change->save();
+            if ($change->save()) {
+                $article = Article::all();
+                $giao_dien = view('pages.server.article.list-item', compact(['article']))->render();
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Hiển Thị Bài Viết Thành Công'
+                    'message' => 'Hiển Thị Bài Viết Thành Công',
+                    'giao_dien' => $giao_dien
                 ], 200);
             }
             return response()->json([

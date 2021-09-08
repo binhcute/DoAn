@@ -109,10 +109,10 @@ class OrderController extends Controller
     public function update_status_0($id)
     {
 
-        $order = Order::find($id);
-        $order->status = 0;
-        $order->save();
-        if($order->save()){
+        $change = Order::find($id);
+        $change->status = 0;
+        $change->save();
+        if($change->save()){
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đơn Hàng Đã Giao Cho Shipper'
@@ -126,10 +126,10 @@ class OrderController extends Controller
     public function update_status_1($id)
     {
 
-        $order = Order::find($id);
-        $order->status = 1;
-        $order->save();
-        if($order->save()){
+        $change = Order::find($id);
+        $change->status = 1;
+        $change->save();
+        if($change->save()){
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đơn hàng đang chờ thanh toán'
@@ -144,10 +144,10 @@ class OrderController extends Controller
     public function update_status_2($id)
     {
 
-        $order = Order::find($id);
-        $order->status = 2;
-        $order->save();
-        if($order->save()){
+        $change = Order::find($id);
+        $change->status = 2;
+        $change->save();
+        if($change->save()){
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đơn hàng đã giao thành công'
@@ -162,10 +162,10 @@ class OrderController extends Controller
     public function update_status_3($id)
     {
 
-        $order = Order::find($id);
-        $order->status = 3;
-        $order->save();
-        if($order->save()){
+        $change = Order::find($id);
+        $change->status = 3;
+        $change->save();
+        if($change->save()){
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đơn hàng đã bị hủy'

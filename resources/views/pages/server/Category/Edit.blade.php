@@ -116,19 +116,18 @@
   });
   $('#edit-data').submit(function(event) {
     event.preventDefault();
-    console.log('aaa');
     var form = $(this);
     var url = form.attr('action');
-    let imageItem = document.getElementsByClassName('imageItem');
+    // let imageItem = document.getElementsByClassName('imageItem');
     //Ckeditor
-    var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
+    // var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
     //Khai bao formData
     var formData = new FormData($(this)[0]);
-    formData.append('data_input_item', imageItem[0].files[0]);
+    // formData.append('data_input_item', imageItem[0].files[0]);
     formData.append('name', $('#name').val());
-    formData.append('description', data_ckeditor);
+    // formData.append('description', data_ckeditor);
     $.ajax({
-      type: 'POST',
+      type: 'PUT',
       url: url,
       data: formData,
       async: false,
@@ -136,31 +135,31 @@
       contentType: false,
       enctype: 'multipart/form-data',
       processData: true,
-      success: function(data) {
-        if (data.status == 'error') {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Thất Bại',
-            text: data.message,
-            showConfirmButton: true,
-            timer: 2500
-          })
-        }
-        if (data.status == 'success') {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Thành Công',
-            text: data.message,
-            showConfirmButton: true,
-            timer: 2500
-          })
-          window.setTimeout(function() {
-            window.location.replace("{{route('LoaiSanPham.index')}}");
-          }, 2500);
-        }
-      }
+      // success: function(data) {
+      //   if (data.status == 'error') {
+      //     Swal.fire({
+      //       position: 'center',
+      //       icon: 'error',
+      //       title: 'Thất Bại',
+      //       text: data.message,
+      //       showConfirmButton: true,
+      //       timer: 2500
+      //     })
+      //   }
+      //   if (data.status == 'success') {
+      //     Swal.fire({
+      //       position: 'center',
+      //       icon: 'success',
+      //       title: 'Thành Công',
+      //       text: data.message,
+      //       showConfirmButton: true,
+      //       timer: 2500
+      //     })
+      //     window.setTimeout(function() {
+      //       window.location.replace("{{route('LoaiSanPham.index')}}");
+      //     }, 2500);
+      //   }
+      // }
     });
   })
 </script>

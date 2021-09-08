@@ -99,9 +99,7 @@ function changeStatus(event) {
                 showConfirmButton: true,
                 timer: 2500
               })
-                    window.setTimeout(function() {
-                        window.location.reload();
-                    }, 2500);
+
             }
           }
         });
@@ -143,6 +141,8 @@ function changeStatus(event) {
               })
             }
             if (data.status == 'success') {
+              $('#change-layout').empty();
+              $('#change-layout').html(data.giao_dien);
               Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -151,9 +151,6 @@ function changeStatus(event) {
                 showConfirmButton: true,
                 timer: 2500
               })
-              window.setTimeout(function() {
-                window.location.reload();
-              }, 2500);
             }
           }
         });
