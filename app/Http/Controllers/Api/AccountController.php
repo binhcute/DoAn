@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\StoreAccountRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Account as AccountResource;
 use Illuminate\Support\Facades\Hash;
@@ -11,13 +12,13 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 class AccountController extends Controller
 {
-    public function register(Request $request)
+    public function register(StoreAccountRequest $request)
     {
         $user = new User();
         $user->firstName = $request->firstName;
         $user->lastName = $request->lastName;
         $user->username = $request->username;
-        $user->avatar = $request->avatar;
+        $files = $request->file('avatar');
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         $user->address = $request->address;
@@ -25,9 +26,21 @@ class AccountController extends Controller
         $user->level = $request->level;
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
+        if ($files != NULL) {
+             // Define upload path
+             $destinationPath = public_path('/server/assets/image/account'); // upload path
+             // Upload Original Image           
+             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+             $files->move($destinationPath, $profileImage);
+ 
+             $insert['avatar'] = "$profileImage";
+             // Save In Database
+             $user->avatar = "$profileImage";
+         }
+
         $user->save();
 
-        return new AccountResource($user);
+        return response()->json(array('success' => 1,'data' => $user));
     }
 
     public function login(Request $request)

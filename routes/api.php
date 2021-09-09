@@ -16,6 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+/* Api Register */
+Route::get('token', function (Request $request) {
+    $token = $request->session()->token();
+    $token = csrf_token();
+    return Response()->json(array("token"=>$token));
+});
 
 Route::post('/login','Api\AccountController@login');
 Route::get('/logout','Api\AccountController@logout')->middleware('auth:api');
