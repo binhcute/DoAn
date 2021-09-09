@@ -22,6 +22,7 @@ Route::group(['middleware' => 'levellogin'], function () {
     //Cate
     Route::resource('/LoaiSanPham', 'CategoryController');
     Route::get('/XoaLoaiSanPham/{LoaiSanPham}', 'CategoryController@destroy');
+    Route::put('SuaLoaiSanPham/{LoaiSanPham}', 'CategoryController@update')->name('SuaLoaiSanPham');
     Route::put('/LoaiSanPham/change_status/{LoaiSanPham}', 'CategoryController@change_status');
     //Article
     Route::resource('/BaiViet', 'ArticleController');

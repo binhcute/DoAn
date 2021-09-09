@@ -63,7 +63,7 @@
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Số Lượng</label>
               <div class="col-sm-9">
-                <input class="form-control digits" name="quantity" id="quantity" type="number" placeholder="Số Lượng" data-bs-original-title="" title="">
+                <input class="form-control digits input-number00" name="quantity" id="quantity" type="number" placeholder="Số Lượng" data-bs-original-title="" title="">
               </div>
             </div>
             <div class="mb-3 row">

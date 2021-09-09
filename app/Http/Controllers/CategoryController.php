@@ -105,7 +105,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd('aaj');
+        dd($request->all());
         $cate = Category::find($id);
         $cate->user_id = Auth::user()->id;
         $cate->cate_name = $request->name;
@@ -122,8 +122,8 @@ class CategoryController extends Controller
             // Save In Database
             $cate->cate_img = "$profileImage";
         }
-        $cate->save();
-        if($cate->save()){
+        $cate->update();
+        if($cate->update()){
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đã chỉnh sửa danh mục'

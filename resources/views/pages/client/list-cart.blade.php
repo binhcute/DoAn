@@ -89,3 +89,20 @@
     @endif
 
 </div>
+<script type="text/javascript">
+    $('.qty-btn').on('click', function () {
+        var $this = $(this);
+        var oldValue = $this.siblings('input').val();
+        if ($this.hasClass('plus')) {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 1) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 1;
+            }
+        }
+        $this.siblings('input').val(newVal);
+    });
+</script>

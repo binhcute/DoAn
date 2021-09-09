@@ -20,9 +20,9 @@
     <div class="card-header">
       <h5>Chỉnh Sửa Danh Mục</h5>
     </div>
-    <form class="form theme-form" action="{{ route('LoaiSanPham.update',$cate->cate_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
-      @csrf
-      <input type="hidden" name="_method" value="put" />
+    <form class="form theme-form" action="{{ route('SuaLoaiSanPham',$cate->cate_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
+      <meta name="csrf-token" content="{{ csrf_token() }}">
+      @method('PUT')
       <div class="card-body">
         <div class="row">
           <div class="col">
@@ -82,13 +82,13 @@
     });
   }
 </script>
-<!-- CKEDITOR -->
-<script>
-  CKEDITOR.replace('ckeditor', {
-    filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token()])}}",
-    filebrowserUploadMethod: 'form'
-  });
-</script>
+  <!-- CKEDITOR -->
+  <script>
+    CKEDITOR.replace('ckeditor', {
+      filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token()])}}",
+      filebrowserUploadMethod: 'form'
+    });
+  </script>
 <!-- Upload Image Files -->
 <script type="text/javascript">
   function readURL(input) {
@@ -118,48 +118,49 @@
     event.preventDefault();
     var form = $(this);
     var url = form.attr('action');
-    // let imageItem = document.getElementsByClassName('imageItem');
+    let imageItem = document.getElementsByClassName('imageItem');
     //Ckeditor
-    // var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
+    var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
     //Khai bao formData
     var formData = new FormData($(this)[0]);
-    // formData.append('data_input_item', imageItem[0].files[0]);
+    formData.append('data_input_item', imageItem[0].files[0]);
     formData.append('name', $('#name').val());
-    // formData.append('description', data_ckeditor);
+    formData.append('description', data_ckeditor);
+    console.log(formData.append('description', data_ckeditor));
     $.ajax({
       type: 'PUT',
-      url: url,
+      url: url ,
       data: formData,
       async: false,
       cache: false,
       contentType: false,
       enctype: 'multipart/form-data',
-      processData: true,
-      // success: function(data) {
-      //   if (data.status == 'error') {
-      //     Swal.fire({
-      //       position: 'center',
-      //       icon: 'error',
-      //       title: 'Thất Bại',
-      //       text: data.message,
-      //       showConfirmButton: true,
-      //       timer: 2500
-      //     })
-      //   }
-      //   if (data.status == 'success') {
-      //     Swal.fire({
-      //       position: 'center',
-      //       icon: 'success',
-      //       title: 'Thành Công',
-      //       text: data.message,
-      //       showConfirmButton: true,
-      //       timer: 2500
-      //     })
-      //     window.setTimeout(function() {
-      //       window.location.replace("{{route('LoaiSanPham.index')}}");
-      //     }, 2500);
-      //   }
-      // }
+      processData: false,
+      success: function(data) {
+        if (data.status == 'error') {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thất Bại',
+            text: data.message,
+            showConfirmButton: true,
+            timer: 2500
+          })
+        }
+        if (data.status == 'success') {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thành Công',
+            text: data.message,
+            showConfirmButton: true,
+            timer: 2500
+          })
+          window.setTimeout(function() {
+            window.location.replace("{{route('LoaiSanPham.index')}}");
+          }, 2500);
+        }
+      }
     });
   })
 </script>
