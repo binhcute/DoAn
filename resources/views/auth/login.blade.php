@@ -207,7 +207,7 @@
                 timer: 2500
               })
               window.setTimeout(function() {
-                window.location.reload();
+                window.location.replace("{{URL::to('/')}} ");
               }, 2500);
             }
           }
