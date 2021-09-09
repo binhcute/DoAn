@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,7 @@ Route::group(['middleware' => 'levellogin'], function () {
     //Cate
     Route::resource('/LoaiSanPham', 'CategoryController');
     Route::get('/XoaLoaiSanPham/{LoaiSanPham}', 'CategoryController@destroy');
+    Route::put('SuaLoaiSanPham/{LoaiSanPham}', 'CategoryController@update')->name('SuaLoaiSanPham');
     Route::put('/LoaiSanPham/change_status/{LoaiSanPham}', 'CategoryController@change_status');
     //Article
     Route::resource('/BaiViet', 'ArticleController');
@@ -65,11 +67,23 @@ Route::group(['middleware' => 'levellogin'], function () {
     Route::get('/QuanLyAPI', 'ServerController@api');
     //Upload Ckeditor
     Route::post('ckeditor/upload', 'ServerController@ckeditorUpload')
-    ->name('ckeditor.upload');
+        ->name('ckeditor.upload');
 });
 
-Auth::routes();
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
+Route::get('/login', 'Api\AccountController@index')->name('login');
+
+Route::post('/login', 'Api\AccountController@login');
+Auth::routes([
+    'register' => false,
+    'login' => false,
+]);
+// Route::post('/logout','Api\AccountController@customLogout')->middleware('auth:api')->name('logout');
+Route::post('/register', 'Api\AccountController@register')->name('register');
+Route::get('/user', 'Api\AccountController@userInfo')->middleware('auth:api');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('LoginCheck', 'CheckLoginController@check');
 
@@ -140,4 +154,4 @@ Route::get('/save-item-list-favorite/{id}/{qty}', 'FavoriteController@SaveItemLi
 
 //search
 
-Route::get('tim-kiem','SearchController@autocomplete')->name('tim-kiem');
+Route::get('tim-kiem', 'SearchController@autocomplete')->name('tim-kiem');

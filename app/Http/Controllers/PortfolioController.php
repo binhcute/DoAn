@@ -154,7 +154,7 @@ class PortfolioController extends Controller
             // Save In Database
             $port->port_img = "$profileImage";
         }
-        $port->save();
+        $port->update();
         Session::put('message', 'Cập Nhật Nhà Cung Cấp Thành Công');
         return redirect()->route('NhaCungCap.index');
     }

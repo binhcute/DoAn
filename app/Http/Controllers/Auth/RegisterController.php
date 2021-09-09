@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    // protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -64,14 +65,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'firstName' => $data['firstName'],
-            'lastName' => $data['lastName'],
-            'phone' => $data['phone'],
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'level'=>0,
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = new User();
+        $user->firstName = $data['firstName'];
+        $user->lastName = $data['lastName'];
+        $user->username = $data['username'];
+        $user->email = $data['email'];
+        $user->level = 0;
+        $user->password = bcrypt($data['password']);
+        $user->save();
+        if($user->save()){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Tạo tài khoản thành công'
+            ]);
+        }
+        
     }
+    
 }

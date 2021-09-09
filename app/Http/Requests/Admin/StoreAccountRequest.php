@@ -26,7 +26,7 @@ class StoreAccountRequest extends FormRequest
         return [
             'firstName' => 'required',
             'lastName' => 'required',
-            'username' => 'required|unique',
+            'username' => 'required|unique:users',
             'password' => 'required',
             'level' => 'required',
             'status' => 'required'

@@ -96,7 +96,7 @@
           <div class="modal-body">
             <form role="form" method="POST" action="{{ url('/register') }}" id="register-check-tri">
               {{ csrf_field() }}
-              <fieldset>
+              <fieldset id="noti-validate">
                 <div class="form-row">
                   <div class="form-group col-sm-6">
                     <input type="name" class="form-control" id="firstName" name="firstName" placeholder="Họ" required>
@@ -207,7 +207,7 @@
                 timer: 2500
               })
               window.setTimeout(function() {
-                window.location.reload();
+                window.location.replace("{{URL::to('/')}} ");
               }, 2500);
             }
           }
@@ -223,29 +223,45 @@
           url: url,
           data: form.serialize(),
           success: function(data) {
-            // if (data.status == 'error') {
-            //   Swal.fire({
-            //     position: 'center',
-            //     icon: 'error',
-            //     title: 'Thất Bại',
-            //     text: data.message,
-            //     showConfirmButton: true,
-            //     timer: 2500
-            //   })
-            // }
-            // if (data.status == 'success') {
-            //   Swal.fire({
-            //     position: 'center',
-            //     icon: 'success',
-            //     title: 'Thành Công',
-            //     text: data.message,
-            //     showConfirmButton: true,
-            //     timer: 2500
-            //   })
-            //   window.setTimeout(function() {
-            //     window.location.reload();
-            //   }, 2500);
-            // }
+            if (data.status == 'error') {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Thất Bại',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+            if (data.status == 'success') {
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Thành Công',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+              window.setTimeout(function() {
+                window.location.replace("{{route('login')}}");
+              }, 2500);
+            }
+          },
+          error: function(response) {
+            $.each(response.responseJSON.errors, function(field_name, error) {
+                $('#noti-validate').before('<div class="alert alert-danger noti-alert-danger" role="alert" style="font-size: 1.5rem;">' + error + '</div>');
+              }),
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Thất bại',
+                text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
+                showConfirmButton: true,
+                timer: 2500
+              }),
+              window.setTimeout(function() {
+                $('.alert.alert-danger.noti-alert-danger').remove();
+              }, 20000);
           }
         });
       });
