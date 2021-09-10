@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-
+use App\Http\Requests\Account\LoginRequest;
 
 class CheckLoginController extends Controller
 {
     use AuthenticatesUsers;
-    public function check(Request $request)
+    public function check(LoginRequest $request)
     {
         $admin = [
             'username' => $request->username,
@@ -26,18 +26,33 @@ class CheckLoginController extends Controller
         ];
 
         if (Auth::attempt($admin)) {
-            Session::put('username',$request->username);
-            Session::put('id',$request->id);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Đăng Nhập Thành Công'
-            ], 200);
+            if(Auth::user()->status == 1){
+                Session::put('username',$request->username);
+                Session::put('id',$request->id);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Đăng Nhập Thành Công'
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tài khoản chưa được kích hoạt'
+                ], 200);
+            }
         } elseif(Auth::attempt($user)) {
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Đăng Nhập Thành Công'
-            ], 200);
+            if(Auth::user()->status == 1){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Đăng Nhập Thành Công'
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tài khoản chưa được kích hoạt'
+                ], 200);
+            }
         }
         else{
             return response()->json([

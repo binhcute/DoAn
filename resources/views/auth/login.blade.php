@@ -50,15 +50,15 @@
 
               <form class="theme-form" method="POST" action="{{ url('/LoginCheck') }}" id="login-check-tri">
                 {{ csrf_field() }}
-                <h4>Đăng nhập</h4>
+                <h4 id="noti-validated">Đăng nhập</h4>
                 <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
                   <label class="col-form-label">Tài khoản</label>
-                  <input type="text" class="form-control" name="username" required="" placeholder="Username" value="{{ old('username') }}" required autofocus>
+                  <input type="text" class="form-control" name="username" placeholder="Username" value="{{ old('username') }}" autofocus>
                 </div>
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                   <label class="col-form-label">Mật khẩu</label>
                   <div class="form-input position-relative">
-                    <input type="password" class="form-control" name="password" placeholder="*********" required>
+                    <input type="password" class="form-control" name="password" placeholder="*********" >
                     <div class="show-hide"><span class="show"> </span></div>
                   </div>
                 </div>
@@ -210,6 +210,22 @@
                 window.location.replace("{{URL::to('/')}} ");
               }, 2500);
             }
+          }, 
+          error: function(response) {
+            $.each(response.responseJSON.errors, function(field_name, error) {
+                $('#noti-validated').after('<p style="color:red" class="noti-alert-danger">' + error + '</p>');
+              }),
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Thất bại',
+                text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
+                showConfirmButton: true,
+                timer: 2500
+              }),
+              window.setTimeout(function() {
+                $('noti-alert-danger').remove();
+              }, 20000);
           }
         });
       });

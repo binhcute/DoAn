@@ -23,7 +23,7 @@ Route::group(['middleware' => 'levellogin'], function () {
     //Cate
     Route::resource('/LoaiSanPham', 'CategoryController');
     Route::get('/XoaLoaiSanPham/{LoaiSanPham}', 'CategoryController@destroy');
-    Route::put('SuaLoaiSanPham/{LoaiSanPham}', 'CategoryController@update')->name('SuaLoaiSanPham');
+    Route::post('SuaLoaiSanPham/{LoaiSanPham}', 'CategoryController@update')->name('SuaLoaiSanPham');
     Route::put('/LoaiSanPham/change_status/{LoaiSanPham}', 'CategoryController@change_status');
     //Article
     Route::resource('/BaiViet', 'ArticleController');
@@ -155,3 +155,6 @@ Route::get('/save-item-list-favorite/{id}/{qty}', 'FavoriteController@SaveItemLi
 //search
 
 Route::get('tim-kiem', 'SearchController@autocomplete')->name('tim-kiem');
+
+//Mail
+Route::get('mail', 'ServerController@sendMail');

@@ -105,7 +105,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        // dd($request->all());
         $cate = Category::find($id);
         $cate->user_id = Auth::user()->id;
         $cate->cate_name = $request->name;

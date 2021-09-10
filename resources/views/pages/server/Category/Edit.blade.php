@@ -22,7 +22,7 @@
     </div>
     <form class="form theme-form" action="{{ route('SuaLoaiSanPham',$cate->cate_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
       <meta name="csrf-token" content="{{ csrf_token() }}">
-      @method('PUT')
+     
       <div class="card-body">
         <div class="row">
           <div class="col">
@@ -123,12 +123,13 @@
     var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
     //Khai bao formData
     var formData = new FormData($(this)[0]);
-    formData.append('data_input_item', imageItem[0].files[0]);
+    if (imageItem[0].files[0] != undefined) {
+        formData.append('data_input_item', imageItem[0].files[0]);
+    }
     formData.append('name', $('#name').val());
     formData.append('description', data_ckeditor);
-    console.log(formData.append('description', data_ckeditor));
     $.ajax({
-      type: 'PUT',
+      type: 'POST',
       url: url ,
       data: formData,
       async: false,

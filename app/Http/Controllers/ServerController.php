@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mail;
 
 class ServerController extends Controller
 {
@@ -79,6 +80,12 @@ class ServerController extends Controller
     public function api()
     {
         return view('pages.server.api');
+    }
+
+    public function sendMail(){
+        Mail::send('view',$data,function($message){
+            $message->from('thanhbinh0606.hcm@gmail.com','Learts');
+        });
     }
     /**
      * Show the form for creating a new resource.

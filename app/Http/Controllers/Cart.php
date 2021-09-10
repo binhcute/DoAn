@@ -44,7 +44,7 @@ class Cart
         }
         $new_product['price'] = $new_product['qty'] * $product->product_price;
         $this->product[$id] = $new_product;
-        $this->totalQuantity = $this->product[$id]['qty'];
+        $this->totalQuantity += $this->product[$id]['qty'];
         // dd($this->totalQuantity);
         $this->totalPrice = $this->product[$id]['qty']*$product->product_price;
     }
