@@ -25,6 +25,9 @@ class ClientController extends Controller
         $product_new = Product::queryStatusOne()
             ->orderBy('created_at', 'desc')->limit(4)->get();
         $cate = Category::queryStatusOne()->get();
+
+        $modal = Product::queryJoinCateAndPort()->get();
+        // dd($modal);
         // foreach ($cate as $key => $value) {
         //     $cate_id = $value->cate_id;
         // }
@@ -35,7 +38,8 @@ class ClientController extends Controller
         return view('pages.client.index')
             ->with('product_hot', $product_hot)
             ->with('product_new', $product_new)
-            ->with('cate', $cate);
+            ->with('cate', $cate)
+            ->with('modal', $modal);
         // ->with('product_by_category', $product_by_category);
     }
     public function product()
@@ -59,13 +63,9 @@ class ClientController extends Controller
     public function product_detail($slug, $id)
     {
 
-        $product_detail = DB::table('tpl_product')
-            ->join('tpl_portfolio', 'tpl_portfolio.port_id', 'tpl_product.port_id')
-            ->join('tpl_category', 'tpl_category.cate_id', '=', 'tpl_product.cate_id')
+        $product_detail = Product::queryJoinCateAndPort()
             ->where('tpl_product.product_id', $id)->first();
-        $product_relate = DB::table('tpl_product')
-            ->join('tpl_portfolio', 'tpl_portfolio.port_id', 'tpl_product.port_id')
-            ->join('tpl_category', 'tpl_category.cate_id', '=', 'tpl_product.cate_id')
+        $product_relate = Product::queryJoinCateAndPort()
             ->where('tpl_product.product_id', $id)->get();
         foreach ($product_relate as $key => $value) {
             $cate_id = $value->cate_id;
@@ -75,7 +75,7 @@ class ClientController extends Controller
             ->where('tpl_category.cate_id', $cate_id)
             ->whereNotIn('tpl_product.product_id', [$id])
             ->get();
-            
+
         $comment = DB::table('tpl_comment')
             ->select(
                 'tpl_comment.comment_description',
@@ -202,17 +202,16 @@ class ClientController extends Controller
             ->where('tpl_order.user_id', $id)->get();
         foreach ($order as $key => $value) {
             $order_id = $value->order_id;
-         
         }
         $sumOrder = DB::table('tpl_order_dt')
-        ->where('tpl_order_dt.order_id', $order_id)->get();
+            ->where('tpl_order_dt.order_id', $order_id)->get();
 
         // dd($order);
         return view('pages.client.myaccount')
             ->with('order', $order);
     }
 
-    
+
     public function cart()
     {
         return view('pages.client.cart');

@@ -59,10 +59,19 @@ class CategoryController extends Controller
         $cate->cate_img = "$profileImage";
 
         $cate->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Thêm Loại Sản Phẩm Thành Công'
-        ], 200);
+
+        if($cate->save()){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thêm Loại Sản Phẩm Thành Công'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Thêm Loại Sản Phẩm Thất Bại'
+            ], 200);
+        }
     }
 
     /**
@@ -105,7 +114,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        // dd($request->all());
         $cate = Category::find($id);
         $cate->user_id = Auth::user()->id;
         $cate->cate_name = $request->name;
@@ -126,13 +135,13 @@ class CategoryController extends Controller
         if($cate->update()){
             return response()->json([
                 'status' => 'success',
-                'message' => 'Đã chỉnh sửa danh mục'
+                'message' => 'Chỉnh Sửa Loại Sản Phẩm Thành Công'
             ], 200);
         }
         else{
             return response()->json([
                 'status' => 'error',
-                'message' => 'Không thể chỉnh sửa loại sản phẩm'
+                'message' => 'Chỉnh Sửa Loại Sản Phẩm Thất Bại'
             ], 200);
         }
     }

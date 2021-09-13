@@ -7,45 +7,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-
+use App\Http\Requests\Account\LoginRequest;
 
 class CheckLoginController extends Controller
 {
     use AuthenticatesUsers;
-    public function check(Request $request)
+    public function check(LoginRequest $request)
     {
-        $admin = [
+        $account = [
             'username' => $request->username,
             'password' => $request->password,
-            'level' => 1,
-        ];
-        $user = [
-            'username' => $request->username,
-            'password' => $request->password,
-            'level' => 0,
         ];
 
-        if (Auth::attempt($admin)) {
-            Session::put('username',$request->username);
-            Session::put('id',$request->id);
+        if (Auth::attempt($account) && Auth::user()->status == 1) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đăng Nhập Thành Công'
             ], 200);
-        } elseif(Auth::attempt($user)) {
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Đăng Nhập Thành Công'
-            ], 200);
-        }
-        else{
+        } else {
+            Auth::logout();
             return response()->json([
                 'status' => 'error',
-                'message' => 'Sai Tài Khoản hoặc Mật Khẩu, Vui Lòng Đăng Nhập Lại!'
+                'message' => 'Tài khoản chưa được kích hoạt'
             ], 200);
-        }   
-        
+        }
     }
     /**
      * Display a listing of the resource.

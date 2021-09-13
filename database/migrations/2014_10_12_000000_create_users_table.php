@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('status')->default(1);
+            $table->string('code')->nullable();
         });
     }
 

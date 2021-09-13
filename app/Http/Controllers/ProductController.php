@@ -85,10 +85,18 @@ class ProductController extends Controller
             $product->product_img_hover = "$profileImage";
         }
         $product->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Thêm Sản Phẩm Thành Công'
-        ], 200);
+        if($product->save()){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thêm Sản Phẩm Thành Công'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Thêm Sản Phẩm Thất Bại'
+            ], 200);
+        }
     }
 
     /**
@@ -174,8 +182,18 @@ class ProductController extends Controller
             $product->product_img_hover = "$profileImage";
         }
         $product->save();
-        Session::put('message', 'Cập Nhật Sản Phẩm Thành Công');
-        return redirect()->route('SanPham.index');
+
+        if ($product->save()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Cập Nhật Sản Phẩm Thành Công'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cập Nhật Sản Phẩm Thất Bại'
+            ], 200);
+        }
     }
 
     /**
@@ -198,7 +216,7 @@ class ProductController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'status' => 'success',
+                'status' => 'error',
                 'message' => 'Xóa Sản Phẩm Thất Bại'
             ], 200);
         }

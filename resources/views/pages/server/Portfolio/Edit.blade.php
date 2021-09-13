@@ -20,27 +20,8 @@
     <div class="card-header">
       <h5>Chỉnh Sửa Nhà Cung Cấp</h5>
     </div>
-    @if ($message = Session::get('success'))
-    <div class="alert alert-success alert-block">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <strong>{{ $message }}</strong>
-    </div>
-    <img src="images/{{ Session::get('image') }}">
-    @endif
-
-    @if (count($errors) > 0)
-    <div class="alert alert-danger">
-      <strong>Whoops!</strong> Có một vài lỗi trong quá trình nhập liệu.
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
-    <form class="form theme-form" action="{{ route('NhaCungCap.update',$port->port_id)}}" method="post" enctype="multipart/form-data">
+    <form class="form theme-form" action="{{ route('SuaNhaCungCap',$port->port_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
       @csrf
-      <input type="hidden" name="_method" value="put" />
       <div class="card-body">
         <div class="row">
           <div class="col">
@@ -53,13 +34,13 @@
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Tên Nhà Cung Cấp</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên Nhà Cung Cấp" name="name" value="{{$port ->port_name}}">
+                <input class="form-control" type="text" placeholder="Nhập tên Nhà Cung Cấp" name="name" id="name" value="{{$port ->port_name}}">
               </div>
             </div>
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Xuất Xứ</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập Xuất Xứ" name="origin" value="{{$port ->port_origin}}">
+                <input class="form-control" type="text" placeholder="Nhập Xuất Xứ" name="origin" id="origin" value="{{$port ->port_origin}}">
               </div>
             </div>
             <div class="mb-3 row">
@@ -71,25 +52,17 @@
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Chọn Avatar</label>
               <div class="col-sm-9">
-                <input class="form-control" type="file" name="avatar" data-bs-original-title="" title="">
-                <div style="padding-top:10px">
-                  <img src="{{URL::to('/') }}/server/assets/image/portfolio/avatar/{{ $port->port_avatar }}" alt="">
-                  <br>
-                  <label for="img" style="text-align:center">{{$port->port_img}}</label>
-                </div>
-
+                <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
+                <input hidden class="form-control imageAvatar" id="event__input-0" name="avatar" type="file" onchange="uploadAvatar(this, 0)" accept=".jpg, .png">
+                <img id="event__img-0" src="{{URL::to('/')}}/server/assets/image/portfolio/avatar/{{$port->port_avatar}}" alt="slider" width="50%" height="250px">
               </div>
             </div>
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Chọn ảnh</label>
               <div class="col-sm-9">
-                <input class="form-control" type="file" name="img" data-bs-original-title="" title="">
-                <div style="padding-top:10px">
-                  <img src="{{URL::to('/') }}/server/assets/image/portfolio/{{ $port->port_img }}" alt="">
-                  <br>
-                  <label for="img" style="text-align:center">{{$port->port_img}}</label>
-                </div>
-
+                <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh</label>
+                <input hidden class="form-control imageItem" id="event__input-hover-0" name="img" type="file" onchange="uploadFile(this, 0)" accept=".jpg, .png">
+                <img id="event__img-hover-0" src="{{URL::to('/')}}/server/assets/image/portfolio/{{$port->port_img}}" alt="slider" width="50%" height="250px">
               </div>
             </div>
           </div>
@@ -112,5 +85,96 @@
     filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token()])}}",
     filebrowserUploadMethod: 'form'
   });
+</script>
+<script type="text/javascript">
+ function uploadAvatar(input, tam) {
+    $('#id-label-' + tam).html(input.files[0].name);
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#event__img-' + tam).attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+    $('#event__input-' + tam).change(function() {
+      readURL(this);
+    });
+  }
+
+  function uploadFile(input, tam) {
+    $('#id-label-hover-' + tam).html(input.files[0].name);
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#event__img-hover-' + tam).attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+    $('#event__input-hover-' + tam).change(function() {
+      readURL(this);
+    });
+  }
+</script>
+<script>
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $('#edit-data').submit(function(event) {
+    event.preventDefault();
+    var form = $(this);
+    var url = form.attr('action');
+    let imageItem = document.getElementsByClassName('imageItem');
+    let imageAvatar = document.getElementsByClassName('imageAvatar');
+    //Ckeditor
+    var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
+    //Khai bao formData
+    var formData = new FormData($(this)[0]);
+    if (imageItem[0].files[0] != undefined) {
+        formData.append('data_input_item', imageItem[0].files[0]);
+    }
+    if (imageAvatar[0].files[0] != undefined) {
+        formData.append('data_input_avatar', imageAvatar[0].files[0]);
+    }
+    formData.append('name', $('#name').val());
+    formData.append('origin', $('#origin').val());
+    formData.append('description', data_ckeditor);
+    $.ajax({
+      type: 'POST',
+      url: url ,
+      data: formData,
+      async: false,
+      cache: false,
+      contentType: false,
+      enctype: 'multipart/form-data',
+      processData: false,
+      success: function(data) {
+        if (data.status == 'error') {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thất Bại',
+            text: data.message,
+            showConfirmButton: true,
+            timer: 2500
+          })
+        }
+        if (data.status == 'success') {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thành Công',
+            text: data.message,
+            showConfirmButton: true,
+            timer: 2500
+          })
+          window.setTimeout(function() {
+            window.location.replace("{{route('NhaCungCap.index')}}");
+          }, 2500);
+        }
+      }
+    });
+  })
 </script>
 @endsection

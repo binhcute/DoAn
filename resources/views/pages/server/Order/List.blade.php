@@ -16,8 +16,49 @@
       </div>
     </div>
   </div>
-  <div id="change-layout">
-    @include('pages.server.order.list-item')
+  <div>
+    <div class="card">
+      @if(count($order)!=0)
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="display" id="basic-1">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Người Mua</th>
+                <th scope="col">Ngày Mua</th>
+                <th scope="col">Trạng Thái</th>
+                <th scope="col">Tác Vụ</th>
+              </tr>
+            </thead>
+            <tbody id="change-layout">
+              @include('pages.server.order.list-item')
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Hình Ảnh</th>
+                <th scope="col">Trạng Thái</th>
+                <th scope="col">Tác Vụ</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Container-fluid starts-->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            @include('pages.server.order.list-orderdetail')
+          </div>
+        </div>
+      </div>
+    </div>
+    @else
+    <strong class="text-center">Danh Sách Trống</strong>
+    @endif
   </div>
 </div>
 </div>
@@ -28,37 +69,47 @@
     event.preventDefault();
     var form = $(this);
     var url = form.attr('action');
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: form.serialize(),
-      success: function(data) {
-        if (data.status == 'error') {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Thất Bại',
-            text: data.message,
-            showConfirmButton: true,
-            timer: 2500
-          })
-        }
-        if (data.status == 'success') {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Thành Công',
-            text: data.message,
-            showConfirmButton: true,
-            timer: 2500
-          })
-          window.setTimeout(function() {
-            window.location.reload();
-          }, 2500);
-        }
+    Swal.fire({
+      title: 'Bạn Muốn Thay Đổi Trạng Thái Đơn Hàng ?',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Hủy',
+      confirmButtonText: 'Thay Đổi'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: form.serialize(),
+          success: function(data) {
+            if (data.status == 'error') {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Thất Bại',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+            if (data.status == 'success') {
+              $('#change-layout').empty();
+              $('#change-layout').html(data.giao_dien);
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Thành Công',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+          }
+        });
       }
     });
-
   }
   $(function() {
     $(document).on('click', '.change-status-zero', changeStatus);

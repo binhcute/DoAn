@@ -19,15 +19,17 @@ Route::group(['middleware' => 'levellogin'], function () {
     //Product
     Route::resource('/SanPham', 'ProductController');
     Route::get('/XoaSanPham/{SanPham}', 'ProductController@destroy');
+    Route::post('SuaSanPham/{SanPham}', 'ProductController@update')->name('SuaSanPham');
     Route::put('/SanPham/change_status/{SanPham}', 'ProductController@change_status');
     //Cate
     Route::resource('/LoaiSanPham', 'CategoryController');
     Route::get('/XoaLoaiSanPham/{LoaiSanPham}', 'CategoryController@destroy');
-    Route::put('SuaLoaiSanPham/{LoaiSanPham}', 'CategoryController@update')->name('SuaLoaiSanPham');
+    Route::post('SuaLoaiSanPham/{LoaiSanPham}', 'CategoryController@update')->name('SuaLoaiSanPham');
     Route::put('/LoaiSanPham/change_status/{LoaiSanPham}', 'CategoryController@change_status');
     //Article
     Route::resource('/BaiViet', 'ArticleController');
     Route::get('/XoaBaiViet/{LoaiBaiViet}', 'ArticleController@destroy');
+    Route::post('SuaBaiViet/{BaiViet}', 'ArticleController@update')->name('SuaBaiViet');
     Route::put('/BaiViet/change_status/{BaiViet}', 'ArticleController@change_status');
     //Order
     Route::resource('/HoaDon', 'OrderController')->only('index', 'show');
@@ -38,6 +40,7 @@ Route::group(['middleware' => 'levellogin'], function () {
     //Portfolio
     Route::resource('/NhaCungCap', 'PortfolioController');
     Route::get('/XoaNhaCungCap/{NhaCungCap}', 'PortfolioController@destroy');
+    Route::post('SuaNhaCungCap/{SuaNhaCungCap}','PortfolioController@update')->name('SuaNhaCungCap');
     Route::put('/NhaCungCap/change_status/{NhaCungCap}', 'PortfolioController@change_status');
     //CMT
     Route::resource('/BinhLuan', 'CommentController')->except('store');
@@ -74,16 +77,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/login', 'Api\AccountController@index')->name('login');
+Route::get('/login', 'AuthController@index')->name('login');
 
-Route::post('/login', 'Api\AccountController@login');
+Route::post('/login', 'AuthController@login');
 Auth::routes([
     'register' => false,
     'login' => false,
 ]);
-// Route::post('/logout','Api\AccountController@customLogout')->middleware('auth:api')->name('logout');
-Route::post('/register', 'Api\AccountController@register')->name('register');
-Route::get('/user', 'Api\AccountController@userInfo')->middleware('auth:api');
+// Route::get('/logout','AuthController@logout')->middleware('auth:api')->name('logout');
+Route::get('forget-password', 'AuthController@getForgotPassword')->name('get.forgot-password');
+Route::post('forget-password', 'AuthController@postForgotPassword')->name('post.forgot-password');
+Route::get('reset-password', 'AuthController@getResetPassword');
+Route::post('reset-password', 'AuthController@postResetPassword');
+Route::post('/register', 'AuthController@register')->name('register');
+Route::get('/verifyAccount', 'AuthController@verifyAccount')->name('verifyAccount');
+Route::get('/user', 'AuthController@userInfo')->middleware('auth:api');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('LoginCheck', 'CheckLoginController@check');
 
@@ -155,3 +163,4 @@ Route::get('/save-item-list-favorite/{id}/{qty}', 'FavoriteController@SaveItemLi
 //search
 
 Route::get('tim-kiem', 'SearchController@autocomplete')->name('tim-kiem');
+

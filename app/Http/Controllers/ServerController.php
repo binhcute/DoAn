@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mail;
 
 class ServerController extends Controller
 {
@@ -80,6 +81,7 @@ class ServerController extends Controller
     {
         return view('pages.server.api');
     }
+
     /**
      * Show the form for creating a new resource.
      *

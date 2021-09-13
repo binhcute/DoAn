@@ -28,8 +28,7 @@ class StoreAccountRequest extends FormRequest
             'lastName' => 'required',
             'username' => 'required|unique:users',
             'password' => 'required',
-            'level' => 'required',
-            'status' => 'required'
+
         ];
     }
     public function messages(){
@@ -39,8 +38,6 @@ class StoreAccountRequest extends FormRequest
             'username.required' => 'Tên đăng nhập không được bỏ trống',
             'username.unique' => 'Tên đăng nhập đã có người sử dụng',
             'password.required' => 'Mật khẩu không được bỏ trống',
-            'level.required' => 'Cấp bật không được bỏ trống',
-            'status.required' => 'Trạng thái không được bỏ trống',
         ];
     }
 }

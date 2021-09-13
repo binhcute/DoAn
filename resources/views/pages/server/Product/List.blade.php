@@ -64,7 +64,7 @@ function changeStatus(event) {
     var form = $(this);
     var url = form.attr('action');
     Swal.fire({
-      title: 'Bạn muốn thay đổi trạng thái này ?',
+      title: 'Bạn Muốn Thay Đổi Trạng Thái Sản Phẩm Này ?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#d33',
@@ -117,7 +117,7 @@ function changeStatus(event) {
     var url = $(this).data('url');
     console.log(url);
     Swal.fire({
-      title: 'Bạn muốn xóa sản phẩm này ?',
+      title: 'Bạn Muốn Xóa Sản Phẩm Này ?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#d33',

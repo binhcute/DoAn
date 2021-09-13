@@ -77,10 +77,19 @@ class PortfolioController extends Controller
         }
         // dd($port);   
         $port->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Thêm Nhà Cung Cấp Thành Công'
-        ], 200);
+        if($port->save()){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thêm Nhà Cung Cấp Thành Công'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Thêm Nhà Cung Cấp Thất Bại'
+            ], 200);
+        }
+ 
     }
 
     /**
@@ -155,8 +164,19 @@ class PortfolioController extends Controller
             $port->port_img = "$profileImage";
         }
         $port->update();
-        Session::put('message', 'Cập Nhật Nhà Cung Cấp Thành Công');
-        return redirect()->route('NhaCungCap.index');
+
+        if ($port->update()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Cập Nhật Nhà Cung Cấp Thành Công'
+            ] ,200);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cập Nhật Nhà Cung Cấp Thất Bại'
+            ] ,200);
+        }
     }
 
     /**
@@ -169,7 +189,7 @@ class PortfolioController extends Controller
     {
         $destroy = Portfolio::find($id);
         $destroy->delete();
-        if($destroy->delete()){
+        if ($destroy->delete()) {
             $port = Portfolio::all();
             $giao_dien = view('pages.server.portfolio.list-item', compact(['port']))->render();
             return response()->json([
@@ -177,8 +197,7 @@ class PortfolioController extends Controller
                 'message' => 'Xóa Nhà Cung Cấp Thành Công',
                 'giao_dien' => $giao_dien
             ], 200);
-        }
-        else{
+        } else {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Xóa Nhà Cung Cấp Thất Bại'
@@ -209,8 +228,8 @@ class PortfolioController extends Controller
             $change->status = 1;
             $change->save();
             if ($change->save()) {
-            $port = Portfolio::all();
-            $giao_dien = view('pages.server.portfolio.list-item', compact(['port']))->render();
+                $port = Portfolio::all();
+                $giao_dien = view('pages.server.portfolio.list-item', compact(['port']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Đã Hiển Thị Nhà Cung Cấp',

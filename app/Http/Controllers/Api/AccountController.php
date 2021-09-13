@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\StoreAccountRequest;
+use App\Http\Requests\Account\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Account as AccountResource;
 use Illuminate\Support\Facades\Hash;
@@ -36,9 +37,9 @@ class AccountController extends Controller
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->email = $request->email;
-        $user->level = $request->level;
+        $user->level = 0;
         $user->password = Hash::make($request->password);
-        $user->status = $request->status;
+        $user->status = 0;
         if ($files != NULL) {
             // Define upload path
             $destinationPath = public_path('/server/assets/image/account'); // upload path
@@ -55,24 +56,14 @@ class AccountController extends Controller
 
         return response()->json(array(
             'success' => 1,
-            'data' => $user
+            'data' => $user,
+            'status' => 'success',
+            'message' => 'Đăng ký thành công'
         ));
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'username' => 'required',
-            'password' => 'required',
-            'remember_me' => 'boolean'
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'fails',
-                'message' => $validator->errors()->first(),
-                'errors' => $validator->errors()->toArray(),
-            ]);
-        }
         if (Auth::attempt([
             'username' => $request->username,
             'password' => $request->password,
@@ -81,7 +72,7 @@ class AccountController extends Controller
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->token;
 
-            if ($request->remember_me) {
+            if ($request->remember) {
                 $token->expires_at = Carbon::now()->addWeeks(1);
             }
             $token->save();
@@ -119,9 +110,4 @@ class AccountController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
-    public function customLogout(Request $request) {
-        $request->user()->token()->revoke();
-        // Auth::logout();
-        return redirect('/');
-      }
 }

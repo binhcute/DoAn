@@ -81,7 +81,10 @@ class CartController extends Controller
         $newCart = new Cart($oldCart);
         $newCart->SaveItemListCart($id, $qty);
         $request->Session()->put('Cart', $newCart);
-
-        return view('pages.client.list-cart');
+        $giao_dien = view('pages.client.cart.list-cart')->render();
+        return response()->json([
+            'status' => 'success',
+            'giao_dien' => $giao_dien
+        ],200);
     }
 }

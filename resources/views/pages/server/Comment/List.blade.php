@@ -60,36 +60,47 @@
     event.preventDefault();
     var form = $(this);
     var url = form.attr('action');
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: form.serialize(),
-      success: function(data) {
-        if (data.status == 'error') {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Thất Bại',
-            text: data.message,
-            showConfirmButton: true,
-            timer: 2500
-          })
-        }
-        if (data.status == 'success') {
-          $("#change-layout").empty();
-          $("#change-layout").html(data.giao_dien)
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Thành Công',
-            text: data.message,
-            showConfirmButton: true,
-            timer: 2500
-          })
-        }
+    Swal.fire({
+      title: 'Bạn Muốn Thay Đổi Trạng Thái Hiển Thị Bình Luận Này ?',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Hủy',
+      confirmButtonText: 'Thay Đổi'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: form.serialize(),
+          success: function(data) {
+            if (data.status == 'error') {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Thất Bại',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+            if (data.status == 'success') {
+              $("#change-layout").empty();
+              $("#change-layout").html(data.giao_dien)
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Thành Công',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+          }
+        });
       }
     });
-
   }
   $(function() {
     $(document).on('click', '.change_status_tri', changeStatus);

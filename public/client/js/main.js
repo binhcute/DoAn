@@ -666,6 +666,7 @@
             }
         }
         $this.siblings('input').val(newVal);
+        SaveItemListCart($(this).data('product-id'));
     });
 
     /*--
