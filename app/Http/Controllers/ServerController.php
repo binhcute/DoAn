@@ -82,11 +82,6 @@ class ServerController extends Controller
         return view('pages.server.api');
     }
 
-    public function sendMail(){
-        Mail::send('view',$data,function($message){
-            $message->from('thanhbinh0606.hcm@gmail.com','Learts');
-        });
-    }
     /**
      * Show the form for creating a new resource.
      *

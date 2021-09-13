@@ -14,53 +14,23 @@ class CheckLoginController extends Controller
     use AuthenticatesUsers;
     public function check(LoginRequest $request)
     {
-        $admin = [
+        $account = [
             'username' => $request->username,
             'password' => $request->password,
-            'level' => 1,
-        ];
-        $user = [
-            'username' => $request->username,
-            'password' => $request->password,
-            'level' => 0,
         ];
 
-        if (Auth::attempt($admin)) {
-            if(Auth::user()->status == 1){
-                Session::put('username',$request->username);
-                Session::put('id',$request->id);
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Đăng Nhập Thành Công'
-                ], 200);
-            }
-            else{
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Tài khoản chưa được kích hoạt'
-                ], 200);
-            }
-        } elseif(Auth::attempt($user)) {
-            if(Auth::user()->status == 1){
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Đăng Nhập Thành Công'
-                ], 200);
-            }
-            else{
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Tài khoản chưa được kích hoạt'
-                ], 200);
-            }
-        }
-        else{
+        if (Auth::attempt($account) && Auth::user()->status == 1) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Đăng Nhập Thành Công'
+            ], 200);
+        } else {
+            Auth::logout();
             return response()->json([
                 'status' => 'error',
-                'message' => 'Sai Tài Khoản hoặc Mật Khẩu, Vui Lòng Đăng Nhập Lại!'
+                'message' => 'Tài khoản chưa được kích hoạt'
             ], 200);
-        }   
-        
+        }
     }
     /**
      * Display a listing of the resource.

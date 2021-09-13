@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use App\Cart;
-use Session;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 
 class CheckOutController extends Controller
 {
@@ -45,7 +46,6 @@ class CheckOutController extends Controller
      */
     public function store(Request $request)
     {
-        //   dd(Session::get('Cart'));
         $rule = [
             'address' => 'required',
             'phone' => 'required|digits_between:10,12'
@@ -59,8 +59,6 @@ class CheckOutController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
-        try {
 
             $order = new Order;
             $order->user_id = Auth::user()->id;
@@ -81,20 +79,29 @@ class CheckOutController extends Controller
                 $order_dt->save();
             }
             $request->Session()->forget('Cart');
-            if($order_dt->save()){
+            if ($order_dt->save()) {
+                // $productName = DB::table('tpl_order_dt')
+                //     ->join('tpl_product', 'tpl_product.product.product_id', 'tpl_order_dt.product_id')
+                //     ->select('tpl_product.product_name')
+                //     ->where('tpl_order_dt.order_dt_id', $order_dt->order_dt_id)->first();
+                $message = [
+                    'name' => 'Đơn Hàng Của Bạn',
+                    'fullName' => Auth::user()->firstName . " " . Auth::user()->lastName,
+                    'address' => $order->address,
+                    'phone' => $order->phone,
+                    'notes' => $order->notes
+                ];
+                Mail::to(auth()->user()->email)->send(new \App\Mail\MailNotify($message));
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Đặt hàng thành công'
-                ],200);
+                ], 200);
             }
             return response()->json([
                 'status' => 'error',
                 'message' => 'Đặt hàng thất bại'
-            ],200);
-            // return redirect()->route('index');
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
+            ], 200);
+       
     }
 
     /**

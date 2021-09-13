@@ -64,10 +64,19 @@ class ArticleController extends Controller
         $article->status = $request->status;
         // dd($article);
         $article->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Thêm Bài Viết Thành Công'
-        ], 200);
+        if($article->save()){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thêm Bài Viết Thành Công'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Thêm Bài Viết Thất Bại'
+            ], 200);
+        }
+
     }
 
     /**
@@ -127,8 +136,17 @@ class ArticleController extends Controller
             $article->article_img = "$profileImage";
         }
         $article->save();
-        Session::put('message', 'Cập Nhật Bài ViếtThành Công');
-        return redirect()->route('BaiViet.index');
+        if ($article->save()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Cập Nhật Bài Viết Thành Công'
+            ],200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cập Nhật Bài Viết Thất Bại'
+            ],200);
+        }
     }
 
     /**

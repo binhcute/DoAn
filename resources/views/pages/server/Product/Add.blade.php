@@ -63,7 +63,7 @@
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Số Lượng</label>
               <div class="col-sm-9">
-                <input class="form-control digits input-number00" name="quantity" id="quantity" type="number" placeholder="Số Lượng" data-bs-original-title="" title="">
+                <input class="form-control" name="quantity" id="quantity" type="number" placeholder="Số Lượng" data-bs-original-title="" title="">
               </div>
             </div>
             <div class="mb-3 row">
@@ -73,9 +73,9 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label pt-0">Màu Sắc</label>
+              <label class="col-sm-3 col-form-label">Màu Sắc</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" name="color" id="color" placeholder="Bao Gồm">
+                <input class="form-control" type="text" placeholder="Bao Gồm" name="color" id="color">
               </div>
             </div>
             <div class="mb-3 row">
@@ -190,9 +190,15 @@
     formData.append('data_input_item', imageItem[0].files[0]);
     formData.append('data_input_hover', imageHover[0].files[0]);
     formData.append('name', $('#name').val());
-    formData.append('origin', $('#origin').val());
+    formData.append('cate_id', $('#cate_id').val());
+    formData.append('port_id', $('#port_id').val());
+    formData.append('quantity', $('#quantity').val());
+    formData.append('price', $('#price').val());
+    formData.append('color', $('#color').val());
+    formData.append('keyword', $('#keyword').val());
     formData.append('status', $('#status').val());
     formData.append('description', data_ckeditor);
+    console.log(    formData.append('color', $('#color').val()));
     $.ajax({
       type: "POST",
       url: url,

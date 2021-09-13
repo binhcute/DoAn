@@ -38,9 +38,8 @@
     </ul>
   </div>
   @endif
-  <form class="form theme-form" action="{{ route('BaiViet.update',$article->article_id)}}" method="post" enctype="multipart/form-data">
+  <form class="form theme-form" action="{{ route('SuaBaiViet',$article->article_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
     @csrf
-    <input type="hidden" name="_method" value="put" />
     <div class="card-body">
       <div class="row">
         <div class="col">
@@ -53,34 +52,34 @@
           <div class="mb-3 row">
             <label class="col-sm-3 col-form-label">Tên Bài Viết</label>
             <div class="col-sm-9">
-              <input class="form-control" type="text" placeholder="Nhập tên Bài Viết" name="name" value="{{$article->article_name}}">
+              <input class="form-control" type="text" placeholder="Nhập tên Bài Viết" name="name" id="name" value="{{$article->article_name}}">
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-3 col-form-label">Mô Tả</label>
             <div class="col-sm-9">
-              <input class="form-control" type="text" placeholder="Mô tả ngắn 255 từ" name="description" value="{{$article->article_description}}">
+              <input class="form-control" type="text" placeholder="Mô tả ngắn 255 từ" name="description" id="description" value="{{$article->article_description}}">
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-3 col-form-label">Từ Khóa</label>
             <div class="col-sm-9">
-              <input class="form-control" type="text" placeholder="Tối đa 50 ký tự" maxlength="50" name="keyword" value="{{$article->article_keyword}}">
+              <input class="form-control" type="text" placeholder="Tối đa 50 ký tự" maxlength="50" name="keyword" id="keyword" value="{{$article->article_keyword}}">
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-3 col-form-label">Chi Tiết</label>
             <div class="col-sm-9">
-              <textarea class="form-control" id="ckeditor1" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="detail">{{$article->article_detail}}</textarea>
+              <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="detail">{{$article->article_detail}}</textarea>
             </div>
           </div>
         <div class="mb-3 row">
           <label class="col-sm-3 col-form-label">Chọn ảnh</label>
           <div class="col-sm-9">
-            <input class="form-control" type="file" name="img" data-bs-original-title="" title="">
-            <img src="{{URL::to('/') }}/server/assets/image/article/{{ $article->article_img }}" width="100" height="100" alt="">
-            <label for="img">{{$article->article_img}}</label> 
-          </div>
+                <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
+                <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadFile(this, 0)" accept=".jpg, .png">
+                <img id="event__img-0" src="{{URL::to('/')}}/server/assets/image/article/{{$article->article_img}}" alt="slider" width="50%" height="250px">
+              </div>
         </div>
       </div>
         </div>
@@ -94,4 +93,88 @@
   </form>
 </div>
 </div>
+@endsection
+
+@section('page-js')
+<script type="text/javascript">
+  function uploadFile(input, tam) {
+    $('#id-label-' + tam).html(input.files[0].name);
+    if(input.files && input.files[0]){
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#event__img' + tam).attr('src', reader.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+    $('#event__input' + tam).change(function() {
+      readURL(this);
+    });
+  }
+</script>
+<!-- CKEDITOR -->
+<script>
+  CKEDITOR.replace('ckeditor', {
+    filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token()])}}",
+    filebrowserUploadMethod: 'form'
+  });
+</script>
+<script>
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $('#edit-data').submit(function(event){
+    event.preventDefault();
+    var from = $(this);
+    var url = from.attr('action');
+    let imageItem = document.getElementsByClassName('imageItem');
+    //CKEDITOR
+    var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
+    //FormData
+    var formData = new  FormData($(this)[0]);
+    if(imageItem[0].files[0] != undefined){
+      formData.append('data_input_item', imageItem[0].files[0]);
+    }
+    formData.append('name',$('#name').val());
+    formData.append('description', $('#description').val());
+    formData.append('keyword', $('#keyword').val());
+    formData.append('detail', data_ckeditor);
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: formData,
+      async: false,
+      cache: false,
+      contentType: false,
+      enctype: 'multipart/form-data',
+      processData: false,
+      success: function(data) {
+        if(data.status == 'error'){
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thất Bại',
+            text: data.message,
+            showConfirmButton: true,
+            timer: 2500
+          })
+        }
+        if(data.status == 'success'){
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thành Công',
+            text: data.message,
+            showConfirmButton: true,
+            timer: 2500
+          })
+          window.setTimeout(function() {
+            window.location.replace("{{route('BaiViet.index')}}");
+          }, 2500);
+        }
+      }
+    })
+  })
+</script>
 @endsection

@@ -120,7 +120,7 @@
                                         <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
                                     </span>
                                     <div class="product-buttons">
-                                        <a href="#quickViewModal" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
+                                        <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
                                         <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
                                         <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
                                     </div>
@@ -162,7 +162,7 @@
                                             <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
                                         </span>
                                         <div class="product-buttons">
-                                            <a href="#quickViewModal" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
+                                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
                                             <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
                                             <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
                                         </div>
@@ -186,7 +186,8 @@
 </div>
 <br>
 <!-- Modal -->
-<div class="quickViewModal modal fade" id="quickViewModal">
+@foreach ($modal as $modal)
+<div class="quickViewModal modal fade" id="quickViewModal{{$modal->product_id}}">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <button class="close" data-dismiss="modal">&times;</button>
@@ -196,17 +197,8 @@
                 <div class="col-lg-6 col-12 learts-mb-30">
                     <div class="product-images">
                         <div class="product-gallery-slider-quickview">
-                            <div class="product-zoom" data-image="assets/images/product/single/1/product-zoom-1.jpg')}}">
-                                <img src="{{asset('client/images/product/single/1/product-1.jpg')}}" alt="">
-                            </div>
-                            <div class="product-zoom" data-image="assets/images/product/single/1/product-zoom-2.jpg')}}">
-                                <img src="{{asset('client/images/product/single/1/product-2.jpg')}}" alt="">
-                            </div>
-                            <div class="product-zoom" data-image="assets/images/product/single/1/product-zoom-3.jpg')}}">
-                                <img src="{{asset('client/images/product/single/1/product-3.jpg')}}" alt="">
-                            </div>
-                            <div class="product-zoom" data-image="assets/images/product/single/1/product-zoom-4.jpg')}}">
-                                <img src="{{asset('client/images/product/single/1/product-4.jpg')}}" alt="">
+                            <div class="product-zoom" data-image="{{URL::to('/') }}/server/assets/image/product/{{$modal->product_img}}">
+                                <img src="{{URL::to('/') }}/server/assets/image/product/{{$modal->product_img}}" alt="">
                             </div>
                         </div>
                     </div>
@@ -218,91 +210,51 @@
                     <div class="product-summery customScroll">
                         <div class="product-ratings">
                             <span class="star-rating">
-                                <span class="rating-active" style="width: 100%;">ratings</span>
+                                <span class="rating-active" style="width: 100%;">Đánh Giá</span>
                             </span>
-                            <a href="#reviews" class="review-link">(<span class="count">3</span> customer reviews)</a>
+                            <a href="#reviews" class="review-link">(<span class="count">Có 3</span> lượt đánh giá sản phẩm)</a>
                         </div>
-                        <h3 class="product-title">Cleaning Dustpan & Brush</h3>
-                        <div class="product-price">£38.00 – £50.00</div>
+                        <h3 class="product-title">{{$modal->product_name}}</h3>
+                        <div class="product-price">{{number_format($modal->product_price).' '.'VND'}}</div>
                         <div class="product-description">
-                            <p>Easy clip-on handle – Hold the brush and dustpan together for storage; the dustpan edge is serrated to allow easy scraping off the hair without entanglement. High-quality bristles – no burr damage, no scratches, thick and durable, comfortable to remove dust and smaller particles.</p>
-                        </div>
-                        <div class="product-variations">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td class="label"><span>Size</span></td>
-                                        <td class="value">
-                                            <div class="product-sizes">
-                                                <a href="#">Large</a>
-                                                <a href="#">Medium</a>
-                                                <a href="#">Small</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label"><span>Color</span></td>
-                                        <td class="value">
-                                            <div class="product-colors">
-                                                <a href="#" data-bg-color="#000000"></a>
-                                                <a href="#" data-bg-color="#ffffff"></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label"><span>Quantity</span></td>
-                                        <td class="value">
-                                            <div class="product-quantity">
-                                                <span class="qty-btn minus"><i class="ti-minus"></i></span>
-                                                <input type="text" class="input-qty" value="1">
-                                                <span class="qty-btn plus"><i class="ti-plus"></i></span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <p>{!!$modal->product_description!!}</p>
                         </div>
                         <div class="product-buttons">
                             <a href="#" class="btn btn-icon btn-outline-body btn-hover-dark"><i class="fal fa-heart"></i></a>
-                            <a href="#" class="btn btn-dark btn-outline-hover-dark"><i class="fal fa-shopping-cart"></i> Add to Cart</a>
+                            <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="btn btn-dark btn-outline-hover-dark"><i class="fal fa-shopping-cart"></i> Add to Cart</a>
                             <a href="#" class="btn btn-icon btn-outline-body btn-hover-dark"><i class="fal fa-random"></i></a>
                         </div>
                         <div class="product-brands">
-                            <span class="title">Brands</span>
+                            <span class="title">Nhà Cung Cấp</span>
                             <div class="brands">
-                                <a href="#"><img src="{{asset('client/images/brands/brand-3.png')}}" alt=""></a>
-                                <a href="#"><img src="{{asset('client/images/brands/brand-8.png')}}" alt=""></a>
+                                <a href="{{route('Nha-Cung-Cap',[Str::slug($modal->port_name, '-'),$modal->port_id])}}"><img src="{{URL::to('/') }}/server/assets/image/portfolio/avatar/{{$modal->port_avatar}}" alt=""></a>
                             </div>
                         </div>
                         <div class="product-meta mb-0">
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td class="label"><span>SKU</span></td>
-                                        <td class="value">0404019</td>
+                                        <td class="label"><span>Số Series</span></td>
+                                        <td class="value">0{{$modal->product_id}}</td>
                                     </tr>
                                     <tr>
-                                        <td class="label"><span>Category</span></td>
+                                        <td class="label"><span>Danh Mục</span></td>
                                         <td class="value">
                                             <ul class="product-category">
-                                                <li><a href="#">Kitchen</a></li>
+                                                <li><a href="#">{{$modal->cate_name}}</a></li>
                                             </ul>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="label"><span>Tags</span></td>
+                                        <td class="label"><span>Từ Khóa</span></td>
                                         <td class="value">
                                             <ul class="product-tags">
-                                                <li><a href="#">handmade</a></li>
-                                                <li><a href="#">learts</a></li>
-                                                <li><a href="#">mug</a></li>
-                                                <li><a href="#">product</a></li>
-                                                <li><a href="#">learts</a></li>
+                                                <li><a href="#">{{$modal->product_keyword}}</a></li>
                                             </ul>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="label"><span>Share on</span></td>
+                                        <td class="label"><span>Chia Sẻ</span></td>
                                         <td class="va">
                                             <div class="product-share">
                                                 <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -324,4 +276,5 @@
         </div>
     </div>
 </div>
+@endforeach
 @endsection

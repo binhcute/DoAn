@@ -1,8 +1,7 @@
 @extends('layout_client')
 @section('content')
 @section('title','Thanh Toán')
-<form method="post" action="{{route('Dat-Hang')}}" enctype="multipart/form-data" class="submit-form-checkout">
-    @csrf
+<form action="{{route('Dat-Hang')}}" enctype="multipart/form-data" class="submit-form-checkout">
     <!-- Page Title/Header Start -->
     <div class="page-title-section section" data-bg-image="{{asset('client/images/bg/page-title-1.jpg')}}">
         <div class="container">
@@ -41,7 +40,8 @@
             <div class="section-title2">
                 <h2 class="title">Chi Tiết Hóa Đơn</h2>
             </div>
-            <form action="#" class="checkout-form learts-mb-50">
+            <form method="post" action="{{route('Dat-Hang')}}" enctype="multipart/form-data" class="checkout-form learts-mb-50">
+                @csrf
                 <div class="row">
                     <div class="col-12 learts-mb-20">
                         <label for="bdCompanyName">Tài Khoản</label>
