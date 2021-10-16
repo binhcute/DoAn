@@ -32,11 +32,11 @@
 
                 <!-- Isotop Filter Start -->
                 <div class="col-md col-12 align-self-center learts-mb-20">
-                    <div class="isotope-filter shop-product-filter" data-target="#shop-products">
-                        <button class="active" data-filter=".all">Sản Phẩm</button>
-                        <button data-filter=".featured">Sản Phẩm Hot</button>
-                        <button data-filter=".new">Sản Phẩm Mới</button>
-                        <button data-filter=".sales">Sản Phẩm Khuyến Mãi</button>
+                    <div class="isotope-filter shop-product-filter">
+                        <button onclick="openTabList('all')">Sản Phẩm</button>
+                        <button onclick="openTabList('hot')">Sản Phẩm Hot</button>
+                        <button onclick="openTabList('new')">Sản Phẩm Mới</button>
+                        <button onclick="openTabList('sales')">Sản Phẩm Khuyến Mãi</button>
                     </div>
                 </div>
                 <!-- Isotop Filter End -->
@@ -67,11 +67,11 @@
 
                 <div class="col-lg-9 col-12 learts-mb-50 order-lg-2">
                     <!-- Products Start -->
-                    <div id="shop-products" class="products isotope-grid row row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
+                    <div class="products isotope-grid row row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
 
                         <div class="grid-sizer col-1"></div>
                         @foreach($product as $item)
-                        <div class="grid-item col all">
+                        <div class="grid-item col list-product-sp" id="all">
                             <div class="product">
                                 <div class="product-thumb">
                                     <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
@@ -96,7 +96,7 @@
                         </div>
                         @endforeach
                         @foreach($product_hot as $item)
-                        <div class="grid-item col new">
+                        <div class="grid-item col list-product-sp" id="hot" style="display: none">
                             <div class="product">
                                 <div class="product-thumb">
                                     <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
@@ -120,7 +120,7 @@
                         </div>
                         @endforeach
                         @foreach($product_new as $item)
-                        <div class="grid-item col featured">
+                        <div class="grid-item col list-product-sp" id="new" style="display: none">
                             <div class="product">
                                 <div class="product-thumb">
                                     <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
@@ -191,5 +191,108 @@
 
 </div>
 <!-- Shop Products Section End -->
+<!-- Modal -->
+@foreach ($modal as $modal)
+<div class="quickViewModal modal fade" id="quickViewModal{{$modal->product_id}}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <button class="close" data-dismiss="modal">&times;</button>
+            <div class="row learts-mb-n30">
 
+                <!-- Product Images Start -->
+                <div class="col-lg-6 col-12 learts-mb-30">
+                    <div class="product-images">
+                        <div class="product-gallery-slider-quickview">
+                            <div class="product-zoom" data-image="{{URL::to('/') }}/server/assets/image/product/{{$modal->product_img}}">
+                                <img src="{{URL::to('/') }}/server/assets/image/product/{{$modal->product_img}}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Images End -->
+
+                <!-- Product Summery Start Modal -->
+                <div class="col-lg-6 col-12 overflow-hidden learts-mb-30">
+                    <div class="product-summery customScroll">
+                        <div class="product-ratings">
+                            <span class="star-rating">
+                                <span class="rating-active" style="width: 100%;">Đánh Giá</span>
+                            </span>
+                            <a href="#reviews" class="review-link">(<span class="count">Có 3</span> lượt đánh giá sản phẩm)</a>
+                        </div>
+                        <h3 class="product-title">{{$modal->product_name}}</h3>
+                        <div class="product-price">{{number_format($modal->product_price).' '.'VND'}}</div>
+                        <div class="product-description">
+                            <p>{!!$modal->product_description!!}</p>
+                        </div>
+                        <div class="product-buttons">
+                            <a href="#" class="btn btn-icon btn-outline-body btn-hover-dark"><i class="fal fa-heart"></i></a>
+                            <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="btn btn-dark btn-outline-hover-dark"><i class="fal fa-shopping-cart"></i> Add to Cart</a>
+                            <a href="#" class="btn btn-icon btn-outline-body btn-hover-dark"><i class="fal fa-random"></i></a>
+                        </div>
+                        <div class="product-brands">
+                            <span class="title">Nhà Cung Cấp</span>
+                            <div class="brands">
+                                <a href="{{route('Nha-Cung-Cap',[Str::slug($modal->port_name, '-'),$modal->port_id])}}"><img src="{{URL::to('/') }}/server/assets/image/portfolio/avatar/{{$modal->port_avatar}}" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="product-meta mb-0">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="label"><span>Số Series</span></td>
+                                        <td class="value">0{{$modal->product_id}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label"><span>Danh Mục</span></td>
+                                        <td class="value">
+                                            <ul class="product-category">
+                                                <li><a href="#">{{$modal->cate_name}}</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label"><span>Từ Khóa</span></td>
+                                        <td class="value">
+                                            <ul class="product-tags">
+                                                <li><a href="#">{{$modal->product_keyword}}</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label"><span>Chia Sẻ</span></td>
+                                        <td class="va">
+                                            <div class="product-share">
+                                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                                <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                                                <a href="#"><i class="fab fa-pinterest"></i></a>
+                                                <a href="#"><i class="fal fa-envelope"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Summery End -->
+
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+@endsection
+@section('page-js')
+<script type="text/javascript">
+    function openTabList(cateSp) {
+        var i;
+        var x= document.getElementsByClassName("list-product-sp");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display="none";
+        }
+        document.getElementById(cateSp).style.display = "block";
+    }
+</script>
 @endsection
