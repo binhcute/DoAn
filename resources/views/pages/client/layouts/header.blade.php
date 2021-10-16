@@ -314,11 +314,7 @@
                 <a href="{{URL::to('/admin')}}" class="btn btn-secondary btn-hover-primary"><i class="fas fa-users-cog"></i> Trang Admin</a>
                 @endif
                 <a href="{{route('Tai-Khoan')}}" class="btn btn-dark btn-hover-primary"><i class="fas fa-user-circle"></i> Tài Khoản</a>
-                <a href="{{ route('logout') }}" class="btn btn-outline-dark btn-hover-primary" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"><i class="fas fa-door-open" data-feather="log-in"> </i> Đăng Xuất
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                <a href="{{ route('logout') }}" class="btn btn-outline-dark btn-hover-primary" ><i class="fas fa-door-open" data-feather="log-in"> </i> Đăng Xuất
                 </a>
             </div>
         </div>

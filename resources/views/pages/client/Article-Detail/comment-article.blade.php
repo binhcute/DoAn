@@ -15,3 +15,5 @@
     </div>
 </li>
 @endforeach
+
+<div>{{ $comment->links()}}</div>

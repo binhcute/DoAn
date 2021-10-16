@@ -82,11 +82,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/login', 'AuthController@index')->name('login');
 
 Route::post('/login', 'AuthController@login');
-Auth::routes([
-    'register' => false,
-    'login' => false,
-]);
-// Route::get('/logout','AuthController@logout')->middleware('auth:api')->name('logout');
+
+Route::get('/logout','AuthController@logout')->name('logout');
 Route::get('forget-password', 'AuthController@getForgotPassword')->name('get.forgot-password');
 Route::post('forget-password', 'AuthController@postForgotPassword')->name('post.forgot-password');
 Route::get('reset-password/{token}', 'AuthController@getResetPassword');

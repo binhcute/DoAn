@@ -54,7 +54,6 @@ class ProductController extends Controller
         $product->user_id = Auth::user()->id;
         $product->product_name = $request->name;
         $product->product_price = $request->price;
-        $product->product_color = $request->color;
         $product->product_description = $request->description;
         $product->product_quantity = $request->quantity;
         $product->product_keyword = $request->keyword;
@@ -151,7 +150,6 @@ class ProductController extends Controller
         $product->product_name = $request->name;
         $product->product_price = $request->price;
         $product->product_description = $request->description;
-        $product->product_color = $request->color;
         $product->product_quantity = $request->quantity;
         $product->product_keyword = $request->keyword;
         $product->view = NULL;

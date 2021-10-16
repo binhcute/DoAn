@@ -19,7 +19,7 @@ class CreatePromotionsTable extends Migration
             $table->integer('promotion_percent')->nullable();
             $table->integer('promotion_money')->nullable();
             $table->timestamps();
-            $table->date('end_at');
+            $table->datetime('end_at');
         });
     }
 

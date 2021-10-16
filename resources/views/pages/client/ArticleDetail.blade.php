@@ -15,7 +15,7 @@
                             <li><i class="fal fa-user"></i> By <a href="#">{{$article->firstName}} {{$article->lastName}}</a></li>
                             <li><i class="far fa-calendar"></i><a href="#">{{$article->created_at}}</a></li>
                             <li><i class="fal fa-comment"></i><a href="#">{{count($comment)}} Comments</a></li>
-                            <li><i class="far fa-eye"></i> 201 views</li>
+                            <li><i class="far fa-eye"></i> {{$article->view}} Lượt Xem</li>
                         </ul>
 
                         <div class="desc">
@@ -93,12 +93,6 @@
                 </div>
                 <div class="Comments-wrapper">
                     <div class="block-title pb-0 border-bottom-0">
-                        <h2 class="title">Bình Luận <span class="text-muted">({{count($comment)}})</span></h2>
-                    </div>
-                    <ul class="comment-list" id="tab-comment">
-                        @include('pages.client.comment-article')
-                    </ul>
-                    <div class="block-title pb-0 border-bottom-0">
                         <h2 class="title">Hãy để lại suy nghĩ của bạn</h2>
                     </div>
                     @if(Auth::check())
@@ -125,6 +119,14 @@
 
                     </div>
                     @endif
+                    <div class="block-title pb-0 border-bottom-0">
+                        <h2 class="title">Bình Luận <span class="text-muted">({{count($comment)}})</span></h2>
+                    </div>
+                    <ul class="comment-list" id="tab-comment">
+                        @include('pages.client.Article-Detail.comment-article')
+                    </ul>
+
+
                 </div>
             </div>
 

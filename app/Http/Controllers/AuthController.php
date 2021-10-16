@@ -70,11 +70,12 @@ class AuthController extends Controller
             ));
         }
     }
-    // public function logout(Request $request)
-    // {
-    //     Auth::logout();
-    //     return redirect('/');
-    // }
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+        // Auth::logout();
+        return redirect('/');
+    }
     public function verifyAccount(Request $request)
     {
         $checkUser = User::where([
@@ -96,6 +97,7 @@ class AuthController extends Controller
     }
     public function postForgotPassword(Request $request)
     {
+
         $request->validate([
             'email' => 'required|email|exists:users',
         ]);
