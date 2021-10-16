@@ -167,27 +167,6 @@
                 </div>
                 <!-- Categories End -->
 
-                <!-- Categories Start -->
-                <div class="single-widget learts-mb-40">
-                    <h3 class="widget-title product-filter-widget-title">Categories</h3>
-                    <ul class="widget-list">
-                        @foreach($cate as $rc)
-                        <li><a href="{{route('Danh-Sach-Danh-Muc')}}">{{$rc->cate_name}}</a> <span class="count">11</span></li>
-                        @endforeach
-                    </ul>
-                </div>
-                <!-- Categories End -->
-
-                <!-- Tags Start -->
-                <div class="single-widget learts-mb-40">
-                    <h3 class="widget-title product-filter-widget-title">Product Tags</h3>
-                    <div class="widget-tags">
-                        <a href="#">design</a>
-                        <a href="#">fashion</a>
-                        <a href="#">learts</a>
-                    </div>
-                </div>
-                <!-- Tags End -->
             </div>
 
         </div>

@@ -113,7 +113,7 @@
                             @break
                             @endswitch
                         </div>
-                        <a href="javascript:" class="review-link">( {{count($comment)}}</span> lượt đánh giá sản phẩm )</a>
+                        <a href="#tab-reviews" class="review-link">( {{count($comment)}}</span> lượt đánh giá sản phẩm )</a>
                     </div>
                     <h3 class="product-title">{{$product_detail->product_name}}</h3>
                     <div class="product-price">{{number_format($product_detail->product_price).' '.'VND'}}</div>
@@ -121,7 +121,17 @@
                         <p><b>Date: </b><i>{{$product_detail->updated_at}}</i></p>
                     </div>
                     <div class="product-description">
-                        <p><b>Trạng Thái: </b>Còn Hàng</p>
+                        @if($product_detail->product_quantity == 0)
+                        <p><b>Trạng Thái: </b> Đã Hết Hàng</p>
+                        @endif
+
+                        @if($product_detail->product_quantity > 0 && $product_detail->product_quantity <= 5) <p><b>Trạng Thái: </b> Sắp Hết Hàng</p>
+                            @endif
+
+                            @if($product_detail->product_quantity > 5)
+                            <p><b>Trạng Thái: </b> Còn Hàng</p>
+                            @endif
+
                     </div>
                     <div class="product-brands">
                         <span class="title">Nhà Cung Cấp</span>
@@ -148,10 +158,8 @@
                             </table>
                         </div>
                         <div class="product-buttons">
-                            <a href="javascript:" class="btn btn-icon btn-outline-body btn-hover-dark hintT-top" data-hint="Add to Wishlist"><i class="fal fa-heart"></i></a>
                             <button type="button" onclick="AddCartDT({{$product_detail->product_id}})" class="btn btn-dark btn-hover-primary"><i class="fal fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-                            <a onclick="updateProduct()" class="btn btn-icon btn-outline-body btn-hover-dark hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
-                        </div>
+                            </div>
                     </form>
                     <br>
                     <div class="product-meta">
@@ -208,7 +216,6 @@
 
         <ul class="nav product-info-tab-list">
             <li><a class="active" data-toggle="tab" href="#tab-description">Chi Tiết Sản Phẩm</a></li>
-            <li><a data-toggle="tab" href="#tab-additional_information">Thông Tin Thêm</a></li>
             <li><a data-toggle="tab" href="#tab-pwb_tab">Nhà Cung Cấp</a></li>
             <li><a data-toggle="tab" href="#tab-reviews">Bình Luận ({{count($comment)}})</a></li>
         </ul>
@@ -217,6 +224,8 @@
                 <div class="row">
                     <div class="col-lg-10 col-12 mx-auto">
                         <p>{!!$product_detail->product_description!!}</p>
+                        <br>
+                        <p>Số Lượng Tồn Kho: {{$product_detail->product_quantity}} Sản Phẩm</p>
                     </div>
                 </div>
             </div>
@@ -228,26 +237,6 @@
                             <div class="col learts-mb-10">
                                 <p>{!!$product_detail->port_description!!}</p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="tab-additional_information">
-                <div class="row">
-                    <div class="col-lg-8 col-md-10 col-12 mx-auto">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <td>Số Lượng</td>
-                                        <td>{{$product_detail->product_quantity}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Màu Sắc</td>
-                                        <td>{{$product_detail->product_color}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -288,7 +277,7 @@
                             <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
                             @endif
                         </a>
-                        <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
+                        <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
                     </div>
                     <div class="product-info">
                         <h6 class="title"><a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}">{{$item->product_name}}</a></h6>
@@ -312,7 +301,7 @@
     </div>
 </div>
 <!-- Recommended Products Section End -->
-
+@include('pages.client.modal.modal-sanpham')
 @endsection
 @section('page-js')
 <script type="text/javascript">
@@ -379,4 +368,5 @@
         });
     });
 </script>
+
 @endsection

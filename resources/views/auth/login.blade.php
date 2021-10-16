@@ -76,7 +76,7 @@
               </form>
               <p class="mt-4 mb-0 text-center">Bạn không có tài khoản?<a class="ms-2" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Tạo tài khoản</a></p>
               @if (Route::has('password.request'))
-              <p class="mt-4 mb-0 text-center">Bạn quên mật khẩu?<a class="btn btn-link" href="{{ route('password.request') }}">Click vào đây</a></p>
+              <p class="mt-4 mb-0 text-center">Bạn quên mật khẩu?<a class="btn btn-link" href="{{ route('get.forgot-password') }}">Click vào đây</a></p>
               @endif
             </div>
           </div>
@@ -193,7 +193,6 @@
                 icon: 'error',
                 title: 'Thất Bại',
                 text: data.message,
-                showConfirmButton: true,
                 timer: 2500
               })
             }
@@ -203,7 +202,6 @@
                 icon: 'success',
                 title: 'Thành Công',
                 text: data.message,
-                showConfirmButton: true,
                 timer: 2500
               })
               window.setTimeout(function() {

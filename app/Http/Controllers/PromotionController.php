@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Promotion;
 
 class PromotionController extends Controller
 {
@@ -13,7 +14,8 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        //
+        $khuyenmai = Promotion::all();
+        return view('pages.server.promotion.list',compact(['khuyenmai']));
     }
 
     /**
@@ -23,7 +25,7 @@ class PromotionController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.server.promotion.add');
     }
 
     /**
@@ -34,7 +36,18 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $khuyenmai = new Promotion();
+        $khuyenmai->promotion_name = $request->promotion_name;
+        $khuyenmai->promotion_percent = $request->promotion_percent;
+        $khuyenmai->promotion_money = $request->promotion_money;
+        $khuyenmai->end_at = $request->end_at;
+        $khuyenmai->save();
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Thanh Cong'
+
+            ],200);
     }
 
     /**

@@ -1,80 +1,28 @@
 <div class="product-review-wrapper">
-    <span class="title">Có {{count($comment)}} reviews sản phẩm {{$product_detail->product_name}}</span>
-    <ul class="product-review-list">
-        @foreach($comment as $cmt)
-        <li>
-            <div class="product-review">
-                <div class="thumb"><img src="{{URL::to('/') }}/server/assets/image/account/{{$cmt->avatar}}" alt=""></div>
-                <div class="content">
-                    <div class="ratings">
-                        @switch($cmt->rate)
-                        @case(1)
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        @break
-                        @case(2)
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        @break
-                        @case(3)
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        @break
-                        @case(4)
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        @break
-                        @case(5)
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        @break
-                        @endswitch
-                    </div>
-                    <div class="meta">
-                        <h5 class="title">{{$cmt->firstName}} {{$cmt->lastName}}</h5>
-                        <span class="date">{{$cmt->updated_at}}</span>
-                    </div>
-                    <p>{!!$cmt->comment_description !!}</p>
-                </div>
-            </div>
-        </li>
-        @endforeach
-    </ul>
     <span class="title">Thêm Bình Luận</span>
     @if(Auth::check())
     <div class="review-form">
-        <form action="{{route('BinhLuan.store')}}" method="post" enctype="multipart/form-data" class="add-comment">
+        <form action="{{route('BinhLuan.store')}}" method="post" id="rating-start" enctype="multipart/form-data" class="add-comment">
             @csrf
             <div class="row learts-mb-n30">
                 <div class="col-12 learts-mb-10">
                     <div class="form-rating">
-                        <span class="title">Đánh giá của bạn</span>
-                        <div class="rate1">
-                            <input type="radio" id="star5" name="rate" value="5" />
-                            <label for="star5" title="text">5 stars</label>
-                            <input type="radio" id="star4" name="rate" value="4" />
-                            <label for="star4" title="text">4 stars</label>
-                            <input type="radio" id="star3" name="rate" value="3" />
-                            <label for="star3" title="text">3 stars</label>
-                            <input type="radio" id="star2" name="rate" value="2" />
-                            <label for="star2" title="text">2 stars</label>
-                            <input type="radio" id="star1" name="rate" value="1" />
-                            <label for="star1" title="text">1 star</label>
+                        <span class="title">Đánh giá của bạn:</span>
+                        <div class="form-reviews__rating">
+                            <input hidden type="radio" class="reviews__rating-input" name="rate" id="rate-5" data-id-rating="5">
+                            <label for="rate-5" class="fas fa-star icon5"></label>
+
+                            <input hidden type="radio" class="reviews__rating-input" name="rate" id="rate-4" data-id-rating="4">
+                            <label for="rate-4" class="fas fa-star icon4"></label>
+
+                            <input hidden type="radio" class="reviews__rating-input" name="rate" id="rate-3" data-id-rating="3">
+                            <label for="rate-3" class="fas fa-star icon3"></label>
+
+                            <input hidden type="radio" class="reviews__rating-input" name="rate" id="rate-2" data-id-rating="2">
+                            <label for="rate-2" class="fas fa-star icon2"></label>
+
+                            <input hidden type="radio" class="reviews__rating-input" name="rate" id="rate-1" data-id-rating="1">
+                            <label for="rate-1" class="fas fa-star icon1"></label>
                         </div>
                     </div>
                 </div>
@@ -94,4 +42,29 @@
 
     </div>
     @endif
+    <div id="phan-trang-binh-luan-san-pham">
+
+        @include('pages.client.product-Detail.dsBinhLuan')
+    </div>
 </div>
+@section('page-js')
+<!-- Lấy giá trị từ phân trang -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            phanTrangBaiViet(page);
+        });
+    });
+
+    function phanTrangBaiViet(page) {
+        $.ajax({
+            url: '?page=' + page,
+            success: function(data) {
+                $('#phan-trang-binh-luan-san-pham').html(data);
+            }
+        });
+    }
+</script>
+@endsection

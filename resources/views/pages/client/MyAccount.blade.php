@@ -77,14 +77,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($order as $item)
+
                                         <tr>
-                                            <td>{{$item->order_id}}</td>
-                                            <td>{{$item->created_at}}</td>
+                                            <td>item->order_id}}</td>
+                                            <td>item->created_at}}</td>
                                             <td>Pending</td>
                                             <td>$3000</td>
                                         </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -129,14 +128,13 @@
                                     <div class="row learts-mb-n30">
                                         @if(Auth::user()->avatar!=null)
                                         <div class="col-12 learts-mb-30">
-                                            <label for="display-name">Avatar <abbr class="required">*</abbr></label>
+                                            <label for="event__input-hover-0">Avatar <abbr class="required">*</abbr></label>
                                             <div class="account-client">
-                                                <img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="">
-                                                <div class="single-input-item">
-                                                    <input type="file" name="display-name">
-                                                </div>
-                                            </div>
+                                                <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
 
+                                                <img id="event__img-hover-0" alt="slider" src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="">
+
+                                            </div>
                                         </div>
                                         @else
                                         <div class="col-12 learts-mb-30">
@@ -164,6 +162,11 @@
                                             <p>Tên đăng nhập là mặc định, không thể chỉnh sửa</p>
                                         </div>
                                         <div class="col-12 learts-mb-30">
+                                            <label for="display-name">Mật Khẩu <abbr class="required">*</abbr></label>
+                                            <input disabled type="text" name="username" value="{{Auth::user()->username}}">
+                                            <a type="button" class="btn btn-primary" href="#">Thay đổi mật khẩu</a>
+                                        </div>
+                                        <div class="col-12 learts-mb-30">
                                             <label for="email">Địa chỉ Email<abbr class="required">*</abbr></label>
                                             <input type="email" name="email" value="{{Auth::user()->email}}">
                                         </div>
@@ -177,11 +180,19 @@
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <label for="email">Giới tính<abbr class="required">*</abbr></label>
-                                            <input type="text" name="gender" value="{{Auth::user()->gender}}">
+                                            <select class="form-select" required="" aria-label="select example" name="gender">
+                                                <option value="">---Chọn---</option>]
+                                                @if(Auth::user()->gender == 0)
+                                                <option value="0">Nam</option>
+                                                @else
+                                                <option value="1">Nữ</option>
+                                                @endif
+                                            </select>
+                                            
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <label for="email">Ngày Sinh<abbr class="required">*</abbr></label>
-                                            <input type="text" name="birthday" value="{{Auth::user()->birthday}}">
+                                            <input type="date" name="birthday" value="{{Auth::user()->birthday}}">
                                         </div>
                                         <div class="col-12 learts-mb-30 learts-mt-30">
                                             <fieldset>
@@ -217,4 +228,19 @@
     </div>
 </div>
 <!-- My Account Section End -->
+<!-- delete and choose file -->
+<script type="text/javascript">
+    function uploadFileHover(input, tam) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#event__img-hover-' + tam).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        $('#event__input-hover-' + tam).change(function() {
+            readURL(this);
+        });
+    }
+</script>
 @endsection

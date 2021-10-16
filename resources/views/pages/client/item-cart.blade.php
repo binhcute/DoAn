@@ -7,9 +7,9 @@
     <ul class="minicart-product-list">
         @foreach(Session::get("Cart")->product as $item)
         <li>
-            <a href="product-details.html" class="image"><img src="{{URL::to('/')}}/server/assets/image/product/{{$item['product_info']->product_img}}" alt="Cart product Image"></a>
+            <a href="{{route('San-Pham',[Str::slug($item['product_info']->product_name, '-'),$item['product_info']->product_id])}}" class="image"><img src="{{URL::to('/')}}/server/assets/image/product/{{$item['product_info']->product_img}}" alt="Cart product Image"></a>
             <div class="content">
-                <a href="product-details.html" class="title">{{$item['product_info']->product_name}}</a>
+                <a href="{{route('San-Pham',[Str::slug($item['product_info']->product_name, '-'),$item['product_info']->product_id])}}" class="title">{{$item['product_info']->product_name}}</a>
                 <span class="quantity-price">{{$item['qty']}} x <span class="amount">{{number_format($item['product_info']->product_price).' '.'VND'}}</span></span>
                 <i class="fa fa-times remove" data-id="{{$item['product_info']->product_id}}"></i>
             </div>
@@ -44,4 +44,34 @@
 </div>
 @endif
 
-<!-- đặt tại đây -->
+<script>
+        // Filter Toggle
+        $('.product-filter-toggle').on('click', function (e) {
+        e.preventDefault();
+        var $this = $(this),
+            $target = $this.attr('href');
+        $this.toggleClass('active');
+        $($target).slideToggle();
+        $('.customScroll').perfectScrollbar('update');
+    });
+
+    // Column Toggle
+    $('.product-column-toggle').on('click', '.toggle', function (e) {
+        e.preventDefault();
+        var $this = $(this),
+            $column = $this.data('column'),
+            $prevColumn = $this.siblings('.active').data('column');
+        $this.toggleClass('active').siblings().removeClass('active');
+        $('.products').removeClass('row-cols-xl-' + $prevColumn).addClass('row-cols-xl-' + $column);
+        $.fn.matchHeight._update();
+        $('.isotope-grid').isotope('layout');
+    });
+
+    /*--
+        Custom Scrollbar (Perfect Scrollbar)
+    -----------------------------------*/
+    $('.customScroll').perfectScrollbar({
+        suppressScrollX: !0
+    });
+
+</script>

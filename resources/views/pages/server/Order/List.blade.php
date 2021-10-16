@@ -50,14 +50,14 @@
       <!-- Container-fluid starts-->
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-12" id="giao-dien-duoi">
             @include('pages.server.order.list-orderdetail')
           </div>
         </div>
       </div>
     </div>
     @else
-    <strong class="text-center">Danh Sách Trống</strong>
+    <img src="{{ asset('image/example/list-empty.png') }}" alt="" >
     @endif
   </div>
 </div>
@@ -97,6 +97,7 @@
             if (data.status == 'success') {
               $('#change-layout').empty();
               $('#change-layout').html(data.giao_dien);
+              $('#giao-dien-duoi').html(data.giao_dien_duoi);
               Swal.fire({
                 position: 'center',
                 icon: 'success',

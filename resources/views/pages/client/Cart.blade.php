@@ -37,10 +37,10 @@
         });
     }
 
-    function SaveItemListCart(id) {
-        console.log($("#qty-item-" + id).val());
+    function SaveItemListCart(id, so_luong) {
+        // console.log($("#qty-item-" + id).val());
         $.ajax({
-            url: 'save-item-list-cart/' + id + '/' + $("#qty-item-" + id).val(),
+            url: 'save-item-list-cart/' + id + '/' + so_luong,
             type: "GET",
         }).done(function(response) {
             // console.log($('#danh_sach').html(data.giao_dien));
@@ -48,6 +48,8 @@
             $('#danh_sach').html(response.giao_dien);
             console.log(response);
             alertify.success('Đã Cập Nhật Sản Phẩm Thành Công');
+            tangSanPham();
+            giamSanPham();
         });
     }
 </script>

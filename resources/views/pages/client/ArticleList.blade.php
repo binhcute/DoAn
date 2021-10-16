@@ -28,35 +28,8 @@
         <div class="row learts-mb-n50">
 
             <div class="col-xl-9 col-lg-8 col-12 learts-mb-50">
-                <div class="row no-gutters learts-mb-n40">
-                    @foreach ($article as $item)
-                    <div class="col-12 border-bottom learts-pb-40 learts-mb-40">
-                        <div class="blog">
-                            <div class="row learts-mb-n30">
-                                <div class="col-md-5 col-12 learts-mb-30">
-                                    <div class="image mb-0">
-                                        <a href="{{route('Bai-Viet',[Str::slug($item->article_name, '-'),$item->article_id])}}"><img src="{{ URL::to('/') }}/server/assets/image/article/{{$item->article_img}}" alt="Blog Image"></a>
-                                    </div>
-                                </div>
-                                <div class="col-md-7 col-12 align-self-center learts-mb-30">
-                                    <div class="content">
-                                        <ul class="meta">
-                                            <li><i class="far fa-calendar"></i><a href="#">{{$item->created_at}}</a></li>
-                                            <li><i class="far fa-eye"></i> {{$item->view}} views</li>
-                                        </ul>
-                                        <h5 class="title"><a href="{{route('Bai-Viet',[Str::slug($item->article_name, '-'),$item->article_id])}}">{{$item->article_name}}</a></h5>
-                                        <div class="desc">
-                                            <p>{!!$item->article_description!!}</p>
-                                        </div>
-                                        <a href="{{route('Bai-Viet',[Str::slug($item->article_name, '-'),$item->article_id])}}" class="link">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-
-                    <div>{{ $article->links()}}</div>
+                <div class="row no-gutters learts-mb-n40" id="phan-trang-bai-viet">
+                   @include('pages.client.Article.dsBaiViet')
                 </div>
 
             </div>
@@ -98,16 +71,7 @@
                 </div>
                 <!-- Categories End -->
 
-                <!-- Categories Start -->
-                <div class="single-widget learts-mb-40">
-                    <h3 class="widget-title product-filter-widget-title">Danh Mục Sản Phẩm</h3>
-                    <ul class="widget-list">
-                        @foreach ($product_cate as $item)
-                        <li><a href="{{URL::to('/product_categories',$item->cate_id)}}">{{ $item->cate_name}}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-                <!-- Categories End -->
+
 
             </div>
 
@@ -117,4 +81,25 @@
 </div>
 <!-- Portfolio Section End -->
 
+@endsection
+@section('page-js')
+<!-- Lấy giá trị từ phân trang -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            phanTrangBaiViet(page);
+        });
+    });
+
+    function phanTrangBaiViet(page) {
+        $.ajax({
+            url: '?page=' + page,
+            success: function(data) {
+                $('#phan-trang-bai-viet').html(data);
+            }
+        });
+    }
+</script>
 @endsection

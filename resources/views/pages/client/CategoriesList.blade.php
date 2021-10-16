@@ -81,7 +81,7 @@
                                         <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
                                         @endif
                                     </a>
-                                    <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
+                                    <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
                                 </div>
                                 <div class="product-info">
                                     <h6 class="title"><a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}">{{$item->product_name}}</a></h6>
@@ -144,4 +144,5 @@
 
 </div>
 <!-- Shop Products Section End -->
+@include('pages.client.modal.modal-sanpham')
 @endsection

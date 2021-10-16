@@ -46,6 +46,7 @@ class CheckOutController extends Controller
      */
     public function store(Request $request)
     {
+
         $rule = [
             'address' => 'required',
             'phone' => 'required|digits_between:10,12'
@@ -60,6 +61,17 @@ class CheckOutController extends Controller
                 ->withInput();
         }
 
+        $ds_gio_hang = Session('Cart') ? Session('Cart') : null;
+        if($ds_gio_hang != null) {
+            foreach($ds_gio_hang-> product as $key => $san_pham){
+                $kho_san_pham = Product::where('product_id',$san_pham['product_info']->product_id)->first();
+                if($kho_san_pham->product_quantity < $san_pham['qty']){
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => $kho_san_pham->product_name . ' chỉ còn ' . $kho_san_pham->product_quantity . ' sản phẩm!',
+                    ],200);
+                }
+            }
             $order = new Order;
             $order->user_id = Auth::user()->id;
             $order->note = $request->note;
@@ -68,14 +80,17 @@ class CheckOutController extends Controller
             $order->status = 1;
             $order->save();
             foreach (Session::get('Cart')->product as $key => $item) {
-                // dd($item);
                 $order_dt = new OrderDetail;
                 $order_dt->order_id = $order->order_id;
                 $order_dt->product_id = $item['product_info']->product_id;
                 $order_dt->quantity = $item['qty'];
                 $order_dt->price = $item['price'];
                 $order_dt->amount = $item['qty'] *  $item['price'];
-                // dd($order_dt);
+
+                $san_pham_ton = Product::where('product_id', $order_dt->product_id)->first();
+                $san_pham_ton->product_quantity -= $item['qty'];
+
+                $san_pham_ton ->save();
                 $order_dt->save();
             }
             $request->Session()->forget('Cart');
@@ -85,6 +100,8 @@ class CheckOutController extends Controller
                 //     ->select('tpl_product.product_name')
                 //     ->where('tpl_order_dt.order_dt_id', $order_dt->order_dt_id)->first();
                 $message = [
+                    'logo' => "{{URL::to('/')}}/client/images/logo/logo-2.png",
+                    'slider' => "{{URL::to('/')}}/client/images/slider/image-4.png",
                     'name' => 'Đơn Hàng Của Bạn',
                     'fullName' => Auth::user()->firstName . " " . Auth::user()->lastName,
                     'address' => $order->address,
@@ -101,6 +118,7 @@ class CheckOutController extends Controller
                 'status' => 'error',
                 'message' => 'Đặt hàng thất bại'
             ], 200);
+        }
        
     }
 

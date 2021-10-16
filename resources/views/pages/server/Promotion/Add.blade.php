@@ -1,16 +1,16 @@
 @extends('layout_admin')
-@section('title','Sản Phẩm')
+@section('title','Danh Mục')
 @section('content')
 <div class="col-sm-12">
   <div class="page-title">
     <div class="row">
       <div class="col-6">
-        <a class="btn btn-primary" href="{{route('SanPham.index')}}"><i class="fa fa-angle-double-left"></i> Quay Lại</a>
+        <a class="btn btn-primary" href="{{route('LoaiSanPham.index')}}"><i class="fa fa-angle-double-left"></i> Quay Lại</a>
       </div>
       <div class="col-6">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.index')}}"> <i data-feather="home"></i></a></li>
-          <li class="breadcrumb-item">Sản Phẩm</li>
+          <li class="breadcrumb-item">Danh Mục</li>
           <li class="breadcrumb-item active">Thêm</li>
         </ol>
       </div>
@@ -18,10 +18,10 @@
   </div>
   <div class="card">
     <div class="card-header">
-      <h5>Thêm Sản Phẩm</h5>
+      <h5>Thêm Danh Mục</h5>
       <div style="padding-top:10px" id="noti-validate"></div>
     </div>
-    <form class="form theme-form" action="{{ route('SanPham.store')}}" method="post" enctype="multipart/form-data" id="add-data">
+    <form class="form theme-form" action="{{ route('LoaiSanPham.store')}}" method="post" enctype="multipart/form-data" id="add-data">
       @csrf
       <div class="card-body">
         <div class="row">
@@ -33,63 +33,18 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Tên Sản Phẩm</label>
+              <label class="col-sm-3 col-form-label">Tên Loại Sản Phẩm</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" name="name" id="name">
+                <input class="form-control" type="text" placeholder="Nhập tên loại sản phẩm" name="name" id="name">
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Loại Sản Phẩm</label>
+              <label class="col-sm-3 col-form-label">Mô Tả</label>
               <div class="col-sm-9">
-                <select class="form-select" required="" aria-label="select example" name="cate_id" id="cate_id">
-                  <option value="">---Chọn---</option>
-                  @foreach($cate as $item)
-                  <option value="{{$item->cate_id}}">{{$item->cate_name}}</option>
-                  @endforeach
-                </select>
+                <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung mô tả..." name="description"></textarea>
               </div>
             </div>
-            <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Nhà Cung Cấp</label>
-              <div class="col-sm-9">
-                <select class="form-select" required="" aria-label="select example" name="port_id" id="port_id">
-                  <option value="">---Chọn---</option>
-                  @foreach($port as $item)
-                  <option value="{{$item->port_id}}">{{$item->port_name}}</option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Số Lượng</label>
-              <div class="col-sm-9">
-                <input class="form-control" name="quantity" id="quantity" type="number" placeholder="Số Lượng" data-bs-original-title="" title="">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Giá</label>
-              <div class="col-sm-9">
-                <input class="form-control" type="number" placeholder="Giá" name="price" id="price">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Màu Sắc</label>
-              <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Bao Gồm" name="color" id="color11">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Từ Khóa</label>
-              <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Tối đa 10 ký tự" maxlength="10" name="keyword" id="keyword">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chi Tiết</label>
-              <div class="col-sm-9">
-                <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="description"></textarea>
-              </div>
-            </div>
+
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Trạng Thái</label>
               <div class="col-sm-9">
@@ -107,15 +62,6 @@
                 <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
                 <img id="event__img-0" src="{{asset('image/example/add.jpg')}}" alt="slider" width="50%" height="320px">
               </div>
-
-            </div>
-            <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chọn ảnh chuyển</label>
-              <div class="col-sm-9">
-                <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh chuyển</label>
-                <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
-                <img id="event__img-hover-0" src="{{asset('image/example/add.jpg')}}" alt="slider" width="50%" height="320px">
-              </div>
             </div>
           </div>
         </div>
@@ -132,7 +78,6 @@
 @endsection
 
 @section('page-js')
-<!-- delete and choose file -->
 <script type="text/javascript">
   function uploadBannerFile(input, tam) {
     $('#id-label-' + tam).html(input.files[0].name);
@@ -147,22 +92,7 @@
       readURL(this);
     });
   }
-
-  function uploadFileHover(input, tam) {
-    $('#id-label-hover-' + tam).html(input.files[0].name);
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        $('#event__img-hover-' + tam).attr('src', e.target.result);
-      }
-      reader.readAsDataURL(input.files[0]);
-    }
-    $('#event__input-hover-' + tam).change(function() {
-      readURL(this);
-    });
-  }
 </script>
-<!-- /delete and choose file -->
 <!-- CKEDITOR -->
 <script>
   CKEDITOR.replace('ckeditor', {
@@ -170,7 +100,27 @@
     filebrowserUploadMethod: 'form'
   });
 </script>
+<!-- Upload Image Files -->
+<script type="text/javascript">
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
 
+      reader.onload = function(e) {
+        $('#imgShow').attr('src', e.target.result);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      removeUpload();
+    }
+  }
+  $("#imgItem").change(function() {
+    readURL(this);
+  });
+</script>
+
+<!-- Add Ajax -->
 <script>
   $.ajaxSetup({
     headers: {
@@ -182,23 +132,14 @@
     var form = $(this);
     var url = form.attr('action');
     let imageItem = document.getElementsByClassName('imageItem');
-    let imageHover = document.getElementsByClassName('imageHover');
     // Lấy giá trị trong ckeditor
     var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
     // Khai báo formData
     var formData = new FormData($(this)[0]);
     formData.append('data_input_item', imageItem[0].files[0]);
-    formData.append('data_input_hover', imageHover[0].files[0]);
     formData.append('name', $('#name').val());
-    formData.append('cate_id', $('#cate_id').val());
-    formData.append('port_id', $('#port_id').val());
-    formData.append('quantity', $('#quantity').val());
-    formData.append('price', $('#price').val());
-    formData.append('color', $('#color11').val());
-    formData.append('keyword', $('#keyword').val());
     formData.append('status', $('#status').val());
     formData.append('description', data_ckeditor);
-    
     $.ajax({
       type: "POST",
       url: url,
@@ -229,7 +170,7 @@
             timer: 2500
           })
           window.setTimeout(function() {
-            window.location.replace("{{route('SanPham.index')}}");
+            window.location.replace("{{route('LoaiSanPham.index')}}");
           }, 2500);
         }
       },
@@ -251,18 +192,5 @@
       }
     });
   })
-</script>
-<script>
-    var number = document.querySelectorAll('input[type="number"]');
-    for(var i = 0; i < number.length; i++){
-        // Listen for input event on numInput.
-        number[i].onkeydown = function(e) {
-            if(!((e.keyCode > 95 && e.keyCode < 106)
-            || (e.keyCode > 47 && e.keyCode < 58) 
-            || e.keyCode == 8)) {
-                return false;
-            }
-        }
-    }
 </script>
 @endsection
