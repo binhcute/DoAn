@@ -15,17 +15,6 @@
                 </ul>
             </div>
 
-            <div class="footer1-menu col">
-                <ul class="widget-menu justify-content-center">
-                    <li><a href="{{URL::to('/about_us')}}">Về chúng tôi</a></li>
-                    <li><a href="#">Địa chỉ</a></li>
-                    <li><a href="{{URL::to('/contact_us')}}">Liên hệ</a></li>
-                    <li><a href="#">Hỗ trợ</a></li>
-                    <li><a href="#">Policy</a></li>
-                    <li><a href="#">FAQs</a></li>
-                </ul>
-            </div>
-
             <div class="footer1-copyright col">
                 <p class="copyright">&copy; 2021 | <a href="https://caothang.edu.vn/"><strong> Cao đẳng kỹ thuật Cao Thắng.</strong></a></p>
             </div>

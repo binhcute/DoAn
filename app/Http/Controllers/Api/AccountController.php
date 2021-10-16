@@ -105,6 +105,7 @@ class AccountController extends Controller
     // }
     public function logout(Request $request)
     {
+        // Auth::guard('web')->logout();
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'Successfully logged out'

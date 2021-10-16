@@ -61,7 +61,8 @@
     var form = $(this);
     var url = form.attr('action');
     Swal.fire({
-      title: 'Bạn muốn thay đổi trạng thái này ?',
+      title: 'Thay Đổi Trạng Thái',
+      text: 'Bạn Muốn Thay Đổi Trạng Thái Nhà Cung Cấp Này ?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#d33',

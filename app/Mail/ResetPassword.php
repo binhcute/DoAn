@@ -11,16 +11,16 @@ class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $token;
+    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($data)
     {
         $this->subject = "Learts";
-        $this ->token = $token;
+        $this ->data = $data;
     }
 
     /**
@@ -31,6 +31,6 @@ class ResetPassword extends Mailable
     public function build()
     {
         return $this->subject($this->subject)->replyTo('thanhbinh0606.hcm@gmail.com','Reset Password')
-        ->view('auth.password.verify', ['token' => $this->token]);
+        ->view('auth.password.verify', ['data' => $this->data]);
     }
 }

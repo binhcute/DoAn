@@ -1,7 +1,7 @@
 <div class="container" id="list-cart">
 
-@if(Session::has("Cart") != null)
-<table class="cart-wishlist-table table">
+    @if(Session::has("Cart") != null)
+    <!-- <table class="cart-wishlist-table table">
     <thead>
         <tr>
             <th class="avatar">Hình Ảnh</th>
@@ -54,11 +54,10 @@
         <a href="{{URL::to('login')}}" class="btn btn-dark btn-hover-success mr-3 mb-3" href="#">Đăng Nhập Ngay Để Đặt Hàng</a>
         @endif
     </div>
-</div>
-<br>
-<div class="row learts-mb-n30">
+</div> -->
+    <div class="row learts-mb-n30">
 
-    <div class="col-lg-6 order-lg-2 learts-mb-30">
+        <!-- <div class="col-lg-6 order-lg-2 learts-mb-30">
         <div class="order-review">
             <table class="table">
                 <thead>
@@ -83,17 +82,174 @@
                 </tfoot>
             </table>
         </div>
+    </div> -->
+
+        <div class="perfume-cart__contents ">
+            <!-- Tiêu đề -->
+            <div class="row_g no-gutters row_g-title hide-on-mobile">
+
+                <div class="col_g l-4_g m-50_g">
+                    <div class="perfume-cart__title">
+                        Sản phẩm
+                    </div>
+                </div>
+
+                <div class="col_g l-2_g m-10-2_g">
+                    <div class="perfume-cart__title">
+                        Đơn giá
+                    </div>
+                </div>
+
+                <div class="col_g l-1_g m-10-2_g">
+                    <div class="perfume-cart__title">
+                        Số lượng
+                    </div>
+                </div>
+
+                <div class="col_g l-2_g m-10-2_g">
+                    <div class="perfume-cart__title">
+                        Khuyến mãi
+                    </div>
+                </div>
+
+                <div class="col_g l-2_g m-10-2_g">
+                    <div class="perfume-cart__title">
+                        Thành tiền
+                    </div>
+                </div>
+
+                <div class="col_g l-1_g m-10-2_g">
+                    <div class="perfume-cart__title">
+                        Xóa
+                    </div>
+                </div>
+
+            </div>
+            @foreach (Session::get('Cart')->product as $item)
+            <!-- Nội dung -->
+            <div class="row_g no-gutters row_content hide-on-mobile">
+                <div class="col_g l-4_g m-50_g">
+                    <div class=" perfume-cart__product">
+                        <img class="product__img" src="{{URL::to('/')}}/server/assets/image/product/{{$item['product_info']->product_img}}" alt="">
+                        <div>
+                            <span class="product__name">
+                                {{$item['product_info']->product_name}}
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col_g l-2_g m-10-2_g">
+                    <div class="perfume-cart__content perfume-cart__center">
+                        <span class="perfume-cart__unit-sprice">{{number_format($item['product_info']->product_price)}}</span>
+                        <span>vnđ</span>
+                    </div>
+                </div>
+                <div class="col_g l-1_g m-10-2_g">
+                    <div class="perfume-cart__content perfume-cart__quantity perfume-cart__center">
+                        <button class="quantity__minus" data-product-id="{{$item['product_info']->product_id}}">-</button>
+                        <input readonly id="quantity__number" class="quantity_num" value="{{$item['qty']}}">
+                        <button class="quantity__plus" data-product-id="{{$item['product_info']->product_id}}">+</button>
+                    </div>
+                </div>
+                <div class="col_g l-2_g m-10-2_g">
+                    <div class="perfume-cart__content  perfume-cart__center">
+                        <span class="perfume-cart__promotion">{{number_format($item['price'])}}</span>
+                        <span>vnđ</span>
+                    </div>
+                </div>
+                <div class="col_g l-2_g m-10-2_g">
+                    <div class="perfume-cart__content perfume-cart__center">
+                        <span class="perfume-cart__into-money">{{number_format($item['price'])}}</span>
+                        <span>vnđ</span>
+                    </div>
+                </div>
+                <div class="col_g l-1_g m-10-2_g">
+                    <div class="perfume-cart__content perfume-cart__trash perfume-cart__center">
+                        <a onclick="DeleteItemListCart({{$item['product_info']->product_id}});"><i class="far fa-trash-alt"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sản phẩm của giỏ hàng trên Mobile -->
+            <div class="row_g hide-on-tablet hide-on-pc">
+
+                <div class="col_g col_g-mar">
+                    <div class=" perfume-cart__product">
+                        <img class="product__img" src="{{URL::to('/')}}/server/assets/image/product/{{$item['product_info']->product_img}}" alt="">
+                        <div>
+                            <span class="product__name">
+                                {{$item['product_info']->product_name}}
+                            </span>
+
+                            <div class="col_g c-0_g">
+                                <div class="perfume-cart__content perfume-cart__center">
+                                    <span class="perfume-cart__unit-sprice">{{$item['product_info']->product_price}}</span>
+                                    <span>vnđ</span>
+                                </div>
+                            </div>
+
+                            <div class="col_g c-0_g">
+                                <div class="perfume-cart__content  perfume-cart__center">
+                                    <span class="perfume-cart__promotion">{{$item['product_info']->product_price}}</span>
+                                    <span>vnđ</span>
+                                </div>
+                            </div>
+
+                            <div class="perfume-cart__content perfume-cart__center ">
+                                <span class="perfume-cart__title-num">Giá:</span>
+                                <span class="perfume-cart__into-money">{{$item['price']}}</span>
+                                <span>vnđ</span>
+                            </div>
+
+                            <div class="perfume-cart__content perfume-cart__quantity perfume-cart__center">
+                                <div class="perfume-cart__btn">
+                                    <span class="perfume-cart__title-num">Số lượng:</span>
+                                    <button class="quantity__minus" data-product-id="{{$item['product_info']->product_id}}">-</button>
+                                    <input readonly id="quantity__number" class="quantity_num" value="{{$item['qty']}}">
+                                    <button class="quantity__plus" data-product-id="{{$item['product_info']->product_id}}">+</button>
+                                </div>
+                                <div class="perfume-cart__trash">
+                                    <a onclick="DeleteItemListCart({{$item['product_info']->product_id}});"><i class="far fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            @endforeach
+            <!-- Button -->
+            <div class="row_g no-gutters">
+                <div class="col_g l-12_g m-12_g c-12_g">
+                    <div class="cart-pay">
+                        @if(Auth::check())
+                        <a href="{{URL::to('/')}}" class="cart-back__btn">Trở lại</a>
+                        <a href="{{URL::to('checkout')}}" class="cart-pay__btn">Thanh toán</a>
+                        @else
+                        <a href="{{URL::to('login')}}" class="btn btn-dark btn-hover-success mr-3 mb-3" href="#">Đăng Nhập Ngay Để Đặt Hàng</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    @endif
 
 </div>
+
+@endif
 @if(Session::has("Cart") == null)
 <h3>Giỏ Hàng Trống</h3>
 @endif
 
 </div>
 <script type="text/javascript">
-    $('.qty-btn').on('click', function () {
+    $('.qty-btn').on('click', function() {
         var $this = $(this);
         var oldValue = $this.siblings('input').val();
         if ($this.hasClass('plus')) {
@@ -112,11 +268,70 @@
 </script>
 
 <script type="text/javascript">
-    $(".inputNumber").change(function(){
+    $(".inputNumber").change(function() {
         var $this = $(this);
         console.log($this);
         var oldValue = $this.siblings('input').val();
         $this.siblings('input').val(oldValue);
         SaveItemListCart($(this).data('product-id'));
     });
+</script>
+
+<script>
+    tangSanPham();
+    let valueCount;
+
+    function tangSanPham() {
+        let btnPlus = document.getElementsByClassName('quantity__plus');
+        for (let i = 0; i < btnPlus.length; i++) {
+            btnPlus[i].addEventListener('click', function() {
+                // Lấy giá trị input
+                valueCount = document.getElementsByClassName('quantity_num')[i];
+
+                // Tăng giá trị lên 1
+                valueCount.value++;
+                SaveItemListCart($(this).data('product-id'), valueCount.value);
+
+                if (valueCount.value > 1) {
+                    document.getElementsByClassName("quantity__minus")[i].removeAttribute("disabled");
+                    document.getElementsByClassName("quantity__minus")[i].classList.remove("disabled");
+                }
+
+                thanhTienSanPham(valueCount.value, i);
+
+
+            });
+        }
+    }
+
+    giamSanPham();
+
+    function giamSanPham() {
+        let btnMinus = document.getElementsByClassName('quantity__minus');
+        for (let i = 0; i < btnMinus.length; i++) {
+            btnMinus[i].addEventListener('click', function() {
+                // Lấy giá trị input
+                valueCount = document.getElementsByClassName('quantity_num')[i];
+
+                // Tăng giá trị lên 1
+                valueCount.value--;
+                SaveItemListCart($(this).data('product-id'), valueCount.value);
+                
+                if (valueCount.value == 1) {
+                    document.getElementsByCFlassName("quantity__minus")[i].setAttribute("disabled", "disabled");
+                }
+                thanhTienSanPham(valueCount.value, i);
+            });
+        }
+    }
+
+    function thanhTienSanPham(soluong, i) {
+        // Lấy giá tiền gốc 
+        let priceUnit = document.getElementsByClassName('perfume-cart__unit-sprice')[i].innerText.replace(/\,/g, "");
+        // Lấy giá tiền khuyến mãi
+        let pricePromotion = document.getElementsByClassName('perfume-cart__promotion')[i].innerText.replace(/\,/g, "");
+        console.log(priceUnit, pricePromotion)
+
+        document.getElementsByClassName('perfume-cart__into-money')[i].innerText = ((priceUnit - pricePromotion) * soluong).toLocaleString().replace(/\./g, ",");
+    }
 </script>

@@ -56,5 +56,10 @@ class Product extends Model
         return $query->join('tpl_category','tpl_category.cate_id','tpl_product.cate_id')
         ->join('tpl_portfolio', 'tpl_portfolio.port_id','tpl_product.port_id');
     }
+
+    public function scopeQueryModalProduct($query){
+        return $query->join('tpl_category','tpl_category.cate_id','tpl_product.cate_id')
+        ->join('tpl_portfolio', 'tpl_portfolio.port_id','tpl_product.port_id');
+    }
 }
 

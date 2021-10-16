@@ -26,7 +26,7 @@ class ClientController extends Controller
             ->orderBy('created_at', 'desc')->limit(4)->get();
         $cate = Category::queryStatusOne()->get();
 
-        $modal = Product::queryJoinCateAndPort()->get();
+        $modal = Product::queryModalProduct()->get();
         // dd($modal);
         // foreach ($cate as $key => $value) {
         //     $cate_id = $value->cate_id;
@@ -42,7 +42,7 @@ class ClientController extends Controller
             ->with('modal', $modal);
         // ->with('product_by_category', $product_by_category);
     }
-    public function product()
+    public function product(Request $request)
     {
         $product = Product::queryStatusOne()
             ->orderBy('product_id', 'asc')->paginate(8);
@@ -53,14 +53,26 @@ class ClientController extends Controller
         $product_cate = Category::queryStatusOne()->get();
         $portfolio = Portfolio::queryStatusOne()->get();
 
+        $modal = Product::queryModalProduct()->get();
+
+        if($request->ajax()){
+            return view('pages.client.list-product.dsSanPham')
+            ->with('product', $product)
+            ->with('product_cate', $product_cate)
+            ->with('product_hot', $product_hot)
+            ->with('product_new', $product_new)
+            ->with('portfolio', $portfolio)
+            ->with('modal', $modal);
+        }
         return view('pages.client.productlist')
             ->with('product', $product)
             ->with('product_cate', $product_cate)
             ->with('product_hot', $product_hot)
             ->with('product_new', $product_new)
-            ->with('portfolio', $portfolio);
+            ->with('portfolio', $portfolio)
+            ->with('modal', $modal);
     }
-    public function product_detail($slug, $id)
+    public function product_detail($slug, $id, Request $request)
     {
 
         $product_detail = Product::queryJoinCateAndPort()
@@ -87,26 +99,40 @@ class ClientController extends Controller
             )
             ->join('users', 'users.id', '=', 'tpl_comment.user_id')
             ->where('tpl_comment.status', 1)
-            ->where('tpl_comment.product_id', $id)->get();
+            ->where('tpl_comment.product_id', $id)
+            ->orderBy('tpl_comment.created_at', 'desc')
+            ->paginate(5);
         $avg_stars = DB::table('tpl_comment')
             ->where('tpl_comment.product_id', $id)
             ->avg('rate');
+        $modal = Product::queryModalProduct()->get();
+        if ($request->ajax()) {
+            return view('pages.client.product-Detail.dsBinhLuan')
+                ->with('list', $list)
+                ->with('product_detail', $product_detail)
+                ->with('comment', $comment)
+                ->with('avg_stars', $avg_stars)
+                ->with('modal', $modal);
+        }
         return view('pages.client.productdetail')
             ->with('list', $list)
             ->with('product_detail', $product_detail)
             ->with('comment', $comment)
-            ->with('avg_stars', $avg_stars);
+            ->with('avg_stars', $avg_stars)
+            ->with('modal', $modal);
     }
 
     //Article
 
-    public function article()
+    public function article(Request $request)
     {
-        $article = Article::queryStatusOne()->orderBy('created_at', 'desc')->paginate(6);
-        $product_cate = Category::queryStatusOne()->get();
+        $article = Article::queryStatusOne()->orderBy('created_at', 'desc')->paginate(3);
+        if ($request->ajax()) {
+            return view('pages.client.article.dsBaiViet')
+                ->with('article', $article);
+        }
         return view('pages.client.articlelist')
-            ->with('article', $article)
-            ->with('product_cate', $product_cate);
+            ->with('article', $article);
     }
     public function article_detail($slug, $id)
     {
@@ -162,11 +188,14 @@ class ClientController extends Controller
         $product_by_category = Product::queryStatusOne()
             ->join('tpl_category', 'tpl_category.cate_id', '=', 'tpl_product.cate_id')
             ->where('tpl_category.cate_id', $id)->get();
+
+        $modal = Product::queryModalProduct()->get();
         return view('pages.client.categorieslist')
             ->with('categories', $categories)
             ->with('portfolio', $portfolio)
             ->with('product_cate', $product_cate)
-            ->with('product_by_category', $product_by_category);
+            ->with('product_by_category', $product_by_category)
+            ->with('modal', $modal);
     }
 
     //Brand
@@ -185,32 +214,37 @@ class ClientController extends Controller
         $product_by_portfolio = Product::queryStatusOne()
             ->join('tpl_portfolio', 'tpl_portfolio.port_id', '=', 'tpl_product.port_id')
             ->where('tpl_portfolio.port_id', $id)->get();
+        $modal = Product::queryModalProduct()->get();
         return view('pages.client.portfoliolist')
             ->with('port', $port)
             ->with('portfolio', $portfolio)
             ->with('product_cate', $product_cate)
-            ->with('product_by_portfolio', $product_by_portfolio);
+            ->with('product_by_portfolio', $product_by_portfolio)
+            ->with('modal', $modal);
     }
 
     //Account
     public function my_account()
     {
-        if (Auth::check()) {
-            $id = Auth::user()->id;
-        }
-        $order = DB::table('tpl_order')
-            ->where('tpl_order.user_id', $id)->get();
-        foreach ($order as $key => $value) {
-            $order_id = $value->order_id;
-        }
-        $sumOrder = DB::table('tpl_order_dt')
-            ->where('tpl_order_dt.order_id', $order_id)->get();
+        // if (Auth::check()) {
+        //     $id = Auth::user()->id;
+        // }
+        // $order = DB::table('tpl_order')
+        //     ->where('tpl_order.user_id', $id)->get();
+        // foreach ($order as $key => $value) {
+        //     $order_id = $value->order_id;
+        // }
+        // $sumOrder = DB::table('tpl_order_dt')
+        //     ->where('tpl_order_dt.order_id', $order_id)->get();
 
         // dd($order);
-        return view('pages.client.myaccount')
-            ->with('order', $order);
+        return view('pages.client.myaccount');
+        // ->with('order', $order);
     }
-
+    public function change_password()
+    {
+        return view('pages.client.change-password');
+    }
 
     public function cart()
     {

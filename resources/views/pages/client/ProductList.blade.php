@@ -32,11 +32,8 @@
 
                 <!-- Isotop Filter Start -->
                 <div class="col-md col-12 align-self-center learts-mb-20">
-                    <div class="isotope-filter shop-product-filter" data-target="#shop-products">
-                        <button class="active" data-filter=".all">Sản Phẩm</button>
-                        <button data-filter=".featured">Sản Phẩm Hot</button>
-                        <button data-filter=".new">Sản Phẩm Mới</button>
-                        <button data-filter=".sales">Sản Phẩm Khuyến Mãi</button>
+                    <div class="isotope-filter shop-product-filter">
+                        <button class="active">Sản Phẩm</button>
                     </div>
                 </div>
                 <!-- Isotop Filter End -->
@@ -65,121 +62,31 @@
         <div class="container">
             <div class="row learts-mb-n50">
 
-                <div class="col-lg-9 col-12 learts-mb-50 order-lg-2">
-                    <!-- Products Start -->
-                    <div id="shop-products" class="products isotope-grid row row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
-
-                        <div class="grid-sizer col-1"></div>
-                        @foreach($product as $item)
-                        <div class="grid-item col all">
-                            <div class="product">
-                                <div class="product-thumb">
-                                    <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
-                                        <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
-                                        <img class="image-hover " src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
-                                    </a>
-                                    <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
-                                </div>
-                                <div class="product-info">
-                                    <h6 class="title"><a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}">{{$item->product_name}}</a></h6>
-                                    <span class="price">
-
-                                        <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
-                                    </span>
-                                    <div class="product-buttons">
-                                        <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                                        <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                                        <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                        @foreach($product_hot as $item)
-                        <div class="grid-item col new">
-                            <div class="product">
-                                <div class="product-thumb">
-                                    <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
-                                        <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
-                                        <img class="image-hover " src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
-                                    </a>
-                                    <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
-                                </div>
-                                <div class="product-info">
-                                    <h6 class="title"><a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}">{{$item->product_name}}</a></h6>
-                                    <span class="price">
-                                        <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
-                                    </span>
-                                    <div class="product-buttons">
-                                        <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                                        <a onclick="addCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                                        <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                        @foreach($product_new as $item)
-                        <div class="grid-item col featured">
-                            <div class="product">
-                                <div class="product-thumb">
-                                    <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
-                                        <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
-                                        <img class="image-hover " src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
-                                    </a>
-                                    <a href="wishlist.html" class="add-to-wishlist hintT-left" data-hint="Add to wishlist"><i class="far fa-heart"></i></a>
-                                </div>
-                                <div class="product-info">
-                                    <h6 class="title"><a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}">{{$item->product_name}}</a></h6>
-                                    <span class="price">
-                                        <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
-                                    </span>
-                                    <div class="product-buttons">
-                                        <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                                        <a onclick="addCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                                        <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                    <!-- Products End -->
-
-                </div>
+               @include('pages.client.list-product.dsSanPham')
 
                 <div class="col-lg-3 col-12 learts-mb-10 order-lg-1">
 
                     <!-- Search Start -->
                     <div class="single-widget learts-mb-40">
-                    <div class="widget-search">
-                        <form class="typeahead" role="search">
-                            <input type="search" name="q" class="form-control search-input" placeholder="Hãy nhập từ bất kỳ..." autocomplete="off">
-                        </form>
+                        <div class="widget-search">
+                            <form class="typeahead" role="search">
+                                <input type="search" name="q" class="form-control search-input" placeholder="Hãy nhập từ bất kỳ..." autocomplete="off">
+                            </form>
+                        </div>
                     </div>
-                </div>
                     <!-- Search End -->
 
                     <!-- Categories Start -->
                     <div class="single-widget learts-mb-40">
                         <h3 class="widget-title product-filter-widget-title">Danh Mục Sản Phẩm</h3>
                         <ul class="widget-list">
-                            @foreach ($product_cate as $item)
-                            <li><a href="{{URL::to('/product_categories',$item->cate_id)}}">{{ $item->cate_name}}</a></li>
-                            @endforeach
+                            <li><a href="#">Sản Phẩm Hot</a></li>
+                            <li><a href="#">Sản Phẩm Mới</a></li>
+                            <li><a href="#">Sản Phẩm Khuyến Mãi</a></li>
                         </ul>
                     </div>
                     <!-- Categories End -->
-                    <!-- Portfolio Start -->
-                    <div class="single-widget learts-mb-40">
-                        <h3 class="widget-title product-filter-widget-title">Nhà Cung Cấp</h3>
-                        <ul class="widget-list">
-                            @foreach ($portfolio as $item)
-                            <li><a href="{{URL::to('/brand',$item->port_id)}}">{{ $item->port_name}}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <!-- Portfolio End -->
+
 
 
                 </div>
@@ -191,5 +98,26 @@
 
 </div>
 <!-- Shop Products Section End -->
+@include('pages.client.modal.modal-sanpham')
+@endsection
+@section('page-js')
+<!-- Lấy giá trị từ phân trang -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            phanTrangBaiViet(page);
+        });
+    });
 
+    function phanTrangBaiViet(page) {
+        $.ajax({
+            url: '?page=' + page,
+            success: function(data) {
+                $('#phan-trang-danh-sach-san-pham').html(data);
+            }
+        });
+    }
+</script>
 @endsection

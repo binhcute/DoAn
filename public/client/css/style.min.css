@@ -2539,7 +2539,7 @@ body.offside-header-left {
 .header-tools > div a span {
     font-size: 13px;
     font-weight: 700;
-    line-height: 1rem;
+    line-height: 16px;
     position: absolute;
     z-index: 1;
     top: 0;
@@ -5307,10 +5307,16 @@ body.offcanvas-open .sticky-header {
     position: relative;
     display: block;
     overflow: hidden;
+    /* max-height: 257px;
+    overflow: hidden; */
 }
 .product-thumb .image img {
+
     z-index: 3;
     width: 100%;
+    max-width: 300px;
+    /* max-height: 257px;
+    overflow: hidden; */
 }
 .product-thumb .image img.image-hover {
     position: absolute;
@@ -6741,7 +6747,7 @@ body.offcanvas-open .sticky-header {
 .product-info-tab-list li a:hover {
     opacity: 1;
 }
-.rate1 {
+/* .rate1 {
     float: left;
     height: 46px;
     padding: 0 10px;
@@ -6775,7 +6781,48 @@ body.offcanvas-open .sticky-header {
 .rate1 > input:checked ~ label:hover ~ label,
 .rate1 > label:hover ~ input:checked ~ label {
     color: #c59b08;
-}
+} */
+.form-reviews__rating {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+    }
+
+    .form-reviews__rating label {
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #444;
+    margin: 0 2px;
+    transition: all 0.2s ease;
+    }
+
+    .icon1 {
+    order: 1;
+    }
+
+    .icon2 {
+    order: 2;
+    }
+
+    .icon3 {
+    order: 3;
+    }
+
+    .icon4 {
+    order: 4;
+    }
+
+    .icon5 {
+    order: 5;
+    }
+
+    input:not(:checked) ~ label:hover,
+    input:not(:checked) ~ label:hover ~ label {
+    color: #fd4;
+    }
+    input:checked ~ label {
+    color: #fd4;
+    }
 @media only screen and (min-width: 992px) and (max-width: 1199px),
     only screen and (min-width: 768px) and (max-width: 991px) {
     .product-info-tab-list {
@@ -6951,7 +6998,7 @@ body.offcanvas-open .sticky-header {
     flex-wrap: wrap;
 }
 .form-rating .title {
-    font-size: 14px;
+    font-size: 1.2em;
     font-weight: 500;
     line-height: 1;
     display: block;
@@ -8006,6 +8053,8 @@ body.offcanvas-open .sticky-header {
 }
 .portfolio .thumbnail img {
     width: 100%;
+    max-height: 267px;
+    overflow: hidden;
 }
 .portfolio .content {
     position: absolute;
@@ -8735,6 +8784,14 @@ body.offcanvas-open .sticky-header {
     border: 0;
     background-color: transparent;
 }
+
+
+.product__list-new,
+.product__list-hot {
+    display:none;
+}
+
+
 .shop-product-filter button:hover,
 .shop-product-filter button.active {
     color: #333;
@@ -9697,3 +9754,316 @@ body.offcanvas-open .sticky-header {
         letter-spacing: 0;
     }
 }
+
+/* Start CSS Giỏ hàng - Cart */
+.app-container__cart {
+    margin-top: calc(var(--header-height));
+    min-height: 400px;
+    background-color: #f5f5f5;
+}
+
+.perfume-cart__none {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffff;
+    height: 310px;
+}
+
+.perfume-cart__none-img {
+    border-radius: 2px;
+}
+
+.perfume-cart__none span {
+    font-size: 1.6rem;
+    margin-top: 2px;
+}
+
+.perfume-cart__none-btn {
+    padding: 6px 26px;
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 26px;
+    margin-right: 15%;
+}
+
+.perfume-cart__contents{
+    width: 100%;
+}
+
+.perfume-cart {
+    margin-top: 10px;
+    border-radius: 4px;
+    width: 100%;
+
+}
+
+.perfume-cart__name {
+    background-color: #fff;
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    line-height: 6.5rem;
+    color: #017fff;
+}
+
+.row_g.row_content,
+.row_g.row_g-title {
+    background-color: #fff;
+    margin-bottom: 6px;
+    border-radius: 4px;
+}
+
+.perfume-cart__title {
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding: 12px 0;
+    /* border: 1px solid rgba(0, 0, 0, 0.2); */
+    text-align: center;
+}
+
+.perfume-cart__title.perfume-cart__title-left {
+    text-align: left;
+}
+.perfume-cart__center {
+    text-align: center;
+}
+
+.perfume-cart__content {
+    font-size: 1.6rem;
+    padding: 4px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.perfume-cart__trash {
+    font-size: 1.8rem;
+}
+
+.perfume-cart__trash i {
+    color: #000;
+}
+
+
+.perfume-cart__product {
+    display: flex;
+    padding: 8px;
+    align-items: center;
+}
+
+.product__img {
+    width: 75px;
+    height: 80px;
+    margin-right: 12px;
+    margin-left: 8px;
+}
+
+.product__name {
+    font-size: 1.4rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.product__promotion-name {
+    font-size: 1.4rem;
+    color: #017fff;
+    background-color: rgba(0, 0, 0, 0.05);
+    display: inline-block;
+    padding: 4px;
+    border-radius: 2px;
+}
+
+.quantity_num{
+    text-align: center;
+    width: 52px !important;
+    height: 26px;
+    font-size: 1.6rem;
+    padding: 0px 16px;
+    font-weight: 400;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+    z-index: 2;
+}
+
+.quantity_num:focus {
+    outline: none;
+}
+
+.quantity__minus {
+    font-size: 1.6rem;
+    padding: 0px 16px;
+    font-weight: 800;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    background-color: transparent;
+    width: 50px;
+    height: 26px;
+}
+
+.quantity__plus {
+    font-size: 1.6rem;
+    padding: 0px 16px;
+    font-weight: 800;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    background-color: transparent;
+    width: 50px;
+    height: 26px;
+}
+
+.quantity__plus:focus,
+.quantity__minus:focus {
+    outline: none;
+}
+
+.row_g.row-cart__pay {
+    background-color: #fafdff;
+    margin-bottom: 1.5px;
+} 
+
+.perfume-cart__content.cart__total-pay {
+    color: #017fff;
+    font-weight: 500;
+    font-size: 1.8rem;
+}
+
+.cart-pay {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.cart-pay__btn {
+    width: 120px;
+    height: 40px;
+    background-color: #017fff;
+    font-size: 1.6rem;
+    line-height: 40px;
+    font-weight: 500;
+    color: #fff !important;
+    text-align: center;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 8px 0px 8px 12px;
+}
+
+.cart-back__btn {
+    width: 120px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-size: 1.6rem;
+    line-height: 40px;
+    font-weight: 500;
+    color: #444 !important;
+    text-align: center;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 8px 0px ;
+}
+
+.cart-pay__btn:hover,
+.cart-back__btn:hover {
+    text-decoration: none;
+}
+
+.perfume-cart__content {
+    font-size: 1.6rem;
+    padding: 4px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+/* End CSS giỏ hàng - Cart */
+/* Start CSS thanh toán - Bill */
+.address-receive-info {
+    padding: 8px 8px;
+    border-right: 2px dashed rgba(0, 0, 0, 0.2);
+    height: 100%;
+    margin-right: 8px;
+}
+
+.address-receive__heading {
+    font-size: 2rem;
+    color: #017fff;
+    font-weight: 500;
+}
+
+.address-receive {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.address-receive__title {
+    font-size: 1.6rem;
+    color: #000;
+    font-weight: 500;
+    margin-left: 16px;
+    margin-right: 8px;
+    width: 100px;
+}
+
+.address-receive__content {
+    font-size: 1.6rem;
+    font-style: italic;
+    color: #333;
+    flex: 1;
+    height: 36px;
+    border: none;
+    outline: none;
+    background-color: transparent; 
+    padding: 0 4px;
+}
+
+.address-receive__numphone::-webkit-outer-spin-button,
+.address-receive__numphone::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.address-receive__change {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.change__btn-info {
+    text-align: center;
+    display: block;
+    width: 100px;
+    height: 30px;
+    color: #017fff !important;
+    font-size: 1.4rem;
+    line-height: 30px;
+    border-radius: 4px;
+    font-style: italic;
+    cursor: pointer;
+    transition: all 0.5s;
+    margin-top: 14px;
+    margin-right: 20px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.change__btn-info.btn__savechange {
+    display: none;
+}
+
+.change__btn-info:hover {
+    background-color: #82baf3 !important;
+    color: #fff !important;
+    text-decoration: none;
+}
+/* End CSS thanh toán - Bill*/

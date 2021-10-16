@@ -61,4 +61,8 @@ class SearchController extends Controller
             ->get();
         return response()->json($data);
     }
+
+    public function donhangg(Request $request){
+        return view('email.xu-ly-don-hang');
+    }
 }

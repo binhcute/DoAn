@@ -10,8 +10,8 @@
     <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{asset('server/assets/images/favicon.png')}}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{asset('server/assets/images/favicon.png')}}" type="image/x-icon">
+    <link rel="icon" href="{{asset('client/images/favicon.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('client/images/favicon.png')}}" type="image/x-icon">
     <title>Admin | @yield('title')</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -149,7 +149,7 @@
               <div id="sidebar-menu">
                 <ul class="sidebar-links" id="simple-bar">
 
-                  <li class="back-btn"><a href="index.html"><img class="img-fluid" src="{{asset('server/assets/images/logo/logo-icon.png')}}" alt=""></a>
+                  <li class="back-btn"><a href="{{route('admin.index')}}"><img class="img-fluid" src="{{asset('server/assets/images/logo/logo-icon.png')}}" alt=""></a>
                     <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
                   </li>
                   <li class="sidebar-main-title">
@@ -179,6 +179,7 @@
                       <li><a href="{{route('HoaDon.index')}}">Quản Lý Hóa Đơn</a></li>
                       <li><a href="{{route('BinhLuan.store')}}">Quản Lý Bình Luận</a></li>
                       <li><a href="{{URL::to('/QuanLyAPI')}}">Quản Lý API</a></li>
+                      <li><a href="{{route('KhuyenMai.index')}}">Quản Lý Mã Khuyến Mãi</a></li>
                     </ul>
                   </li>
                 </ul>

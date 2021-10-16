@@ -18,7 +18,7 @@
     </div>
   </div>
   <div class="card">
-    @if(count($cate)!=0)
+    @if(count($khuyenmai)!=0)
     <div class="card-body">
       <div class="table-responsive">
         <table class="display" id="basic-1">

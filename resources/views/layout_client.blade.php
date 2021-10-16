@@ -44,6 +44,8 @@
     <link rel="stylesheet" href="{{asset('client/css/plugins/plugins.min.css')}}">
     <link rel="stylesheet" href="{{asset('client/css/style.min.css')}}">
     <link rel="stylesheet" href="{{asset('sweetarlet2/node_modules/sweetalert2/dist/sweetalert2.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/grid_custom.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/responsive.css')}}">
 
 </head>
 
@@ -116,7 +118,7 @@
     <script>
         function AddCart(id) {
             $.ajax({
-                url: 'item-cart/' + id,
+                url: '/./item-cart/' + id,
                 type: "GET",
             }).done(function(response) {
                 console.log(response);

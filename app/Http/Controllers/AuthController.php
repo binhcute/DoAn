@@ -60,7 +60,7 @@ class AuthController extends Controller
                 'success' => 1,
                 'data' => $user,
                 'status' => 'success',
-                'message' => 'Đăng ký thành công'
+                'message' => 'Đăng Ký Thành Công, Vui Lòng Kiểm Tra Email Để Kích Hoạt Tài Khoản'
             ));
         } else {
             return response()->json(array(
@@ -69,42 +69,6 @@ class AuthController extends Controller
                 'message' => 'Đăng ký thất bại'
             ));
         }
-    }
-
-    public function login(LoginRequest $request)
-    {
-        if (Auth::attempt([
-            'username' => $request->username,
-            'password' => $request->password,
-        ])) {
-            $user = $request->user();
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
-
-            if ($request->remember) {
-                $token->expires_at = Carbon::now()->addWeeks(1);
-            }
-            $token->save();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Đăng Nhập Thành Công',
-                'access_token' => $tokenResult->accessToken,
-                'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                    $tokenResult->token->expires_at
-                )->toDateTimeString()
-            ]);
-        }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Tài khoản hoặc mật khẩu không chính xác, vui lòng đăng nhập lại'
-        ], 401);
-    }
-
-    public function userInfo(Request $request)
-    {
-        return response()->json($request->user());
     }
     // public function logout(Request $request)
     // {
@@ -119,16 +83,16 @@ class AuthController extends Controller
         ])->first();
 
         if (!$checkUser) {
-            return redirect('/login')->with('danger', 'URL khong ton tai');
+            return redirect('/login')->with('danger', 'Đường Dẫn Không Tồn Tại');
         }
         $checkUser->status = 1;
         $checkUser->save();
 
         return redirect('/login')->with('success', 'Verify successful');
     }
-    public function getForgotPassword(Request $request)
+    public function getForgotPassword()
     {
-        return view('auth.password.email');
+        return view('auth.passwords.email');
     }
     public function postForgotPassword(Request $request)
     {
@@ -136,12 +100,16 @@ class AuthController extends Controller
             'email' => 'required|email|exists:users',
         ]);
         $token = Str::random(60);
+        $url = view('password/reset/',$token);
+        $data = [
+            'route' => $url
+        ];
         DB::table('password_resets')->insert([
             'email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()
         ]);
 
 
-        Mail::to($request->email)->send(new \App\Mail\ResetPassword($token));
+        Mail::to($request->email)->send(new \App\Mail\ResetPassword($data));
         return back();
     }
     public function getResetPassword($token)

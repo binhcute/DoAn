@@ -62,6 +62,8 @@ Route::group(['middleware' => 'levellogin'], function () {
     // Route::put('/Logo/disabled/{Logo}','LogoController@disabled');
     // Route::put('/Logo/enabled/{Logo}','LogoController@enabled');
 
+    //Promotion
+    Route::resource('/KhuyenMai','PromotionController');
 
     //Report
     Route::get('/Report', 'ReportController@index');
@@ -87,8 +89,8 @@ Auth::routes([
 // Route::get('/logout','AuthController@logout')->middleware('auth:api')->name('logout');
 Route::get('forget-password', 'AuthController@getForgotPassword')->name('get.forgot-password');
 Route::post('forget-password', 'AuthController@postForgotPassword')->name('post.forgot-password');
-Route::get('reset-password', 'AuthController@getResetPassword');
-Route::post('reset-password', 'AuthController@postResetPassword');
+Route::get('reset-password/{token}', 'AuthController@getResetPassword');
+Route::post('reset-password', 'AuthController@postResetPassword')->name('post.reset-password');
 Route::post('/register', 'AuthController@register')->name('register');
 Route::get('/verifyAccount', 'AuthController@verifyAccount')->name('verifyAccount');
 Route::get('/user', 'AuthController@userInfo')->middleware('auth:api');
@@ -104,8 +106,7 @@ Route::get('/about_us', 'ClientController@about_us');
 Route::get('/checkout', 'ClientController@check_out');
 Route::get('/contact_us', 'ClientController@contact_us');
 Route::get('Tai-Khoan', 'ClientController@my_account')
-    ->name('Tai-Khoan')
-    ->middleware('levellogin');
+    ->name('Tai-Khoan');
 
 //Brand
 Route::get('/Nha-Cung-Cap/{slug}-{id}', 'ClientController@portfolio_list')
@@ -164,3 +165,5 @@ Route::get('/save-item-list-favorite/{id}/{qty}', 'FavoriteController@SaveItemLi
 
 Route::get('tim-kiem', 'SearchController@autocomplete')->name('tim-kiem');
 
+
+Route::get('donhangg', 'SearchController@donhangg')->name('donhangg');

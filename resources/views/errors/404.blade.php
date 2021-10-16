@@ -397,44 +397,6 @@
     </div>
     <!-- OffCanvas Search End -->
 
-    <!-- OffCanvas Wishlist Start -->
-    <div id="offcanvas-wishlist" class="offcanvas offcanvas-wishlist">
-        <div class="inner" id="change-item">
-            <div class="head">
-                <span class="title">Yêu Thích</span>
-                <button class="offcanvas-close">×</button>
-            </div>
-            @if(Session::has("Favorite") != null)
-            <div class="body customScroll">
-                <ul class="minicart-product-list">
-                    @foreach(Session::get('Favorite')->product as $item)
-                    <li>
-                        <a href="product-details.html" class="image"><img src="{{URL::to('/')}}/server/assets/image/product/{{$item['product_info']->product_img}}" alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="product-details.html" class="title">{{$item['product_info']->product_name}}</a>
-                            <span class="quantity-price">{{$item['qty']}} x <span class="amount">{{number_format($item['product_info']->product_price).' '.'VND'}}</span></span>
-                            <i class="fa fa-times remove" data-id="{{$item['product_info']->product_id}}"></i>
-                        </div>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-            @if(Session::has("Cart") == null)
-            <div class="body customScroll">
-                <strong>Giỏ Hàng trống</strong>
-            </div>
-            @endif
-            <div class="foot">
-                <div class="buttons">
-                    <a href="{{URL::to('/favorite')}}" class="btn btn-dark btn-hover-primary">Xem Danh Sách</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!-- OffCanvas Wishlist End -->
-
     <!-- OffCanvas Cart Start -->
     <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
         <div class="inner" id="change-items">
@@ -556,8 +518,8 @@
                 <h2 class="sub-title">Page not found!</h2>
                 <p>You could either go back or go to homepage</p>
                 <div class="buttons">
-                    <a class="btn btn-primary btn-outline-hover-dark" href="index.html">Go back</a>
-                    <a class="btn btn-dark btn-outline-hover-dark" href="index.html">Homepage</a>
+                    <a class="btn btn-primary btn-outline-hover-dark" href="{{route('index')}}">Back</a>Go back</a>
+                    <a class="btn btn-dark btn-outline-hover-dark" href="{{route('index')}}">Back</a>Homepage</a>
                 </div>
             </div>
         </div>

@@ -35,7 +35,7 @@
                         <div class="blog-author" style="margin-bottom: 0px;">
                             <div class="thumbnail" style="width: 32px;">
                                 @if(Auth::user()->avatar!=null)
-                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px;"></a>
                                 @else
                                 <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
                                 @endif
@@ -48,14 +48,7 @@
                     <div class="header-search">
                         <a href="#offcanvas-search" class="offcanvas-toggle"><i class="fal fa-search"></i></a>
                     </div>
-                    <div class="header-wishlist">
 
-                        @if(Session::has("Favorite")!= null)
-                        <a href="#offcanvas-wishlist" class="offcanvas-toggle"><span id="total-qty-favorite">{{Session::get("Favorite")->totalQuantity}}</span><i class="fal fa-heart"></i></a>
-                        @else
-                        <a href="#offcanvas-wishlist" class="offcanvas-toggle"><i class="fal fa-heart"></i></a>
-                        @endif
-                    </div>
                     <div class="header-cart">
 
                         @if(Session::has("Cart") !=null)
@@ -78,8 +71,7 @@
                     <li><a href="{{route('index')}}"><span class="menu-text">Trang Chủ</span></a></li>
                     <li><a href="{{route('Danh-Sach-San-Pham')}}"><span class="menu-text">Sản Phẩm</span></a></li>
                     <li><a href="{{route('Danh-Sach-Bai-Viet')}}"><span class="menu-text">Bài Viết</span></a></li>
-                    <li><a href="{{route('Danh-Sach-Danh-Muc')}}"><span class="menu-text">Danh Mục</span></a></li>
-                    <li><a href="{{route('Danh-Sach-Nha-Cung-Cap')}}"><span class="menu-text">Nhà Cung Cấp</span></a></li>
+                    <li><a href="{{URL::to('/contact_us')}}"><span class="menu-text">Liên hệ</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -108,8 +100,7 @@
                     <ul>
                         <li><a href="{{route('Danh-Sach-San-Pham')}}"><span class="menu-text">Sản Phẩm</span></a></li>
                         <li><a href="{{route('Danh-Sach-Bai-Viet')}}"><span class="menu-text">Bài Viết</span></a></li>
-                        <li><a href="{{route('Danh-Sach-Danh-Muc')}}"><span class="menu-text">Danh Mục</span></a></li>
-                        <li><a href="{{route('Danh-Sach-Nha-Cung-Cap')}}"><span class="menu-text">Nhà Cung Cấp</span></a></li>
+                        <li><a href="{{URL::to('/contact_us')}}"><span class="menu-text">Liên hệ</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -136,13 +127,7 @@
                     <div class="header-search d-none d-sm-block">
                         <a href="#offcanvas-search" class="offcanvas-toggle"><i class="fal fa-search"></i></a>
                     </div>
-                    <div class="header-wishlist">
-                        @if(Session::has("Favorite")!= null)
-                        <a href="#offcanvas-wishlist" class="offcanvas-toggle"><span id="total-qty-favorite">{{Session::get("Favorite")->totalQuantity}}</span><i class="fal fa-heart"></i></a>
-                        @else
-                        <a href="#offcanvas-wishlist" class="offcanvas-toggle"><i class="fal fa-heart"></i></a>
-                        @endif
-                    </div>
+
                     <div class="header-cart">
                         @if(Session::has("Cart") !=null)
                         <a href="#offcanvas-cart" class="offcanvas-toggle"><span id="total-qty-show" class="cart-count">{{Session::get("Cart")->totalQuantity}}</span><i class="fal fa-shopping-cart"></i></a>
@@ -185,18 +170,24 @@
             <div class="col-auto">
                 <div class="header-tools justify-content-end">
                     <div class="header-login d-none d-sm-block">
+                        @if(Auth::check())
+                        <div class="blog-author" style="margin-bottom: 0px;">
+                            <div class="thumbnail" style="width: 32px;">
+                                @if(Auth::user()->avatar!=null)
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px; "></a>
+                                @else
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
+                                @endif
+                            </div>
+                        </div>
+                        @else
                         <a href="{{route('login')}}"><i class="fal fa-user"></i></a>
+                        @endif
                     </div>
                     <div class="header-search d-none d-sm-block">
                         <a href="#offcanvas-search" class="offcanvas-toggle"><i class="fal fa-search"></i></a>
                     </div>
-                    <div class="header-wishlist d-none d-sm-block">
-                        @if(Session::has("Favorite")!= null)
-                        <a href="#offcanvas-wishlist" class="offcanvas-toggle"><span id="total-qty-favorite">{{Session::get("Favorite")->totalQuantity}}</span><i class="fal fa-heart"></i></a>
-                        @else
-                        <a href="#offcanvas-wishlist" class="offcanvas-toggle"><i class="fal fa-heart"></i></a>
-                        @endif
-                    </div>
+
                     <div class="header-cart">
                         @if(Session::has("Cart") !=null)
                         <a href="#offcanvas-cart" class="offcanvas-toggle"><span id="total-qty-show" class="cart-count">{{Session::get("Cart")->totalQuantity}}</span><i class="fal fa-shopping-cart"></i></a>
@@ -239,18 +230,24 @@
             <div class="col-auto">
                 <div class="header-tools justify-content-end">
                     <div class="header-login d-none d-sm-block">
+                    @if(Auth::check())
+                        <div class="blog-author" style="margin-bottom: 0px;">
+                            <div class="thumbnail" style="width: 32px;">
+                                @if(Auth::user()->avatar!=null)
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
+                                @else
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
+                                @endif
+                            </div>
+                        </div>
+                        @else
                         <a href="{{route('login')}}"><i class="fal fa-user"></i></a>
+                        @endif
                     </div>
                     <div class="header-search d-none d-sm-block">
                         <a href="#offcanvas-search" class="offcanvas-toggle"><i class="fal fa-search"></i></a>
                     </div>
-                    <div class="header-wishlist d-none d-sm-block">
-                        @if(Session::has("Favorite")!= null)
-                        <a href="#offcanvas-wishlist" class="offcanvas-toggle"><span id="total-qty-favorite">{{Session::get("Favorite")->totalQuantity}}</span><i class="fal fa-heart"></i></a>
-                        @else
-                        <a href="#offcanvas-wishlist" class="offcanvas-toggle"><i class="fal fa-heart"></i></a>
-                        @endif
-                    </div>
+
                     <div class="header-cart">
                         @if(Session::has("Cart") !=null)
                         <a href="#offcanvas-cart" class="offcanvas-toggle"><span id="total-qty-show" class="cart-count">{{Session::get("Cart")->totalQuantity}}</span><i class="fal fa-shopping-cart"></i></a>
@@ -277,7 +274,7 @@
 <!-- Mobile Header Section End -->
 @if (Auth::check())
 <!-- OffCanvas account Start -->
-<div id="offcanvas-account" class="offcanvas offcanvas-account">
+<div id="offcanvas-account" class="offcanvas offcanvas-account" style="z-index:9999;">
     <div class="inner">
         <div class="head">
             <span class="title">Tài Khoản</span>
@@ -348,43 +345,7 @@
 </div>
 <!-- OffCanvas Search End -->
 
-<!-- OffCanvas Wishlist Start -->
-<div id="offcanvas-wishlist" class="offcanvas offcanvas-wishlist">
-    <div class="inner" id="change-item">
-        <div class="head">
-            <span class="title">Yêu Thích</span>
-            <button class="offcanvas-close">×</button>
-        </div>
-        @if(Session::has("Favorite") != null)
-        <div class="body customScroll">
-            <ul class="minicart-product-list">
-                @foreach(Session::get('Favorite')->product as $item)
-                <li>
-                    <a href="product-details.html" class="image"><img src="{{URL::to('/')}}/server/assets/image/product/{{$item['product_info']->product_img}}" alt="Cart product Image"></a>
-                    <div class="content">
-                        <a href="product-details.html" class="title">{{$item['product_info']->product_name}}</a>
-                        <span class="quantity-price">{{$item['qty']}} x <span class="amount">{{number_format($item['product_info']->product_price).' '.'VND'}}</span></span>
-                        <i class="fa fa-times remove" data-id="{{$item['product_info']->product_id}}"></i>
-                    </div>
-                </li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-        @if(Session::has("Favorite") == null)
-        <div class="body customScroll">
-            <strong>Giỏ Hàng trống</strong>
-        </div>
-        @endif
-        <div class="foot">
-            <div class="buttons">
-                <a href="{{URL::to('/favorite')}}" class="btn btn-dark btn-hover-primary">Xem Danh Sách</a>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<!-- OffCanvas Wishlist End -->
+
 
 <!-- OffCanvas Cart Start -->
 <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
@@ -407,8 +368,7 @@
                 <li><a href="{{route('index')}}"><span class="menu-text">Trang Chủ</span></a></li>
                 <li><a href="{{route('Danh-Sach-San-Pham')}}"><span class="menu-text">Sản Phẩm</span></a></li>
                 <li><a href="{{route('Danh-Sach-Bai-Viet')}}"><span class="menu-text">Bài Viết</span></a></li>
-                <li><a href="{{route('Danh-Sach-Danh-Muc')}}"><span class="menu-text">Danh Mục</span></a></li>
-                <li><a href="{{route('Danh-Sach-Nha-Cung-Cap')}}"><span class="menu-text">Nhà Cung Cấp</span></a></li>
+                <li><a href="{{URL::to('/contact_us')}}"><span class="menu-text">Liên hệ</span></a></li>
             </ul>
         </div>
         <div class="offcanvas-buttons">
