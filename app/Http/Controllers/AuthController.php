@@ -73,7 +73,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
-        // Auth::logout();
         return redirect('/');
     }
     public function verifyAccount(Request $request)
@@ -87,58 +86,89 @@ class AuthController extends Controller
             return redirect('/login')->with('danger', 'Đường Dẫn Không Tồn Tại');
         }
         $checkUser->status = 1;
+        $checkUser->code = NULL;
         $checkUser->save();
 
         return redirect('/login')->with('success', 'Verify successful');
     }
-    public function getForgotPassword()
+    public function getQuenMatKhau()
     {
         return view('auth.passwords.email');
     }
-    public function postForgotPassword(Request $request)
+    public function postQuenMatKhau(Request $request)
     {
 
         $request->validate([
             'email' => 'required|email|exists:users',
         ]);
-        $token = Str::random(60);
-        $url = view('password/reset/',$token);
-        $data = [
-            'route' => $url
-        ];
-        DB::table('password_resets')->insert([
-            'email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()
-        ]);
+        $kiemtraEmail = DB::table('users')
+            ->where('email', '=', $request->email)->first();
+        if (!$kiemtraEmail) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Email sai'
+            ]);
+        } else {
 
+            // dd($kiemtraEmail);
+            $token = Str::random(6);
+            // dd($token);
+            $kiemtraBang = DB::table('tpl_reset_password')
+            ->where('email','=',$request->email)->first();
+            if(!$kiemtraBang) {
+                DB::table('tpl_reset_password')->insert([
+                    'email' => $request->email,
+                    'token' => $token,
+                    'created_at' => Carbon::now()
+                ]);
+            }
+            else{
+                DB::table('tpl_reset_password')
+                ->where(['tpl_reset_password.email' => $request->email])
+                ->update([
+                    'token' => $token,
+                    'created_at' => Carbon::now()
+                ]);
+            }
+            // DB::table('tpl_reset_password')->insert([
+            //             'email' => $request->email,
+            //             'token' => $token,
+            //             'created_at' => Carbon::now()
+            //         ]);
+            $data = [
+                'token' => $token,
+                'email' => $request->email,
+            ];
+            Mail::to($request->email)->send(new \App\Mail\ResetPassword($data));
+            return view('auth.passwords.otp')->with('email',$request->email);
+        }
+    }
 
-        Mail::to($request->email)->send(new \App\Mail\ResetPassword($data));
+    public function postNhapOtp(Request $request){
+        $check = DB::table('tpl_reset_password')
+        ->where('token','=',$request->otp)
+        ->where('email','=',$request->email)
+        ->orderBy('created_at','desc')
+        ->first();
+        if($check){
+            return view('auth.passwords.reset')->with('email',$request->email);
+        }
         return back();
     }
-    public function getResetPassword($token)
-    {
-        return view('auth.password.reset', ['token' => $token]);
-    }
-    public function postResetPassword(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:users',
-            'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required',
 
+    public function postDatLaiMatKhau(Request $request){
+        DB::table('users')
+        ->where('email','=',$request->email)
+        ->update([
+            'password' =>  Hash::make($request->password)
         ]);
-
-        $updatePassword = DB::table('password_resets')
-            ->where(['email' => $request->email, 'token' => $request->token])
-            ->first();
-
-        if (!$updatePassword)
-            return back()->withInput()->with('error', 'Invalid token!');
-
-        $user = User::where('email', $request->email)
-            ->update(['password' => Hash::make($request->password)]);
-
-        DB::table('password_resets')->where(['email' => $request->email])->delete();
-
-        return redirect('/login')->with('message', 'Your password has been changed!');
+        DB::table('tpl_reset_password')
+        ->where('email','=',$request->email)
+        ->update([
+            'token' => NULL
+        ]);
+        return view('auth.login');
     }
+
+
 }

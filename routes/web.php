@@ -64,6 +64,8 @@ Route::group(['middleware' => 'levellogin'], function () {
 
     //Promotion
     Route::resource('/KhuyenMai','PromotionController');
+    Route::get('/XoaKhuyenMai/{KhuyenMai}', 'PromotionController@destroy');
+    Route::post('SuaKhuyenMai/{KhuyenMai}', 'PromotionController@update')->name('SuaKhuyenMai');
 
     //Report
     Route::get('/Report', 'ReportController@index');
@@ -84,10 +86,15 @@ Route::get('/login', 'AuthController@index')->name('login');
 Route::post('/login', 'AuthController@login');
 
 Route::get('/logout','AuthController@logout')->name('logout');
-Route::get('forget-password', 'AuthController@getForgotPassword')->name('get.forgot-password');
-Route::post('forget-password', 'AuthController@postForgotPassword')->name('post.forgot-password');
-Route::get('reset-password/{token}', 'AuthController@getResetPassword');
-Route::post('reset-password', 'AuthController@postResetPassword')->name('post.reset-password');
+Route::get('/QuenMatKhau','AuthController@getQuenMatKhau')->name('getQuenMatKhau');
+Route::post('/QuenMatKhau','AuthController@postQuenMatKhau')->name('postQuenMatKhau');
+
+// Route::get('/QuenMatKhau-otp','AuthController@getQuenMatKhau')->name('get.otp');
+
+Route::post('/LayLaiMatKhau','AuthController@postNhapOtp')->name('post.otp');
+
+Route::post('/DatLaiMatKhau','AuthController@postDatLaiMatKhau')->name('post.datmatkhau');
+
 Route::post('/register', 'AuthController@register')->name('register');
 Route::get('/verifyAccount', 'AuthController@verifyAccount')->name('verifyAccount');
 Route::get('/user', 'AuthController@userInfo')->middleware('auth:api');
@@ -102,8 +109,12 @@ Route::resource('/', 'ClientController');
 Route::get('/about_us', 'ClientController@about_us');
 Route::get('/checkout', 'ClientController@check_out');
 Route::get('/contact_us', 'ClientController@contact_us');
+//Thong tin tai khoan
 Route::get('Tai-Khoan', 'ClientController@my_account')
     ->name('Tai-Khoan');
+Route::post('post-thay-doi-thong-tin-nguoi-dung','ClientController@change_my_account')->name('post.change_account');
+
+Route::post('post-thay-doi-mat-khau','ClientController@post_change_password')->name('post.change_password');
 
 //Brand
 Route::get('/Nha-Cung-Cap/{slug}-{id}', 'ClientController@portfolio_list')
@@ -160,7 +171,7 @@ Route::get('/save-item-list-favorite/{id}/{qty}', 'FavoriteController@SaveItemLi
 
 //search
 
-Route::get('tim-kiem', 'SearchController@autocomplete')->name('tim-kiem');
+Route::get('/tim-kiem/name', 'SearchController@searchProductByName');
 
 
 Route::get('donhangg', 'SearchController@donhangg')->name('donhangg');

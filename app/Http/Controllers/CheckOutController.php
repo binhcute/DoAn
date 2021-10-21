@@ -93,8 +93,13 @@ class CheckOutController extends Controller
                 $san_pham_ton ->save();
                 $order_dt->save();
             }
-            $request->Session()->forget('Cart');
             if ($order_dt->save()) {
+                foreach (Session::get('Cart')->product as $key => $item) {
+                    $product_name = $item['product_info']->product_name;
+                    $product_quantity = $item['qty'];
+                    $product_price = $item['price'];
+                    $product_amount = $item['qty'] *  $item['price'];
+                }
                 // $productName = DB::table('tpl_order_dt')
                 //     ->join('tpl_product', 'tpl_product.product.product_id', 'tpl_order_dt.product_id')
                 //     ->select('tpl_product.product_name')
@@ -109,6 +114,7 @@ class CheckOutController extends Controller
                     'notes' => $order->notes
                 ];
                 Mail::to(auth()->user()->email)->send(new \App\Mail\MailNotify($message));
+                $request->Session()->forget('Cart');
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Đặt hàng thành công'

@@ -119,11 +119,8 @@
                 <ul class="profile-dropdown onhover-show-div">
                   <li><a href="{{route('MyAccount.index')}}"><i data-feather="user"></i><span>Tài khoản </span></a></li>
                   <li><a href="#"><i data-feather="settings"></i><span>Cài đặt</span></a></li>
-                  <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"><i data-feather="log-in"> </i><span>Đăng xuất</span>
-                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                      </form>
+                  <li><a href="{{ route('logout') }}"><i data-feather="log-in"> </i><span>Đăng xuất</span>
+                      
                     </a></li>
                 </ul>
               </li>

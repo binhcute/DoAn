@@ -1,17 +1,17 @@
 @extends('layout_admin')
-@section('title','Danh Mục')
+@section('title','Khuyến Mãi')
 @section('content')
 <div class="col-sm-12">
   <div class="page-title">
     <div class="row">
       <div class="col-6">
-        <h3>Danh Sách Danh Mục</h3>
-        <a style="margin-left:50px" class="btn btn-success" href="{{route('LoaiSanPham.create')}}"><i class="fa fa-plus"></i> Thêm Mới</a>
+        <h3>Danh Sách Khuyến Mãi</h3>
+        <a style="margin-left:50px" class="btn btn-success" href="{{route('KhuyenMai.create')}}"><i class="fa fa-plus"></i> Thêm Mới</a>
       </div>
       <div class="col-6">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.index')}}"> <i data-feather="home"></i></a></li>
-          <li class="breadcrumb-item">Danh Mục</li>
+          <li class="breadcrumb-item">Khuyến Mãi</li>
           <li class="breadcrumb-item active">Danh Sách</li>
         </ol>
       </div>
@@ -26,20 +26,20 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Tên</th>
-              <th scope="col">Hình Ảnh</th>
-              <th scope="col">Trạng Thái</th>
+              <th scope="col">Số Tiền Giảm Giá</th>
+              <th scope="col">Thời gian</th>
               <th scope="col">Tác Vụ</th>
             </tr>
           </thead>
           <tbody id="change-layout">
-          @include('pages.server.category.list-item')
+          @include('pages.server.promotion.list-item')
           </tbody>
           <tfoot>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Tên</th>
-              <th scope="col">Hình Ảnh</th>
-              <th scope="col">Trạng Thái</th>
+              <th scope="col">Số Tiền Giảm Giá</th>
+              <th scope="col">Thời gian</th>
               <th scope="col">Tác Vụ</th>
             </tr>
           </tfoot>

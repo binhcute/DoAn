@@ -75,9 +75,9 @@
                 </div>
               </form>
               <p class="mt-4 mb-0 text-center">Bạn không có tài khoản?<a class="ms-2" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Tạo tài khoản</a></p>
-              @if (Route::has('password.request'))
-              <p class="mt-4 mb-0 text-center">Bạn quên mật khẩu?<a class="btn btn-link" href="{{ route('get.forgot-password') }}">Click vào đây</a></p>
-              @endif
+             
+              <p class="mt-4 mb-0 text-center">Bạn quên mật khẩu?<a class="btn btn-link" href="{{ route('getQuenMatKhau') }}">Click vào đây</a></p>
+
             </div>
           </div>
         </div>

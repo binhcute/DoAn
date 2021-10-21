@@ -17,7 +17,15 @@
     </div>
   </div>
 </div>
+<div class="card">
+    <div class="card-header">
+      <h5>Thông Tin Tài Khoản</h5>
+      <div style="padding-top:10px" id="noti-validate"></div>
+    </div>
 <!-- Container-fluid starts-->
+<div class="card-body">
+        <div class="row">
+          <div class="col">
 <div class="container-fluid">
   <div class="user-profile">
     <div class="row">
@@ -71,8 +79,11 @@
 
         </div>
       </div>
+    </div></div>
+      </div>
     </div>
   </div>
+</div>
 </div>
 <!-- Container-fluid Ends-->
 @endsection

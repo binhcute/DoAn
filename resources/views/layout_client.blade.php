@@ -95,22 +95,45 @@
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
     <script src="{{asset('client/js/vendor/vendor.min.js')}}"></script>
     <script src="{{asset('client/js/plugins/plugins.min.js')}}"></script>
-    <script src="{{asset('client/js/bootstrap3-typeahead.min.js_4.0.2/cdnjs/bootstrap3-typeahead.min.js')}}"></script>
-    <script>
-        var path = "{{ route('tim-kiem') }}";
-        $('input.typeahead').typeahead({
-            source: function(query, process) {
-                return $.get(path, {
-                    query: query
-                }, function(data) {
-                    return process(data);
-                });
-            },
-            highlighter: function(item, data) {
-                var parts = item.split('#'),
-                    html = ` <a href="#"><div class="row" style="padding:2px 0px;"><div class="col-md-1" style="padding-right:8px;"><img src="server/assets/image/product/${data.img}"/ height="100%" width="200px;"></div><div class="col-md-10 pl-0"><span style="font-size: 1.4rem;">${data.name}</span></div></div></a>`;
-                return html;
-            }
+    <!-- <script src="{{asset('client/js/bootstrap3-typeahead.min.js_4.0.2/cdnjs/bootstrap3-typeahead.min.js')}}"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+  
+    <!-- <script src="{{URL::asset('js/app.js')}}"></script> -->
+    <script type="text/javascript">
+        $(document).ready(function($) {
+            var engine1 = new Bloodhound({
+                remote: {
+                    url: '/tim-kiem/name?value=%QUERY%',
+                    wildcard: '%QUERY%'
+                },
+                datumTokenizer: Bloodhound.tokenizers.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace
+            });
+
+            $(".search-input-layout").typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1
+            }, [{
+                    source: engine1.ttAdapter(),
+                    name: 'product_name',
+                    display: function(data) {
+                        return data.product_name;
+                    },
+                    templates: {
+                        empty: [
+                            '<div class="header-title">Tên Sản Phẩm</div><div class="list-group search-results-dropdown"><div class="list-group-item">Không tìm thấy sản phẩm nào</div></div>'
+                        ],
+                        header: [
+                            '<div class="header-title">Tên Sản Phẩm</div><div class="list-group search-results-dropdown"></div>'
+                        ],
+                        suggestion: function(data) {
+                            
+                            return '<a href="/San-Pham/'+ data.product_name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\-]+/g, '-') + '-' + data.product_id + '" class="list-group-item">' + ` <div class="row" style="padding:2px 0px;"><div class="col-md-1" style="padding-right:8px;"><img src="/./server/assets/image/product/${data.product_img}"/ height="100%" width="200px;"></div><div class="col-md-10 pl-0"><span style="font-size: 1.4rem;">${data.product_name}</span></div></div>` + '</a>';
+                        }
+                    }
+                }
+            ]);
         });
     </script>
     <!-- Main Activation JS -->

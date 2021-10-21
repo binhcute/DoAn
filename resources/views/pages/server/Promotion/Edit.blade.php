@@ -1,16 +1,16 @@
 @extends('layout_admin')
-@section('title','Danh Mục')
+@section('title','Khuyến Mãi')
 @section('content')
 <div class="col-sm-12">
   <div class="page-title">
     <div class="row">
       <div class="col-6">
-        <a class="btn btn-primary" href="{{route('LoaiSanPham.index')}}"><i class="fa fa-angle-double-left"></i> Quay Lại</a>
+        <a class="btn btn-primary" href="{{route('KhuyenMai.index')}}"><i class="fa fa-angle-double-left"></i> Quay Lại</a>
       </div>
       <div class="col-6">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.index')}}"> <i data-feather="home"></i></a></li>
-          <li class="breadcrumb-item">Danh Mục</li>
+          <li class="breadcrumb-item">Khuyến Mãi</li>
           <li class="breadcrumb-item active">Chỉnh Sửa</li>
         </ol>
       </div>
@@ -18,38 +18,36 @@
   </div>
   <div class="card">
     <div class="card-header">
-      <h5>Chỉnh Sửa Danh Mục</h5>
+      <h5>Chỉnh Sửa Khuyến Mãi</h5>
     </div>
-    <form class="form theme-form" action="{{ route('SuaLoaiSanPham',$cate->cate_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
+    <form class="form theme-form" action="{{ route('SuaKhuyenMai',$khuyenmai->promotion_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
       <meta name="csrf-token" content="{{ csrf_token() }}">
      
       <div class="card-body">
         <div class="row">
-          <div class="col">
+        <div class="col">
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label pt-0">Người Nhập Hiện Tại</label>
+              <label class="col-sm-3 col-form-label">Tên Mã Khuyến Mãi</label>
               <div class="col-sm-9">
-                <div class="form-control-static">{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</div>
+                <input class="form-control" type="text" placeholder="Nhập tên Mã Khuyến Mãi" value="{{$khuyenmai->promotion_name}}" name="promotion_name" id="promotion_name">
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Tên Loại Sản Phẩm</label>
+              <label class="col-sm-3 col-form-label">Mã Khuyến Mãi</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên loại sản phẩm" value="{{ $cate->cate_name }}" name="name" id="name">
+                <input class="form-control" type="text" placeholder="Mã" name="promotion_key" id="promotion_key" value="{{$khuyenmai->promotion_key}}">
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Mô Tả</label>
+              <label class="col-sm-3 col-form-label">Số Tiền Giảm</label>
               <div class="col-sm-9">
-                <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="description">{{$cate->cate_description}}</textarea>
+                <input class="form-control" type="number" placeholder="Giá" name="promotion_money" id="promotion_money" value="{{$khuyenmai->promotion_money}}">
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chọn ảnh</label>
+              <label class="col-sm-3 col-form-label">Thời Hạn</label>
               <div class="col-sm-9">
-                <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
-                <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
-                <img id="event__img-0" src="{{URL::to('/')}}/server/assets/image/category/{{$cate->cate_img}}" alt="slider" width="50%" height="250px">
+                <input class="form-control" type="date" placeholder="Thời gian hết hạn" name="end_at" id="end_at" value="{{$khuyenmai->end_at}}">
               </div>
             </div>
           </div>
@@ -139,7 +137,7 @@
             timer: 2500
           })
           window.setTimeout(function() {
-            window.location.replace("{{route('LoaiSanPham.index')}}");
+            window.location.replace("{{route('KhuyenMai.index')}}");
           }, 2500);
         }
       }

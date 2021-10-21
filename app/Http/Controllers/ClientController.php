@@ -8,8 +8,10 @@ use App\Models\Category;
 use App\Models\Portfolio;
 use App\Models\Article;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class ClientController extends Controller
 {
@@ -263,9 +265,46 @@ class ClientController extends Controller
         return view('pages.client.myaccount');
         // ->with('order', $order);
     }
+
+    public function change_my_account(Request $request){
+        if(Auth::check()){
+            $taikhoan = User::find(Auth::user()->id);
+            $taikhoan -> lastName = $request->lastName;
+            $taikhoan -> firstName = $request->firstName;
+            $taikhoan -> avatar = $request->avatar;
+            $taikhoan -> email = $request->email;
+            $taikhoan -> phone = $request->phone;
+            $taikhoan -> address = $request->address;
+            $taikhoan -> birthday = $request->birthday;
+            $taikhoan -> gender = $request->gender;
+            $taikhoan -> save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thay đổi thông tin thành công'
+            ]);
+        }
+    }
+
     public function change_password()
     {
         return view('pages.client.change-password');
+    }
+
+    public function post_change_password(Request $request){
+        // dd($request->all());
+        $hashedPassword = Auth::user()->password;
+        if(Auth::check() && Hash::check($request->old_password, $hashedPassword)){
+
+            if($request->new_pwd == $request->confirm_pwd){
+                // dd('dung');
+                $user = User::find(Auth::user()->id);
+                $user ->password = Hash::make($request->new_pwd);
+                $user ->save();
+                return back();
+            }
+        }    
+        dd('sai');
     }
 
     public function cart()
