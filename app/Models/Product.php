@@ -24,7 +24,6 @@ class Product extends Model
         'product_img',
         'product_img_hover',
         'product_price',
-        'product_color',
         'product_description',
         'product_quantity',
         'product_keyword',

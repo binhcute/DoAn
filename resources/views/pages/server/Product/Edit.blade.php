@@ -78,12 +78,6 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label pt-0">Màu Sắc</label>
-              <div class="col-sm-9">
-                <input class="form-control" type="text" name="color" id="color" placeholder="Màu Sắc" value="{{$product->product_color}}">
-              </div>
-            </div>
-            <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Từ Khóa</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" placeholder="Tối đa 10 ký tự" maxlength="10" name="keyword" id="keyword" value="{{$product->product_keyword}}">

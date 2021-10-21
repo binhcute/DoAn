@@ -8,8 +8,10 @@ use App\Models\Category;
 use App\Models\Portfolio;
 use App\Models\Article;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class ClientController extends Controller
 {
@@ -55,14 +57,14 @@ class ClientController extends Controller
 
         $modal = Product::queryModalProduct()->get();
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return view('pages.client.list-product.dsSanPham')
-            ->with('product', $product)
-            ->with('product_cate', $product_cate)
-            ->with('product_hot', $product_hot)
-            ->with('product_new', $product_new)
-            ->with('portfolio', $portfolio)
-            ->with('modal', $modal);
+                ->with('product', $product)
+                ->with('product_cate', $product_cate)
+                ->with('product_hot', $product_hot)
+                ->with('product_new', $product_new)
+                ->with('portfolio', $portfolio)
+                ->with('modal', $modal);
         }
         return view('pages.client.productlist')
             ->with('product', $product)
@@ -127,12 +129,18 @@ class ClientController extends Controller
     public function article(Request $request)
     {
         $article = Article::queryStatusOne()->orderBy('created_at', 'desc')->paginate(3);
+        //Bài Viết Xem nhiều
+        $view_hot = DB::table('tpl_article')
+            ->orderBy('tpl_article.view', 'desc')->limit(1)->first();
+
         if ($request->ajax()) {
             return view('pages.client.article.dsBaiViet')
-                ->with('article', $article);
+                ->with('article', $article)
+                ->with('view_hot', $view_hot);
         }
         return view('pages.client.articlelist')
-            ->with('article', $article);
+            ->with('article', $article)
+            ->with('view_hot', $view_hot);
     }
     public function article_detail($slug, $id)
     {
@@ -145,6 +153,7 @@ class ClientController extends Controller
             )
             ->join('users', 'users.id', '=', 'tpl_article.user_id')
             ->where('tpl_article.article_id', $id)->first();
+
         $related = DB::table('tpl_article')->inRandomOrder()->limit(2)->get();
         $comment = DB::table('tpl_comment')
             ->select(
@@ -156,11 +165,26 @@ class ClientController extends Controller
             )
             ->join('users', 'users.id', '=', 'tpl_comment.user_id')
             ->where('tpl_comment.status', 1)
-            ->where('tpl_comment.article_id', $id)->get();
+            ->where('tpl_comment.article_id', $id)->paginate(3);
         $recent = Article::queryStatusOne()
             ->orderBy('created_at', 'desc')->limit(3)->get();
         $cate = Category::queryStatusOne()
             ->orderBy('created_at', 'desc')->limit(3)->get();
+
+
+        //Luot Xem
+        $article_view = DB::table('tpl_article')
+            ->where('article_id', $id)->get();
+        foreach ($article_view as $item) {
+            $article_id = $item->article_id;
+        }
+
+        $luot_xem = Article::where('article_id', $article_id)->first();
+        $luot_xem->view = $luot_xem->view + 1;
+        $luot_xem->save();
+        //Het Luot Xem
+
+
 
         return view('pages.client.articledetail')
             ->with('article', $article)
@@ -241,9 +265,46 @@ class ClientController extends Controller
         return view('pages.client.myaccount');
         // ->with('order', $order);
     }
+
+    public function change_my_account(Request $request){
+        if(Auth::check()){
+            $taikhoan = User::find(Auth::user()->id);
+            $taikhoan -> lastName = $request->lastName;
+            $taikhoan -> firstName = $request->firstName;
+            $taikhoan -> avatar = $request->avatar;
+            $taikhoan -> email = $request->email;
+            $taikhoan -> phone = $request->phone;
+            $taikhoan -> address = $request->address;
+            $taikhoan -> birthday = $request->birthday;
+            $taikhoan -> gender = $request->gender;
+            $taikhoan -> save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thay đổi thông tin thành công'
+            ]);
+        }
+    }
+
     public function change_password()
     {
         return view('pages.client.change-password');
+    }
+
+    public function post_change_password(Request $request){
+        // dd($request->all());
+        $hashedPassword = Auth::user()->password;
+        if(Auth::check() && Hash::check($request->old_password, $hashedPassword)){
+
+            if($request->new_pwd == $request->confirm_pwd){
+                // dd('dung');
+                $user = User::find(Auth::user()->id);
+                $user ->password = Hash::make($request->new_pwd);
+                $user ->save();
+                return back();
+            }
+        }    
+        dd('sai');
     }
 
     public function cart()

@@ -61,7 +61,7 @@ class CommentController extends Controller
             if ($request->role == 1) {
                 $giao_dien = view('pages.client.load-comment', compact(['comment', 'product_detail']))->render();
             } else {
-                $giao_dien = view('pages.client.comment-article', compact(['comment', 'product_detail']))->render();
+                $giao_dien = view('pages.client.Article-Detail.comment-article', compact(['comment', 'product_detail']))->render();
             }
             return response()->json([
                 'status' => 'success',

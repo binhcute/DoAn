@@ -31,6 +31,6 @@ class ResetPassword extends Mailable
     public function build()
     {
         return $this->subject($this->subject)->replyTo('thanhbinh0606.hcm@gmail.com','Reset Password')
-        ->view('auth.password.verify', ['data' => $this->data]);
+        ->view('email.lay-lai-mat-khau', ['data' => $this->data]);
     }
 }

@@ -73,12 +73,6 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Màu Sắc</label>
-              <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Bao Gồm" name="color" id="color11">
-              </div>
-            </div>
-            <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Từ Khóa</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" placeholder="Tối đa 10 ký tự" maxlength="10" name="keyword" id="keyword">

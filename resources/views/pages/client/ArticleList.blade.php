@@ -25,11 +25,11 @@
 <!-- Portfolio Section Start -->
 <div class="section section-padding">
     <div class="container">
+        @if(count($article) != 0)
         <div class="row learts-mb-n50">
-
             <div class="col-xl-9 col-lg-8 col-12 learts-mb-50">
                 <div class="row no-gutters learts-mb-n40" id="phan-trang-bai-viet">
-                   @include('pages.client.Article.dsBaiViet')
+                    @include('pages.client.Article.dsBaiViet')
                 </div>
 
             </div>
@@ -50,13 +50,14 @@
 
                     <h3 class="widget-title product-filter-widget-title">Bài Viết Xem Nhiều</h3>
                     <ul class="widget-blogs">
+
                         <li class="widget-blog">
                             <div class="thumbnail">
-                                <a href="blog-details-right-sidebar.html"><img src="{{asset('client/images/blog/widget/widget-1.jpg')}}" alt="Widget Blog Post"></a>
+                                <a href="{{route('Bai-Viet',[Str::slug($view_hot->article_name, '-'),$view_hot->article_id])}}"><img src="{{URL::to('/')}}/server/assets/image/article/{{$view_hot->article_img}}" alt="Widget Blog Post"></a>
                             </div>
                             <div class="content">
-                                <h6 class="title"><a href="blog-details-right-sidebar.html">Start a Kickass Online Blog</a></h6>
-                                <span class="date">January 22, 2020</span>
+                                <h6 class="title"><a href="{{route('Bai-Viet',[Str::slug($view_hot->article_name, '-'),$view_hot->article_id])}}">{{$view_hot->article_name}}</a></h6>
+                                <span class="date"><i class="far fa-eye"></i> {{$view_hot->view}} Lượt xem</span>
                             </div>
                         </li>
                     </ul>
@@ -76,6 +77,9 @@
             </div>
 
         </div>
+        @else
+        <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="">
+        @endif
     </div>
 
 </div>

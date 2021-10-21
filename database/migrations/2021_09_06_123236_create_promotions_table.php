@@ -16,10 +16,10 @@ class CreatePromotionsTable extends Migration
         Schema::create('tpl_promotion', function (Blueprint $table) {
             $table->Increments('promotion_id');
             $table->string('promotion_name');
-            $table->integer('promotion_percent')->nullable();
+            $table->integer('promotion_key')->nullable();
             $table->integer('promotion_money')->nullable();
             $table->timestamps();
-            $table->date('end_at');
+            $table->datetime('end_at');
         });
     }
 

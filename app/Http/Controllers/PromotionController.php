@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Promotion;
+use Illuminate\Support\Str;
 
 class PromotionController extends Controller
 {
@@ -15,7 +16,7 @@ class PromotionController extends Controller
     public function index()
     {
         $khuyenmai = Promotion::all();
-        return view('pages.server.promotion.list',compact(['khuyenmai']));
+        return view('pages.server.promotion.list', compact(['khuyenmai']));
     }
 
     /**
@@ -36,9 +37,14 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
+
         $khuyenmai = new Promotion();
         $khuyenmai->promotion_name = $request->promotion_name;
-        $khuyenmai->promotion_percent = $request->promotion_percent;
+        if ($request->promotion_key == NULL) {
+            $khuyenmai->promotion_key = Str::random(6);
+        } else {
+            $khuyenmai->promotion_key = $request->promotion_key;
+        }
         $khuyenmai->promotion_money = $request->promotion_money;
         $khuyenmai->end_at = $request->end_at;
         $khuyenmai->save();
@@ -47,7 +53,9 @@ class PromotionController extends Controller
                 'status' => 'success',
                 'message' => 'Thanh Cong'
 
-            ],200);
+            ],
+            200
+        );
     }
 
     /**
@@ -69,7 +77,8 @@ class PromotionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $khuyenmai = Promotion::find($id);
+        return view('pages.server.promotion.edit',compact(['khuyenmai']));
     }
 
     /**
@@ -81,7 +90,20 @@ class PromotionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $khuyenmai = Promotion::find($id);
+        $khuyenmai ->promotion_name = $request->promotion_name;
+        $khuyenmai-> promotion_key = $request->promotion_key;
+        $khuyenmai-> promotion_money = $request->promotion_money;
+        $khuyenmai-> end_at = $request->end_at;
+        $khuyenmai-> save();
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Thanh Cong'
+
+            ],
+            200
+        );
     }
 
     /**

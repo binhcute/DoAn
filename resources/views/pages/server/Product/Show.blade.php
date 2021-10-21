@@ -65,10 +65,6 @@
               <td>{{$product->cate_name}}</td>
             </tr>
             <tr>
-              <td> <b>Màu Sắc &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
-              <td>{{$product->product_color}}</td>
-            </tr>
-            <tr>
               <td> <b>Ký hiệu &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
               <td>{{$product->product_keyword}}</td>
             </tr>

@@ -314,11 +314,7 @@
                 <a href="{{URL::to('/admin')}}" class="btn btn-secondary btn-hover-primary"><i class="fas fa-users-cog"></i> Trang Admin</a>
                 @endif
                 <a href="{{route('Tai-Khoan')}}" class="btn btn-dark btn-hover-primary"><i class="fas fa-user-circle"></i> Tài Khoản</a>
-                <a href="{{ route('logout') }}" class="btn btn-outline-dark btn-hover-primary" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"><i class="fas fa-door-open" data-feather="log-in"> </i> Đăng Xuất
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                <a href="{{ route('logout') }}" class="btn btn-outline-dark btn-hover-primary" ><i class="fas fa-door-open" data-feather="log-in"> </i> Đăng Xuất
                 </a>
             </div>
         </div>
@@ -339,7 +335,6 @@
                 </div>
             </form>
         </div>
-        <p class="search-description text-body-light mt-2"> <span>Tìm Kiếm Một Sản Phẩm Nào Đó Theo Ý Thích Của Bạn</span></p>
 
     </div>
 </div>
@@ -386,13 +381,6 @@
                     </div>
                     @else
                     <a href="{{route('login')}}"><i class="fal fa-user"></i></a>
-                    @endif
-                </div>
-                <div class="header-wishlist">
-                    @if(Session::has("Favorite")!= null)
-                    <a href="{{URL::to('/favorite')}}"><span id="total-qty-favorite">{{Session::get("Favorite")->totalQuantity}}</span><i class="fal fa-heart"></i></a>
-                    @else
-                    <a href="{{URL::to('/favorite')}}"><i class="fal fa-heart"></i></a>
                     @endif
                 </div>
                 <div class="header-cart">
