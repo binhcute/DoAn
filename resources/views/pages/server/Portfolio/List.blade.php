@@ -51,8 +51,6 @@
   <strong class="text-center">Danh Sách Trống</strong>
   @endif
 </div>
-</div>
-
 @endsection
 @section('page-js')
 <script>
@@ -113,15 +111,14 @@
     });
     event.preventDefault();
     var url = $(this).data('url');
-    console.log(url);
     Swal.fire({
-      title: 'Bạn muốn xóa nhà cung cấp này ?',
+      title: 'Bạn Muốn Xóa Nhà Cung Cấp Này ?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#d33',
       confirmButtonColor: '#3085d6',
       cancelButtonText: 'Hủy',
-      confirmButtonText: 'Thay Đổi'
+      confirmButtonText: 'Xóa'
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({

@@ -18,7 +18,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('pages.client.cart');
+        return view('pages.client.Cart');
     }
 
 
@@ -32,9 +32,9 @@ class CartController extends Controller
 
             $request->session()->put('Cart', $newCart);
         }
-        // $danh_sach = view('pages.client.item-cart')->gender();
+        // $danh_sach = view('pages.client.cart.update-icon-section-start')->gender();
         // $gio_hang = view()
-        return view('pages.client.item-cart');
+        return view('pages.client.Cart.item-cart');
     }
 
     public function AddCartDT(Request $request, $id)
@@ -47,7 +47,7 @@ class CartController extends Controller
 
             $request->session()->put('Cart', $newCart);
         }
-        return view('pages.client.item-cart');
+        return view('pages.client.Cart.item-cart');
     }
 
     public function DeleteItemCart(Request $request, $id)
@@ -60,7 +60,7 @@ class CartController extends Controller
         } else {
             $request->Session()->forget('Cart');
         }
-        return view('pages.client.item-cart');
+        return view('pages.client.Cart.item-cart');
     }
 
     public function DeleteItemListCart(Request $request, $id)
@@ -73,7 +73,10 @@ class CartController extends Controller
         } else {
             $request->Session()->forget('Cart');
         }
-        return view('pages.client.list-cart');
+        return response()->json([
+            'status' => 'success',
+            'giao_dien' => view('pages.client.Cart.list-cart')->render(),
+        ],200) ;
     }
     public function SaveItemListCart(Request $request, $id, $qty)
     {
@@ -81,7 +84,7 @@ class CartController extends Controller
         $newCart = new Cart($oldCart);
         $newCart->SaveItemListCart($id, $qty);
         $request->Session()->put('Cart', $newCart);
-        $giao_dien = view('pages.client.cart.list-cart')->render();
+        $giao_dien = view('pages.client.Cart.list-cart')->render();
         return response()->json([
             'status' => 'success',
             'giao_dien' => $giao_dien

@@ -35,7 +35,7 @@
                         <div class="blog-author" style="margin-bottom: 0px;">
                             <div class="thumbnail" style="width: 32px;">
                                 @if(Auth::user()->avatar!=null)
-                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px;"></a>
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px;"></a>
                                 @else
                                 <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
                                 @endif
@@ -45,6 +45,9 @@
                         <a href="{{route('login')}}"><i class="fal fa-user"></i></a>
                         @endif
                     </div>
+                    <div><a href="#"><i class="fal fa-bell"></i>
+
+                        </a></div>
                     <div class="header-search">
                         <a href="#offcanvas-search" class="offcanvas-toggle"><i class="fal fa-search"></i></a>
                     </div>
@@ -114,7 +117,7 @@
                         <div class="blog-author" style="margin-bottom: 0px;">
                             <div class="thumbnail" style="width: 32px;">
                                 @if(Auth::user()->avatar!=null)
-                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
                                 @else
                                 <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
                                 @endif
@@ -127,14 +130,7 @@
                     <div class="header-search d-none d-sm-block">
                         <a href="#offcanvas-search" class="offcanvas-toggle"><i class="fal fa-search"></i></a>
                     </div>
-
-                    <div class="header-cart">
-                        @if(Session::has("Cart") !=null)
-                        <a href="#offcanvas-cart" class="offcanvas-toggle"><span id="total-qty-show" class="cart-count">{{Session::get("Cart")->totalQuantity}}</span><i class="fal fa-shopping-cart"></i></a>
-                        @else
-                        <a href="#offcanvas-cart" class="offcanvas-toggle"><i class="fal fa-shopping-cart"></i></a>
-                        @endif
-                    </div>
+                    @include('pages.client.Cart.update-icon-section-start')
                     <div class="mobile-menu-toggle d-xl-none">
                         <a href="#offcanvas-mobile-menu" class="offcanvas-toggle">
                             <svg viewBox="0 0 800 600">
@@ -174,7 +170,7 @@
                         <div class="blog-author" style="margin-bottom: 0px;">
                             <div class="thumbnail" style="width: 32px;">
                                 @if(Auth::user()->avatar!=null)
-                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px; "></a>
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px; "></a>
                                 @else
                                 <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
                                 @endif
@@ -230,11 +226,11 @@
             <div class="col-auto">
                 <div class="header-tools justify-content-end">
                     <div class="header-login d-none d-sm-block">
-                    @if(Auth::check())
+                        @if(Auth::check())
                         <div class="blog-author" style="margin-bottom: 0px;">
                             <div class="thumbnail" style="width: 32px;">
                                 @if(Auth::user()->avatar!=null)
-                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
                                 @else
                                 <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
                                 @endif
@@ -285,7 +281,7 @@
                 <li>
                     <div class="account-client">
                         @if(Auth::user()->avatar!=null)
-                        <img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="">
+                        <img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="">
                         @else
                         <img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="">
                         @endif
@@ -295,13 +291,8 @@
                             <a href="#"><i class="fab fa-linkedin"></i></a>
                             <a href="#"><i class="fab fa-instagram"></i></a>
                         </div>
-                        <h5><i>Thông tin cá nhân ({{Auth::user()->username}})</i></h5>
-                        <hr>
                         <div class="account-content">
                             <a href="#" class="name">{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</a>
-
-                            <h5>Phone: <i>{{Auth::user()->phone}}</i></h5>
-                            <h5>Email: <i>{{Auth::user()->email}}</i></h5>
                         </div>
                         <hr>
                     </div>
@@ -314,7 +305,7 @@
                 <a href="{{URL::to('/admin')}}" class="btn btn-secondary btn-hover-primary"><i class="fas fa-users-cog"></i> Trang Admin</a>
                 @endif
                 <a href="{{route('Tai-Khoan')}}" class="btn btn-dark btn-hover-primary"><i class="fas fa-user-circle"></i> Tài Khoản</a>
-                <a href="{{ route('logout') }}" class="btn btn-outline-dark btn-hover-primary" ><i class="fas fa-door-open" data-feather="log-in"> </i> Đăng Xuất
+                <a href="{{ route('logout') }}" class="btn btn-outline-dark btn-hover-primary"><i class="fas fa-door-open" data-feather="log-in"> </i> Đăng Xuất
                 </a>
             </div>
         </div>
@@ -345,7 +336,7 @@
 <!-- OffCanvas Cart Start -->
 <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
     <div class="inner" id="change-items">
-        @include('pages.client.item-cart')
+        @include('pages.client.Cart.item-cart')
     </div>
 </div>
 <!-- OffCanvas Cart End -->
@@ -373,7 +364,7 @@
                     <div class="blog-author" style="margin-bottom: 0px;">
                         <div class="thumbnail" style="width: 32px;">
                             @if(Auth::user()->avatar!=null)
-                            <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
+                            <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
                             @else
                             <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
                             @endif

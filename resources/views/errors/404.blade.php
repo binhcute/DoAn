@@ -84,7 +84,7 @@
                             <div class="blog-author" style="margin-bottom: 0px;">
                                 <div class="thumbnail" style="width: 32px;">
                                     @if(Auth::user()->avatar!=null)
-                                    <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
+                                    <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
                                     @else
                                     <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
                                     @endif
@@ -172,7 +172,7 @@
                             <div class="blog-author" style="margin-bottom: 0px;">
                                 <div class="thumbnail" style="width: 32px;">
                                     @if(Auth::user()->avatar!=null)
-                                    <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
+                                    <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
                                     @else
                                     <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
                                     @endif
@@ -337,7 +337,7 @@
                     <li>
                         <div class="account-client">
                             @if(Auth::user()->avatar!=null)
-                            <img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="">
+                            <img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="">
                             @else
                             <img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="">
                             @endif
@@ -409,7 +409,7 @@
                 <ul class="minicart-product-list">
                     @foreach(Session::get("Cart")->product as $item)
                     <li>
-                        <a href="product-details.html" class="image"><img src="{{URL::to('/')}}/server/assets/image/product/{{$item['product_info']->product_img}}" alt="Cart product Image"></a>
+                        <a href="product-details.html" class="image"><img src="{{URL::to('/')}}/image/product/{{$item['product_info']->product_img}}" alt="Cart product Image"></a>
                         <div class="content">
                             <a href="product-details.html" class="title">{{$item['product_info']->product_name}}</a>
                             <span class="quantity-price">{{$item['qty']}} x <span class="amount">{{number_format($item['product_info']->product_price).' '.'VND'}}</span></span>
@@ -474,7 +474,7 @@
                         <div class="blog-author" style="margin-bottom: 0px;">
                             <div class="thumbnail" style="width: 32px;">
                                 @if(Auth::user()->avatar!=null)
-                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
+                                <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="" style="height:32px"></a>
                                 @else
                                 <a href="#offcanvas-account" class="offcanvas-toggle"><img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="" style="height:32px"></a>
                                 @endif
@@ -599,23 +599,7 @@
     <script src="{{asset('client/js/vendor/vendor.min.js')}}"></script>
     <script src="{{asset('client/js/plugins/plugins.min.js')}}"></script>
     <script src="{{asset('client/js/bootstrap3-typeahead.min.js_4.0.2/cdnjs/bootstrap3-typeahead.min.js')}}"></script>
-    <script>
-        var path = "{{ route('tim-kiem') }}";
-        $('input.typeahead').typeahead({
-            source: function(query, process) {
-                return $.get(path, {
-                    query: query
-                }, function(data) {
-                    return process(data);
-                });
-            },
-            highlighter: function(item, data) {
-                var parts = item.split('#'),
-                    html = ` <a href="#"><div class="row" style="padding:2px 0px;"><div class="col-md-1" style="padding-right:8px;"><img src="server/assets/image/product/${data.img}"/ height="100%" width="200px;"></div><div class="col-md-10 pl-0"><span style="font-size: 1.4rem;">${data.name}</span></div></div></a>`;
-                return html;
-            }
-        });
-    </script>
+   
     <!-- Main Activation JS -->
     <script src="{{asset('client/js/main.js')}}"></script>
     <script>
@@ -624,19 +608,16 @@
                 url: 'item-cart/' + id,
                 type: "GET",
             }).done(function(response) {
-                console.log(response);
                 Render(response);
                 alertify.success('Đã Thêm Vào Giỏ Hàng');
             });
         }
         $("#change-items").on("click", ".content i", function() {
-            console.log($(this).data("id"));
 
             $.ajax({
                 url: 'delete-item-cart/' + $(this).data("id"),
                 type: "GET",
             }).done(function(response) {
-                console.log(response);
                 Render(response);
                 alertify.error('Đã Xóa Sản Phẩm Thành Công');
             });
@@ -649,24 +630,20 @@
         }
 
         function AddFavorite(id) {
-            console.log(id);
             $.ajax({
                 url: 'item-favorite/' + id,
                 type: "GET",
             }).done(function(response) {
-                console.log(response);
                 Render1(response);
                 alertify.success('Đã Thêm Vào Yêu Thích');
             });
         }
         $("#change-item").on("click", ".content i", function() {
-            console.log($(this).data("id"));
 
             $.ajax({
                 url: 'delete-item-favorite/' + $(this).data("id"),
                 type: "GET",
             }).done(function(response) {
-                console.log(response);
                 Render1(response);
                 alertify.error('Đã Xóa Sản Phẩm Thành Công');
             });

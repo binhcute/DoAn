@@ -39,7 +39,7 @@
                 <div class="single-widget learts-mb-40">
                     <div class="widget-search">
                         <form class="typeahead" role="search">
-                            <input type="search" name="q" class="form-control search-input" placeholder="Hãy nhập từ bất kỳ..." autocomplete="off">
+                            <input type="search" name="q" class="form-control search-input-article typeahead" placeholder="Hãy nhập từ bất kỳ..." autocomplete="off">
                         </form>
                     </div>
                 </div>
@@ -50,27 +50,22 @@
 
                     <h3 class="widget-title product-filter-widget-title">Bài Viết Xem Nhiều</h3>
                     <ul class="widget-blogs">
-
+                        @foreach($view_hot as $hot)
                         <li class="widget-blog">
                             <div class="thumbnail">
-                                <a href="{{route('Bai-Viet',[Str::slug($view_hot->article_name, '-'),$view_hot->article_id])}}"><img src="{{URL::to('/')}}/server/assets/image/article/{{$view_hot->article_img}}" alt="Widget Blog Post"></a>
+                                <a href="{{route('Bai-Viet',[Str::slug($hot->article_name, '-'),$hot->article_id])}}"><img src="{{URL::to('/')}}/image/article/{{$hot->article_img}}" alt="Widget Blog Post"></a>
                             </div>
                             <div class="content">
-                                <h6 class="title"><a href="{{route('Bai-Viet',[Str::slug($view_hot->article_name, '-'),$view_hot->article_id])}}">{{$view_hot->article_name}}</a></h6>
-                                <span class="date"><i class="far fa-eye"></i> {{$view_hot->view}} Lượt xem</span>
+                                <h6 class="title"><a href="{{route('Bai-Viet',[Str::slug($hot->article_name, '-'),$hot->article_id])}}">{{$hot->article_name}}</a></h6>
+                                <span class="date"><i class="far fa-eye"></i> {{$hot->view}} Lượt xem</span>
                             </div>
                         </li>
+                        @endforeach
                     </ul>
                 </div>
                 <!-- Blog Post Widget End -->
 
-                <!-- Categories Start -->
-                <div class="single-widget learts-mb-40">
-                    <div class="widget-banner">
-                        <img src="{{asset('client/images/banner/widget-banner.jpg')}}" alt="">
-                    </div>
-                </div>
-                <!-- Categories End -->
+
 
 
 
@@ -105,5 +100,41 @@
             }
         });
     }
+</script>
+<script type="text/javascript">
+    $(document).ready(function($) {
+        var engine1 = new Bloodhound({
+            remote: {
+                url: '/tim-kiem-bai-viet/name?value=%QUERY%',
+                wildcard: '%QUERY%'
+            },
+            datumTokenizer: Bloodhound.tokenizers.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace
+        });
+
+        $(".search-input-article").typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        }, [{
+            source: engine1.ttAdapter(),
+            name: 'article_name',
+            display: function(data) {
+                return data.article_name;
+            },
+            templates: {
+                empty: [
+                    '<div class="header-title">Tên Bài Viết</div><div class="list-group search-results-dropdown"><div class="list-group-item">Không tìm thấy Bài Viết nào</div></div>'
+                ],
+                header: [
+                    '<div class="header-title">Tên Bài Viết</div><div class="list-group search-results-dropdown"></div>'
+                ],
+                suggestion: function(data) {
+
+                    return '<a href="/Bai-Viet/' + data.article_name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\-]+/g, '-') + '-' + data.article_id + '" class="list-group-item">' + ` <div class="row" style="padding:2px 0px;"><div class="col-md-1" style="padding-right:8px;"><img src="/./image/article/${data.article_img}"/ height="100%" width="200px;"></div><div class="col-md-10 pl-0"><span style="font-size: 1.4rem;">${data.article_name}</span></div></div>` + '</a>';
+                }
+            }
+        }]);
+    });
 </script>
 @endsection

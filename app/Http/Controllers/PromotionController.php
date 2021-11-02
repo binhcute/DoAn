@@ -16,7 +16,8 @@ class PromotionController extends Controller
     public function index()
     {
         $khuyenmai = Promotion::all();
-        return view('pages.server.promotion.list', compact(['khuyenmai']));
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Promotion.List', compact(['khuyenmai', 'thongBaoMoi']));
     }
 
     /**
@@ -26,7 +27,9 @@ class PromotionController extends Controller
      */
     public function create()
     {
-        return view('pages.server.promotion.add');
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Promotion.Add')
+        ->with('thongBaoMoi',$thongBaoMoi);
     }
 
     /**
@@ -78,7 +81,8 @@ class PromotionController extends Controller
     public function edit($id)
     {
         $khuyenmai = Promotion::find($id);
-        return view('pages.server.promotion.edit',compact(['khuyenmai']));
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Promotion.Edit',compact(['khuyenmai','thongBaoMoi']));
     }
 
     /**

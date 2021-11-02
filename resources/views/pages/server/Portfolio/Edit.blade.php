@@ -54,7 +54,7 @@
               <div class="col-sm-9">
                 <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
                 <input hidden class="form-control imageAvatar" id="event__input-0" name="avatar" type="file" onchange="uploadAvatar(this, 0)" accept=".jpg, .png">
-                <img id="event__img-0" src="{{URL::to('/')}}/server/assets/image/portfolio/avatar/{{$port->port_avatar}}" alt="slider" width="50%" height="250px">
+                <img id="event__img-0" src="{{URL::to('/')}}/image/portfolio/avatar/{{$port->port_avatar}}" alt="slider" width="50%" height="250px">
               </div>
             </div>
             <div class="mb-3 row">
@@ -62,7 +62,7 @@
               <div class="col-sm-9">
                 <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh</label>
                 <input hidden class="form-control imageItem" id="event__input-hover-0" name="img" type="file" onchange="uploadFile(this, 0)" accept=".jpg, .png">
-                <img id="event__img-hover-0" src="{{URL::to('/')}}/server/assets/image/portfolio/{{$port->port_img}}" alt="slider" width="50%" height="250px">
+                <img id="event__img-hover-0" src="{{URL::to('/')}}/image/portfolio/{{$port->port_img}}" alt="slider" width="50%" height="250px">
               </div>
             </div>
           </div>

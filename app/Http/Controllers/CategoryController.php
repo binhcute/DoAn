@@ -7,7 +7,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use App\Http\Requests\Admin\StoreCategoryRequest;
+use App\Http\Requests\Admin\Category\StoreCategoryRequest;
 
 
 class CategoryController extends Controller
@@ -20,8 +20,10 @@ class CategoryController extends Controller
     public function index()
     {
         $cate = Category::all();
-        return view('pages.server.Category.list')
-            ->with('cate', $cate);
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Category.List')
+            ->with('cate', $cate)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -31,7 +33,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('pages.server.Category.add');
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Category.Add')
+        ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -49,7 +53,7 @@ class CategoryController extends Controller
         $cate->status = $request->status;
         $files = $request->file('img');
         // Define upload path
-        $destinationPath = public_path('/server/assets/image/category'); // upload path
+        $destinationPath = public_path('/image/category'); // upload path
         // Upload Original Image           
         $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
         $files->move($destinationPath, $profileImage);
@@ -85,8 +89,10 @@ class CategoryController extends Controller
         $cate = DB::table('tpl_category')
             ->join('users', 'users.id', '=', 'tpl_category.user_id')
             ->where('cate_id', $id)->first();
-        return view('pages.server.Category.show')
-            ->with('cate', $cate);
+            $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Category.Show')
+            ->with('cate', $cate)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -100,9 +106,11 @@ class CategoryController extends Controller
         $user = DB::table('users')
             ->orderBy('id', 'desc')->first();
         $cate = Category::find($id);
-        return view('pages.server.Category.edit')
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Category.Edit')
             ->with('cate', $cate)
-            ->with('user', $user);
+            ->with('user', $user)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -122,7 +130,7 @@ class CategoryController extends Controller
         $files = $request->file('img');
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/category'); // upload path
+            $destinationPath = public_path('/image/category'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -158,7 +166,7 @@ class CategoryController extends Controller
         $category->delete();
         if($category->delete()){
             $cate = Category::all();
-            $giao_dien = view('pages.server.category.list-item', compact(['cate']))->render();
+            $giao_dien = view('pages.server.Category.list-item', compact(['cate']))->render();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Xóa Loại Sản Phẩm Thành Công',
@@ -181,7 +189,7 @@ class CategoryController extends Controller
             $change->save();
             if ($change->save()) {
                 $cate = Category::all();
-                $giao_dien = view('pages.server.category.list-item',compact(['cate']))->render();
+                $giao_dien = view('pages.server.Category.list-item',compact(['cate']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Ẩn Danh Mục Thành Công',
@@ -197,7 +205,7 @@ class CategoryController extends Controller
             $change->save();
             if ($change->save()) {
                 $cate = Category::all();
-                $giao_dien = view('pages.server.category.list-item',compact(['cate']))->render();
+                $giao_dien = view('pages.server.Category.list-item',compact(['cate']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Hiển Thị Danh Mục Thành Công',

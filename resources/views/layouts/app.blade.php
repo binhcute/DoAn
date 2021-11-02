@@ -128,7 +128,6 @@
       });
       $('#register-check-tri').submit(function(event) {
         event.preventDefault();
-        console.log('aaaaa');
         var form = $(this);
         var url = form.attr('action');
         $.ajax({

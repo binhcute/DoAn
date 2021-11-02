@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Http\Requests\Admin\StoreAccountRequest;
+use App\Http\Requests\Admin\Account\StoreAccountRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 
 
 class AccountController extends Controller
@@ -20,8 +19,11 @@ class AccountController extends Controller
     public function index()
     {
         $account = User::all();
-        return view('pages.server.account.list')
-            ->with('account', $account);
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        // dd($thongBaoMoi);
+        return view('pages.server.Account.List')
+            ->with('account', $account)
+            ->with('thongBaoMoi',$thongBaoMoi);
     }
 
     /**
@@ -31,7 +33,10 @@ class AccountController extends Controller
      */
     public function create()
     {
-        return view('pages.server.account.add');
+        
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.account.add')
+        ->with('thongBaoMoi',$thongBaoMoi);
     }
 
     /**
@@ -83,8 +88,11 @@ class AccountController extends Controller
     {
         $account = DB::table('users')
             ->where('id', $id)->first();
+            
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         return view('pages.server.account.show')
-            ->with('account', $account);
+            ->with('account', $account)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -96,8 +104,10 @@ class AccountController extends Controller
     public function edit($id)
     {
         $account = User::find($id);
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         return view('pages.server.account.edit')
-            ->with('account', $account);
+            ->with('account', $account)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -144,28 +154,28 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $account = User::find($id);
-        $account->delete();
-        Session::put('detroy', 'Đã Xóa Tài Khoản');
-        return redirect()->route('TaiKhoan.index');
-    }
+    // public function destroy($id)
+    // {
+    //     $account = User::find($id);
+    //     $account->delete();
+    //     Session::put('detroy', 'Đã Xóa Tài Khoản');
+    //     return redirect()->route('TaiKhoan.index');
+    // }
 
-    public function disabled($id)
-    {
-        $account = User::find($id);
-        $account->status = 0;
-        $account->save();
-        Session::put('info', 'Đã Ẩn Tài Khoản');
-        return redirect()->route('TaiKhoan.index');
-    }
-    public function enabled($id)
-    {
-        $account = User::find($id);
-        $account->status = 1;
-        $account->save();
-        Session::put('info', 'Đã Hiển Thị Tài Khoản');
-        return redirect()->route('TaiKhoan.index');
-    }
+    // public function disabled($id)
+    // {
+    //     $account = User::find($id);
+    //     $account->status = 0;
+    //     $account->save();
+    //     Session::put('info', 'Đã Ẩn Tài Khoản');
+    //     return redirect()->route('TaiKhoan.index');
+    // }
+    // public function enabled($id)
+    // {
+    //     $account = User::find($id);
+    //     $account->status = 1;
+    //     $account->save();
+    //     Session::put('info', 'Đã Hiển Thị Tài Khoản');
+    //     return redirect()->route('TaiKhoan.index');
+    // }
 }

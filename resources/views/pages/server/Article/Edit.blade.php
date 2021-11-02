@@ -78,7 +78,7 @@
           <div class="col-sm-9">
                 <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
                 <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadFile(this, 0)" accept=".jpg, .png">
-                <img id="event__img-0" src="{{URL::to('/')}}/server/assets/image/article/{{$article->article_img}}" alt="slider" width="50%" height="250px">
+                <img id="event__img-0" src="{{URL::to('/')}}/image/article/{{$article->article_img}}" alt="slider" width="50%" height="250px">
               </div>
         </div>
       </div>

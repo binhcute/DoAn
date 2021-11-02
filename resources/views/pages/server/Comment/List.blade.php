@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody id="change-layout">
-            @include('pages.server.comment.list-item')
+            @include('pages.server.Comment.list-item')
           </tbody>
           <tfoot>
             <tr>
@@ -51,7 +51,6 @@
   @else
   <strong class="text-center">Danh Sách Trống</strong>
   @endif
-</div>
 </div>
 @endsection
 @section('page-js')

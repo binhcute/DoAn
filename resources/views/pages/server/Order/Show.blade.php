@@ -109,8 +109,8 @@
                   </div>
                   <ul class="qty">
                     <?php $sum = 0 ?>
-                    @foreach($order as $od)
-                    <li>{{$od -> product_id}}.{{$od -> product_name}} × {{$od->quantity}} <span>{{number_format($od->amount).' '.'VND'}}</span></li>
+                    @foreach($order as $stt => $od)
+                    <li>{{$stt+1}}.{{$od -> product_name}} × {{$od->quantity}} <span>{{number_format($od->amount).' '.'VND'}}</span></li>
                     <?php $sum += $od->amount ?>
                     @endforeach
                   </ul>

@@ -5302,6 +5302,8 @@ body.offcanvas-open .sticky-header {
     position: relative;
     z-index: 2;
     margin: 0;
+
+    height: 79%;
 }
 .product-thumb .image {
     position: relative;
@@ -5314,6 +5316,7 @@ body.offcanvas-open .sticky-header {
 
     z-index: 3;
     width: 100%;
+    height: 100%;
 }
 .product-thumb .image img.image-hover {
     position: absolute;
@@ -10064,3 +10067,14 @@ body.offcanvas-open .sticky-header {
     text-decoration: none;
 }
 /* End CSS thanh toán - Bill*/
+
+
+#phan-trang-binh-luan-san-pham span.title {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    display: block;
+    margin: 40px 0;
+    text-align: center;
+    color: #333;
+}

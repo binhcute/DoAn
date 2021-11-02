@@ -2,7 +2,11 @@
 <li>
     <div class="comment">
         <div class="thumbnail">
-            <img src="{{URL::to('/') }}/server/assets/image/account/{{$cmt->avatar}}" alt="">
+            @if($cmt->avatar)
+            <img src="{{URL::to('/') }}/image/account/{{$cmt->avatar}}" alt="">
+            @else
+            <img src="{{URL::to('/') }}/image/account/1.png" alt="">
+            @endif
         </div>
         <div class="content">
             <h4 class="name">{{$cmt->firstName}} {{$cmt->lastName}}</h4>

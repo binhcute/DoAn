@@ -98,7 +98,7 @@
                                     <div class="row_g no-gutters row_content hide-on-mobile">
                                         <div class="col_g l-4_g m-50_g">
                                             <div class=" perfume-cart__product">
-                                                <img class="product__img" src="{{URL::to('/')}}/server/assets/image/product/product_info']->product_img}}" alt="">
+                                                <img class="product__img" src="{{URL::to('/')}}/image/product/product_info']->product_img}}" alt="">
                                                 <div>
                                                     <span class="product__name">
                                                         product_info']->product_name}}
@@ -133,7 +133,7 @@
 
                                         <div class="col_g col_g-mar">
                                             <div class=" perfume-cart__product">
-                                                <img class="product__img" src="{{URL::to('/')}}/server/assets/image/product/product_info']->product_img}}" alt="">
+                                                <img class="product__img" src="{{URL::to('/')}}/image/product/product_info']->product_img}}" alt="">
                                                 <div>
                                                     <span class="product__name">
                                                         product_info']->product_name}}
@@ -213,7 +213,7 @@
                                             <div class="account-client">
                                                 <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
 
-                                                <img id="event__img-hover-0" alt="slider" src="{{URL::to('/') }}/server/assets/image/account/{{Auth::user()->avatar }}" alt="">
+                                                <img id="event__img-hover-0" alt="slider" src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="">
 
                                             </div>
                                         </div>
@@ -332,7 +332,7 @@
         event.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        console.log(form.serialize());
+        // console.log(form.serialize());
         // $.ajax({
         //     type: "POST",
         //     url: url,

@@ -3,7 +3,7 @@
     <th scope="row">{{ $stt+1 }}</th>
     <td>{{ $item->product_name}}</td>
     <td>{{number_format($item->product_price).' '.'VND'}}</td>
-    <td><img class="img-thumbnail" width="75" height="100" width="100" height="100" src="{{ URL::to('/') }}/server/assets/image/product/{{$item->product_img}}"></td>
+    <td><img class="img-thumbnail" width="75" height="100" width="100" height="100" src="{{ URL::to('/') }}/image/product/{{$item->product_img}}"></td>
     <td>
         @if($item->status==1)
         <form action="{{URL::to('/SanPham/change_status/'.$item->product_id)}}" class="change_status_tri" method="post">

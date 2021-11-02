@@ -58,7 +58,7 @@ class ClientController extends Controller
         $modal = Product::queryModalProduct()->get();
 
         if ($request->ajax()) {
-            return view('pages.client.list-product.dsSanPham')
+            return view('pages.client.List-product.dsSanPham')
                 ->with('product', $product)
                 ->with('product_cate', $product_cate)
                 ->with('product_hot', $product_hot)
@@ -66,7 +66,7 @@ class ClientController extends Controller
                 ->with('portfolio', $portfolio)
                 ->with('modal', $modal);
         }
-        return view('pages.client.productlist')
+        return view('pages.client.ProductList')
             ->with('product', $product)
             ->with('product_cate', $product_cate)
             ->with('product_hot', $product_hot)
@@ -76,7 +76,6 @@ class ClientController extends Controller
     }
     public function product_detail($slug, $id, Request $request)
     {
-
         $product_detail = Product::queryJoinCateAndPort()
             ->where('tpl_product.product_id', $id)->first();
         $product_relate = Product::queryJoinCateAndPort()
@@ -103,20 +102,20 @@ class ClientController extends Controller
             ->where('tpl_comment.status', 1)
             ->where('tpl_comment.product_id', $id)
             ->orderBy('tpl_comment.created_at', 'desc')
-            ->paginate(5);
+            ->paginate(4);
         $avg_stars = DB::table('tpl_comment')
             ->where('tpl_comment.product_id', $id)
             ->avg('rate');
         $modal = Product::queryModalProduct()->get();
         if ($request->ajax()) {
-            return view('pages.client.product-Detail.dsBinhLuan')
+            return view('pages.client.Product-Detail.dsBinhLuan')
                 ->with('list', $list)
                 ->with('product_detail', $product_detail)
                 ->with('comment', $comment)
                 ->with('avg_stars', $avg_stars)
                 ->with('modal', $modal);
         }
-        return view('pages.client.productdetail')
+        return view('pages.client.ProductDetail')
             ->with('list', $list)
             ->with('product_detail', $product_detail)
             ->with('comment', $comment)
@@ -131,18 +130,18 @@ class ClientController extends Controller
         $article = Article::queryStatusOne()->orderBy('created_at', 'desc')->paginate(3);
         //Bài Viết Xem nhiều
         $view_hot = DB::table('tpl_article')
-            ->orderBy('tpl_article.view', 'desc')->limit(1)->first();
+            ->orderBy('tpl_article.view', 'desc')->limit(3)->get();
 
         if ($request->ajax()) {
-            return view('pages.client.article.dsBaiViet')
+            return view('pages.client.Article.dsBaiViet')
                 ->with('article', $article)
                 ->with('view_hot', $view_hot);
         }
-        return view('pages.client.articlelist')
+        return view('pages.client.ArticleList')
             ->with('article', $article)
             ->with('view_hot', $view_hot);
     }
-    public function article_detail($slug, $id)
+    public function article_detail($slug, $id, Request $request)
     {
         $article = DB::table('tpl_article')
             ->select(
@@ -165,7 +164,8 @@ class ClientController extends Controller
             )
             ->join('users', 'users.id', '=', 'tpl_comment.user_id')
             ->where('tpl_comment.status', 1)
-            ->where('tpl_comment.article_id', $id)->paginate(3);
+            ->where('tpl_comment.article_id', $id)
+            ->orderBy('tpl_comment.created_at', 'desc')->paginate(3);
         $recent = Article::queryStatusOne()
             ->orderBy('created_at', 'desc')->limit(3)->get();
         $cate = Category::queryStatusOne()
@@ -184,9 +184,16 @@ class ClientController extends Controller
         $luot_xem->save();
         //Het Luot Xem
 
+        if($request->ajax()){
+            return view('pages.client.Article-Detail.comment-article')
+            ->with('article', $article)
+            ->with('related', $related)
+            ->with('comment', $comment)
+            ->with('recent', $recent)
+            ->with('cate', $cate);
+        }
 
-
-        return view('pages.client.articledetail')
+        return view('pages.client.ArticleDetail')
             ->with('article', $article)
             ->with('related', $related)
             ->with('comment', $comment)
@@ -200,7 +207,7 @@ class ClientController extends Controller
     {
         $categories = Category::queryStatusOne()->get();
         // dd($categories);
-        return view('pages.client.categoriesdetail')->with('categories', $categories);
+        return view('pages.client.CategoriesDetail')->with('categories', $categories);
     }
 
 
@@ -214,7 +221,7 @@ class ClientController extends Controller
             ->where('tpl_category.cate_id', $id)->get();
 
         $modal = Product::queryModalProduct()->get();
-        return view('pages.client.categorieslist')
+        return view('pages.client.CategoriesList')
             ->with('categories', $categories)
             ->with('portfolio', $portfolio)
             ->with('product_cate', $product_cate)
@@ -227,7 +234,7 @@ class ClientController extends Controller
     public function portfolio_detail()
     {
         $portfolio = Portfolio::queryStatusOne()->get();
-        return view('pages.client.portfoliodetail')->with('portfolio', $portfolio);
+        return view('pages.client.PortfolioDetail')->with('portfolio', $portfolio);
     }
 
     public function portfolio_list($slug, $id)
@@ -239,7 +246,7 @@ class ClientController extends Controller
             ->join('tpl_portfolio', 'tpl_portfolio.port_id', '=', 'tpl_product.port_id')
             ->where('tpl_portfolio.port_id', $id)->get();
         $modal = Product::queryModalProduct()->get();
-        return view('pages.client.portfoliolist')
+        return view('pages.client.PortfolioList')
             ->with('port', $port)
             ->with('portfolio', $portfolio)
             ->with('product_cate', $product_cate)
@@ -262,7 +269,7 @@ class ClientController extends Controller
         //     ->where('tpl_order_dt.order_id', $order_id)->get();
 
         // dd($order);
-        return view('pages.client.myaccount');
+        return view('pages.client.MyAccount');
         // ->with('order', $order);
     }
 
@@ -309,30 +316,16 @@ class ClientController extends Controller
 
     public function cart()
     {
-        return view('pages.client.cart');
+        return view('pages.client.Cart');
     }
     public function check_out()
     {
-        return view('pages.client.checkout');
+        return view('pages.client.Checkout');
     }
     public function contact_us()
     {
-        return view('pages.client.contactus');
+        return view('pages.client.ContactUs');
     }
-    public function favorite()
-    {
-        return view('pages.client.favorite');
-    }
-
-    public function about_us()
-    {
-        return view('pages.client.aboutUs');
-    }
-    public function search(request $request)
-    {
-        $key = $request->key;
-
-        $product = DB::table('tpl_product')
-            ->where('product_name', 'like', $key);
+    public function post_contact_us(Request $request){
     }
 }

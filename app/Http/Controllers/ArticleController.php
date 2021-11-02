@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Article;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use App\Http\Requests\Admin\StoreArticleRequest;
-
+use App\Http\Requests\Admin\Article\StoreArticleRequest;
 
 
 class ArticleController extends Controller
@@ -21,8 +20,10 @@ class ArticleController extends Controller
     public function index()
     {
         $article = Article::all();
-        return view('pages.server.article.list')
-            ->with('article', $article);
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Article.List')
+            ->with('article', $article)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -32,7 +33,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('pages.server.article.add');
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Article.Add')
+        ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -53,7 +56,7 @@ class ArticleController extends Controller
         $files = $request->file('img');
 
         // Define upload path
-        $destinationPath = public_path('/server/assets/image/article'); // upload path
+        $destinationPath = public_path('/image/article'); // upload path
         // Upload Original Image           
         $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
         $files->move($destinationPath, $profileImage);
@@ -90,8 +93,10 @@ class ArticleController extends Controller
         $article = DB::table('tpl_article')
             ->join('users', 'users.id', '=', 'tpl_article.user_id')
             ->where('article_id', $id)->first();
-        return view('pages.server.article.show')
-            ->with('article', $article);
+            $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Article.Show')
+            ->with('article', $article)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -104,8 +109,10 @@ class ArticleController extends Controller
     {
 
         $article = Article::find($id);
-        return view('pages.server.article.edit')
-            ->with('article', $article);
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Article.Edit')
+            ->with('article', $article)
+            ->with('thong_bao_moi',$thongBaoMoi);
     }
 
     /**
@@ -126,7 +133,7 @@ class ArticleController extends Controller
         $files = $request->file('img');
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/article'); // upload path
+            $destinationPath = public_path('/image/article'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -161,7 +168,7 @@ class ArticleController extends Controller
         $destroy->delete();
         if ($destroy->delete()) {
             $article = Article::all();
-            $giao_dien = view('pages.server.article.list-item', compact(['article']))->render();
+            $giao_dien = view('pages.server.Article.list-item', compact(['article']))->render();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Xóa Bài Viết Thành Công',
@@ -183,7 +190,7 @@ class ArticleController extends Controller
             $change->save();
             if ($change->save()) {
                 $article = Article::all();
-                $giao_dien = view('pages.server.article.list-item', compact(['article']))->render();
+                $giao_dien = view('pages.server.Article.list-item', compact(['article']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Ẩn Bài Viết Thành Công',
@@ -199,7 +206,7 @@ class ArticleController extends Controller
             $change->save();
             if ($change->save()) {
                 $article = Article::all();
-                $giao_dien = view('pages.server.article.list-item', compact(['article']))->render();
+                $giao_dien = view('pages.server.Article.list-item', compact(['article']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Hiển Thị Bài Viết Thành Công',

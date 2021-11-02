@@ -15,7 +15,7 @@ class Promotion extends Model
     protected $fillable = [
         'promotion_id', 
         'promotion_name',
-        'promotion_percent',
+        'promotion_key',
         'promotion_money',
         'created_at',
         'updated_at',

@@ -94,7 +94,7 @@
         </div>
         <div class="col-md-6">
           <div class="product-icon">
-            <img class="img-thumbnail" src="{{URL::to('/') }}/server/assets/image/product/{{ $product->product_img }}" alt="">
+            <img class="img-thumbnail" src="{{URL::to('/') }}/image/product/{{ $product->product_img }}" alt="">
           </div>
         </div>
       </div>
@@ -105,7 +105,7 @@
         </div>
         <div class="col-md-6">
           <div class="d-flex">
-            <img class="img-thumbnail" src="{{URL::to('/') }}/server/assets/image/product/hover/{{ $product->product_img_hover }}" alt="">
+            <img class="img-thumbnail" src="{{URL::to('/') }}/image/product/hover/{{ $product->product_img_hover }}" alt="">
           </div>
         </div>
       </div>

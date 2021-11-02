@@ -2,7 +2,7 @@
 @section('content')
 @section('title','Danh Mục')
 <!-- Page Title/Header Start -->
-<div class="page-title-section section" data-bg-image="{{URL::to('/')}}/server/assets/image/category/{{$categories->cate_img}}">
+<div class="page-title-section section" data-bg-image="{{URL::to('/')}}/image/category/{{$categories->cate_img}}">
     <div class="container">
         <div class="row">
             <div class="col">
@@ -75,10 +75,10 @@
                                 <div class="product-thumb">
                                     <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
                                         @if($item->product_img_hover !=null)
-                                        <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
-                                        <img class="image-hover " src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
+                                        <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
+                                        <img class="image-hover " src="{{ URL::to('/') }}/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
                                         @else
-                                        <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
+                                        <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
                                         @endif
                                     </a>
                                     <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
@@ -103,38 +103,16 @@
                 </div>
                 <div class="col-lg-3 col-12 learts-mb-10 order-lg-1">
 
-                    <!-- Search Start -->
-                    <div class="single-widget learts-mb-40">
-                        <div class="widget-search">
-                            <form class="typeahead" role="search">
-                                <input type="search" name="q" class="form-control search-input" placeholder="Hãy nhập từ bất kỳ..." autocomplete="off">
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Search End -->
-
                     <!-- Categories Start -->
                     <div class="single-widget learts-mb-40">
                         <h3 class="widget-title product-filter-widget-title">Danh Mục Sản Phẩm</h3>
                         <ul class="widget-list">
                             @foreach ($product_cate as $item)
-                            <li><a href="{{URL::to('/product_categories',$item->cate_id)}}">{{ $item->cate_name}}</a></li>
+                            <li><a href="{{route('Danh-Muc',[Str::slug($item->cate_name, '-'),$item->cate_id])}}">{{ $item->cate_name}}</a></li>
                             @endforeach
                         </ul>
                     </div>
                     <!-- Categories End -->
-                    <!-- Portfolio Start -->
-                    <div class="single-widget learts-mb-40">
-                        <h3 class="widget-title product-filter-widget-title">Nhà Cung Cấp</h3>
-                        <ul class="widget-list">
-                            @foreach ($portfolio as $item)
-                            <li><a href="{{URL::to('/brand',$item->port_id)}}">{{ $item->port_name}}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <!-- Portfolio End -->
-
-
                 </div>
 
 
@@ -144,5 +122,5 @@
 
 </div>
 <!-- Shop Products Section End -->
-@include('pages.client.modal.modal-sanpham')
+@include('pages.client.Modal.modal-SanPham')
 @endsection

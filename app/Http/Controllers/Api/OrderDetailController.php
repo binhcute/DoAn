@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderDetail as OrderDetailResource;
+use App\Http\Resources\OrderDetailResource;
 
 class OrderDetailController extends Controller
 {

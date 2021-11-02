@@ -5,7 +5,11 @@
         @foreach($comment as $cmt)
         <li>
             <div class="product-review">
-                <div class="thumb"><img src="{{URL::to('/') }}/server/assets/image/account/{{$cmt->avatar}}" alt=""></div>
+                @if($cmt->avatar)
+                <div class="thumb"><img src="{{URL::to('/') }}/image/account/{{$cmt->avatar}}" alt=""></div>
+                @else
+                <div class="thumb"><img src="{{URL::to('/') }}/image/account/1.png" alt=""></div>
+                @endif
                 <div class="content">
                     <div class="ratings">
                         @switch($cmt->rate)

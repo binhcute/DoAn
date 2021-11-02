@@ -95,7 +95,7 @@
             <div class="col-sm-9">
               <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
               <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
-              <img id="event__img-0" src="{{URL::to('/')}}/server/assets/image/product/{{$product->product_img}}" alt="slider" width="50%" height="320px">
+              <img id="event__img-0" src="{{URL::to('/')}}/image/product/{{$product->product_img}}" alt="slider" width="50%" height="320px">
             </div>
 
           </div>
@@ -104,7 +104,7 @@
             <div class="col-sm-9">
               <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh chuyển</label>
               <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
-              <img id="event__img-hover-0" src="{{URL::to('/')}}/server/assets/image/product/hover/{{$product->product_img_hover}}" alt="slider" width="50%" height="320px">
+              <img id="event__img-hover-0" src="{{URL::to('/')}}/image/product/hover/{{$product->product_img_hover}}" alt="slider" width="50%" height="320px">
             </div>
           </div>
         </div>
@@ -183,7 +183,6 @@
       formData.append('data_input_hover', imageHover[0].files[0]);
     
     }
-    console.log(formData.append('keyword',$('#keyword').val()));
     formData.append('name', $('#name').val());
     formData.append('cate_id', $('#cate_id').val());
     formData.append('port_id', $('#port_id').val());

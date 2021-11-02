@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +14,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => 'levellogin'], function () {
+Route::group(['middleware' => 'KiemTra_Admin_User'], function () {
     //Server
     Route::resource('/admin', 'ServerController');
     Route::resource('/MyAccount', 'MyAccountController')->except('destroy');
@@ -95,6 +97,7 @@ Route::post('/LayLaiMatKhau','AuthController@postNhapOtp')->name('post.otp');
 
 Route::post('/DatLaiMatKhau','AuthController@postDatLaiMatKhau')->name('post.datmatkhau');
 
+Route::get('Dang-Ky','AuthController@registerContinue')->name('registerContinue');
 Route::post('/register', 'AuthController@register')->name('register');
 Route::get('/verifyAccount', 'AuthController@verifyAccount')->name('verifyAccount');
 Route::get('/user', 'AuthController@userInfo')->middleware('auth:api');
@@ -173,5 +176,21 @@ Route::get('/save-item-list-favorite/{id}/{qty}', 'FavoriteController@SaveItemLi
 
 Route::get('/tim-kiem/name', 'SearchController@searchProductByName');
 
+Route::get('/tim-kiem-bai-viet/name', 'SearchController@searchArticleByName');
 
-Route::get('donhangg', 'SearchController@donhangg')->name('donhangg');
+// Route::get('donhangg', 'SearchController@donhangg')->name('donhangg');
+
+// Route::get('test',function(){
+//     event(new App\Events\MyEvent('welcome'));
+//     return "Event has been sent";
+// });
+
+// Route::get('test',function(){
+//     return view('test');
+// });
+
+// Route::post('test',function(){
+//     $message = request()->product_name;
+
+//     event(new MyEvent($message));
+// })->name('post.test');

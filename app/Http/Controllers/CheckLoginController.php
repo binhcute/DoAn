@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\Account\LoginRequest;
+use App\Http\Requests\LoginRequest;
 
 class CheckLoginController extends Controller
 {
@@ -19,92 +19,25 @@ class CheckLoginController extends Controller
             'password' => $request->password,
         ];
 
-        if (Auth::attempt($account) && Auth::user()->status == 1) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Đăng Nhập Thành Công'
-            ], 200);
+        if (Auth::attempt($account)) {
+            if (Auth::user()->status == 1) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Đăng Nhập Thành Công'
+                ], 200);
+            } else {
+                Auth::logout();
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tài Khoản Này Chưa Được Kích Hoạt'
+                ], 200);
+            }
         } else {
             Auth::logout();
             return response()->json([
                 'status' => 'error',
-                'message' => 'Tài khoản chưa được kích hoạt'
+                'message' => 'Tài Khoản Hoặc Mật Khẩu Không Chính Xác'
             ], 200);
         }
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

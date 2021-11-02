@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Order as OrderResource;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {

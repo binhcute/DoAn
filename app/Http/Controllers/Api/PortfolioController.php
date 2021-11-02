@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Portfolio as PortfolioResource;
-use App\Http\Requests\Admin\StorePortfolioRequest;
+use App\Http\Resources\PortfolioResource;
+use App\Http\Requests\Admin\Portfolio\StorePortfolioRequest;
 
 class PortfolioController extends Controller
 {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Comment as CommentResource;
+use App\Http\Resources\CommentResource;
 
 class CommentController extends Controller
 {

@@ -32,7 +32,7 @@
               </tr>
             </thead>
             <tbody id="change-layout">
-              @include('pages.server.order.list-item')
+              @include('pages.server.Order.list-item')
             </tbody>
             <tfoot>
               <tr>
@@ -51,7 +51,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-12" id="giao-dien-duoi">
-            @include('pages.server.order.list-orderdetail')
+            @include('pages.server.Order.list-orderDetail')
           </div>
         </div>
       </div>

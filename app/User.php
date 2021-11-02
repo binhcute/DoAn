@@ -2,14 +2,14 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable,HasApiTokens;
 
     protected $table = 'users';
     //Khóa chính tự động tăng int
@@ -54,6 +54,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
     public function product()
     {
         return $this->HasMany('App\Models\Product', 'user_id', 'id');
@@ -74,9 +75,9 @@ class User extends Authenticatable
     {
         return $this->HasMany('App\Models\Order', 'user_id', 'id');
     }
-    public function AauthAcessToken()
-    {
-        return $this->hasMany('App\Models\OauthAccessToken');
-    }
+    // public function AauthAcessToken()
+    // {
+    //     return $this->hasMany('App\Models\OauthAccessToken');
+    // }
 }
 
