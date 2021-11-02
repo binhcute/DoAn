@@ -80,5 +80,4 @@
   <strong class="text-center">Danh Sách Trống</strong>
   @endif
 </div>
-</div>
 @endsection

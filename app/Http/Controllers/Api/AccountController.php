@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\StoreAccountRequest;
-use App\Http\Requests\Account\LoginRequest;
+use App\Http\Requests\Admin\Account\StoreAccountRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Account as AccountResource;
+use App\Http\Resources\AccountResource;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Carbon\Carbon;
@@ -42,7 +43,7 @@ class AccountController extends Controller
         $user->status = 0;
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/account'); // upload path
+            $destinationPath = public_path('/image/account'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -54,12 +55,28 @@ class AccountController extends Controller
 
         $user->save();
 
-        return response()->json(array(
-            'success' => 1,
-            'data' => $user,
-            'status' => 'success',
-            'message' => 'Đăng ký thành công'
-        ));
+        if ($user->save()) {
+            $code = bcrypt(md5(time() . $user->email));
+            $url = route('verifyAccount', ['id' => $user->id, 'code' => $code]);
+            $user->code = $code;
+            $user->save();
+            $data = [
+                'route' => $url
+            ];
+            Mail::to($user->email)->send(new \App\Mail\KichHoatTaiKhoan($data));
+            return response()->json(array(
+                'success' => 1,
+                'data' => $user,
+                'status' => 'success',
+                'message' => 'Đăng Ký Thành Công, Vui Lòng Kiểm Tra Email Để Kích Hoạt Tài Khoản'
+            ));
+        } else {
+            return response()->json(array(
+                'success' => 0,
+                'status' => 'error',
+                'message' => 'Đăng ký thất bại'
+            ));
+        }
     }
 
     public function login(LoginRequest $request)
@@ -82,6 +99,7 @@ class AccountController extends Controller
                 'message' => 'Đăng Nhập Thành Công',
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
+                'user' => $user,
                 'expires_at' => Carbon::parse(
                     $tokenResult->token->expires_at
                 )->toDateTimeString()

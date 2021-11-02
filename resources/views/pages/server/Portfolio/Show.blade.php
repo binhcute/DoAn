@@ -66,7 +66,7 @@
             </tr>
             <tr>
               <td> <b>Avatar &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
-              <td><img class="img-thumbnail" src="{{URL::to('/') }}/server/assets/image/portfolio/avatar/{{ $port->port_avatar }}" alt=""></td>
+              <td><img class="img-thumbnail" src="{{URL::to('/') }}/image/portfolio/avatar/{{ $port->port_avatar }}" alt=""></td>
             </tr>
           </tbody>
         </table>
@@ -82,7 +82,7 @@
         </div>
         <div class="col-md-6">
           <div class="product-icon">
-            <img class="img-thumbnail" src="{{URL::to('/') }}/server/assets/image/portfolio/{{ $port->port_img }}" alt="">
+            <img class="img-thumbnail" src="{{URL::to('/') }}/image/portfolio/{{ $port->port_img }}" alt="">
           </div>
         </div>
       </div>

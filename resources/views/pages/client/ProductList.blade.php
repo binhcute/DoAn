@@ -62,19 +62,9 @@
         <div class="container">
             <div class="row learts-mb-n50">
 
-               @include('pages.client.list-product.dsSanPham')
+               @include('pages.client.List-product.dsSanPham')
 
                 <div class="col-lg-3 col-12 learts-mb-10 order-lg-1">
-
-                    <!-- Search Start -->
-                    <div class="single-widget learts-mb-40">
-                        <div class="widget-search">
-                            <form class="typeahead" role="search">
-                                <input type="search" name="q" class="form-control search-input" placeholder="Hãy nhập từ bất kỳ..." autocomplete="off">
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Search End -->
 
                     <!-- Categories Start -->
                     <div class="single-widget learts-mb-40">
@@ -98,10 +88,9 @@
 
 </div>
 <!-- Shop Products Section End -->
-@include('pages.client.modal.modal-sanpham')
+@include('pages.client.Modal.modal-SanPham')
 @endsection
-@section('page-js')
-<!-- Lấy giá trị từ phân trang -->
+<!-- Lấy giá trị từ phân trang
 <script>
     $(document).ready(function() {
         $(document).on('click', '.pagination a', function(event) {
@@ -119,5 +108,4 @@
             }
         });
     }
-</script>
-@endsection
+</script> -->

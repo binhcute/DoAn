@@ -22,17 +22,20 @@
 <!-- Page Title/Header End -->
 <!-- Shopping Cart Section Start -->
 <div class="section section-padding" id="danh_sach">
-    @include('pages.client.cart.list-cart')
+    @include('pages.client.Cart.list-cart')
 </div>
 <script>
+    function RenderList(response) {
+        $("#danh_sach").empty();
+        $("#danh_sach").html(response);
+    }
+
     function DeleteItemListCart(id) {
-        console.log(id);
         $.ajax({
             url: 'delete-item-list-cart/' + id,
             type: "GET",
         }).done(function(response) {
-            console.log(response);
-            RenderList(response);
+            RenderList(response.giao_dien);
             alertify.error('Đã Xóa Sản Phẩm Thành Công');
         });
     }
@@ -46,7 +49,11 @@
             // console.log($('#danh_sach').html(data.giao_dien));
             $('#danh_sach').empty();
             $('#danh_sach').html(response.giao_dien);
-            console.log(response);
+
+            if ($('.quantity_num').val() == 1) {
+                $('.quantity__minus').prop("disabled", true);
+            }
+
             alertify.success('Đã Cập Nhật Sản Phẩm Thành Công');
             tangSanPham();
             giamSanPham();

@@ -94,7 +94,7 @@
         </div>
         <div class="col-md-6">
           <div class="product-icon">
-            <img class="img-thumbnail" src="{{URL::to('/') }}/server/assets/image/account/{{ $account->avatar }}" alt="">
+            <img class="img-thumbnail" src="{{URL::to('/') }}/image/account/{{ $account->avatar }}" alt="">
           </div>
         </div>
       </div>

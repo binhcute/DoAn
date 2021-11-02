@@ -40,6 +40,8 @@
     <link id="color" rel="stylesheet" href="{{asset('server/assets/css/color-1.css')}}" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{asset('server/assets/css/responsive.css')}}">
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  
   </head>
 
   <body onload="startTime()">
@@ -85,26 +87,45 @@
                   </div>
                 </div>
               </li>
-              <li class="onhover-dropdown">
-                <div class="notification-box"><i data-feather="bell"> </i><span class="badge rounded-pill badge-secondary">4                                </span></div>
-                <ul class="notification-dropdown onhover-show-div">
-                  <li><i data-feather="bell"></i>
-                    <h6 class="f-18 mb-0">Notitications</h6>
-                  </li>
-                  <li>
-                    <p><i class="fa fa-circle-o me-3 font-primary"> </i>Delivery processing <span class="pull-right">10 min.</span></p>
-                  </li>
-                  <li>
-                    <p><i class="fa fa-circle-o me-3 font-success"></i>Order Complete<span class="pull-right">1 hr</span></p>
-                  </li>
-                  <li>
-                    <p><i class="fa fa-circle-o me-3 font-info"></i>Tickets Generated<span class="pull-right">3 hr</span></p>
-                  </li>
-                  <li>
-                    <p><i class="fa fa-circle-o me-3 font-danger"></i>Delivery Complete<span class="pull-right">6 hr</span></p>
-                  </li>
-                  <li><a class="btn btn-primary" href="#">Check all notification</a></li>
-                </ul>
+              <li class="onhover-dropdown header_noti-notice">
+                <div class="notification-box"><i data-feather="bell"> </i><span data-count="0" id="header__noti_1" class="header_noti-notice badge rounded-pill badge-secondary">0 </span></div>
+                <div class="header__noti-list">
+                  <div class="header__noti-heading">Thông báo mới</div>
+                  <ul class="header__noti-list-item">
+                    @if($thongBaoMoi!==null)
+                    @foreach($thongBaoMoi as $thongBao)
+                    <?php $chi_tiet = json_decode($thongBao->noi_dung,TRUE) ?>
+                    <a href="{{route('HoaDon.show', $chi_tiet['don_hang_id'])}}">
+                      <li class="header__noti-item">
+                        <div class="noti-item__avt">
+                          <img src="{{URL::to('/')}}/image/account/1.png" alt="" class="noti-item__avt-img">
+                        </div>
+                        <div class="noti-item__content">
+                          Bạn có đơn hàng:
+                          <span class="header-noti__code-order">{{$chi_tiet['don_hang_id']}}</span>
+                          mới từ
+                          <span class="header-noti__email-order">{{$chi_tiet['email_nguoi_dung']}}</span>. <br />
+                          <span class="header-noti__date-order">{{$chi_tiet['thoi_gian']}}</span>
+                        </div>
+                      </li>
+                    </a>
+                    @endforeach
+                    @else
+                    <li class="header__noti-item">
+                      <div class="noti-item__avt">
+                        <img src="./asset/img/notice_avt.jpg" alt="" class="noti-item__avt-img">
+                      </div>
+                      <div class="noti-item__content">
+                        Bạn có đơn hàng:
+                        <span class="header-noti__code-order">ccc6da91-9f0f-4369-ba79-694382e3b1b7</span>
+                        mới từ
+                        <span class="header-noti__email-order">123456789@gmail.com</span>. <br />
+                        <span class="header-noti__date-order">10 giây trước</span>
+                      </div>
+                    </li>
+                    @endif
+                  </ul>
+                </div>
               </li>
               <li>
                 <div class="mode"><i class="fa fa-moon-o"></i></div>
@@ -120,7 +141,7 @@
                   <li><a href="{{route('MyAccount.index')}}"><i data-feather="user"></i><span>Tài khoản </span></a></li>
                   <li><a href="#"><i data-feather="settings"></i><span>Cài đặt</span></a></li>
                   <li><a href="{{ route('logout') }}"><i data-feather="log-in"> </i><span>Đăng xuất</span>
-                      
+
                     </a></li>
                 </ul>
               </li>
@@ -162,7 +183,7 @@
                     <a class="sidebar-link sidebar-title link-nav" href="{{route('SanPham.index')}}"><i data-feather="airplay"></i><span>Sản Phẩm</span></a>
                   </li>
                   <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title link-nav" href="{{route('LoaiSanPham.index')}}"><i data-feather="layout"></i><span>Loại Sản Phẩm</span></a>
+                    <a class="sidebar-link sidebar-title link-nav" href="{{route('LoaiSanPham.index')}}"><i data-feather="layout"></i><span>Danh Mục</span></a>
                   </li>
                   <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('NhaCungCap.index')}}"><i data-feather="briefcase"></i><span>Nhà Cung Cấp</span></a>
                   </li>
@@ -232,14 +253,14 @@
     <script src="{{URL::asset('server/assets/js/datepicker/date-picker/datepicker.custom.js')}}"></script>
     <script src="{{URL::asset('server/assets/js/typeahead/handlebars.js')}}"></script>
     <script src="{{URL::asset('server/assets/js/typeahead/typeahead.bundle.js')}}"></script>
-  <script src="{{URL::asset('server/assets/js/typeahead/typeahead.custom.js')}}"></script>
+    <script src="{{URL::asset('server/assets/js/typeahead/typeahead.custom.js')}}"></script>
     <script src="{{URL::asset('server/assets/js/typeahead-search/handlebars.js')}}"></script>
     <script src="{{URL::asset('server/assets/js/typeahead-search/typeahead-custom.js')}}"></script>
     <script src="{{URL::asset('server/assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('server/assets/js/datatable/datatables/datatable.custom.js')}}"></script>
     <script src="{{URL::asset('server/assets/js/tooltip-init.js')}}"></script>
     <script src="{{asset('sweetarlet2/node_modules/sweetalert2/dist/sweetalert2.js')}}"></script>
-    
+
     <script src="{{URL::asset('server/assets/js/counter/jquery.waypoints.min.js')}}"></script>
     <script src="{{URL::asset('server/assets/js/counter/jquery.counterup.min.js')}}"></script>
     <script src="{{URL::asset('server/assets/js/counter/counter-custom.js')}}"></script>
@@ -256,6 +277,39 @@
     <!-- login js-->
     <!-- Plugin used-->
     @yield('page-js')
+      <script>
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true;
+
+      var pusher = new Pusher('b126bc4269efe288e2d6', {
+        cluster: 'ap1'
+      });
+
+      var channel = pusher.subscribe('my-channel');
+      var notificationCount = $('#header__noti_1').data('count');
+      console.log(notificationCount);
+      channel.bind('form-submitted', function(data) {
+        $('.header__noti-list-item').prepend(`
+          <a href="/./HoaDon/` + data['data']['don_hang_id'] + `">
+            <li class="header__noti-item">
+              <div class="noti-item__avt">
+                <img src="{{asset('image/account/1.png')}}" alt="" class="noti-item__avt-img">
+              </div>
+              <div class="noti-item__content">
+                Bạn có đơn hàng:
+                <span class="header-noti__code-order">` + data['data']['don_hang_id'] + `</span>
+                mới từ
+                <span class="header-noti__email-order">` + data['data']['email_nguoi_dung'] + `</span>.<br />
+                <span class="header-noti__date-order">` + data['data']['thoi_gian'] + `</span>
+              </div>
+            </li>
+          </a>
+        `)
+        notificationCount += 1;
+        $('#header__noti_1').attr('data-count', notificationCount);
+        $('#header__noti_1').text(notificationCount);
+      });
+    </script>
   </body>
 
   <!-- Mirrored from admin.pixelstrap.com/cuba/theme/{{route('admin.index')}} by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 16 May 2021 10:56:01 GMT -->

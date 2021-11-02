@@ -67,7 +67,7 @@
             <div class="col">
                 <div class="category-banner1">
                     <div class="inner">
-                        <a href="{{route('Danh-Muc',[Str::slug($item->cate_name,'-'),$item->cate_id])}}" class="image"><img src="{{ URL::to('/')}}/server/assets/image/category/{{ $item->cate_img }}" alt=""></a>
+                        <a href="{{route('Danh-Muc',[Str::slug($item->cate_name,'-'),$item->cate_id])}}" class="image"><img src="{{ URL::to('/')}}/image/category/{{ $item->cate_img }}" alt=""></a>
                         <div class="content">
                             <h3 class="title">
                                 <a href="{{route('Danh-Muc',[Str::slug($item->cate_name,'-'),$item->cate_id])}}">{{$item->cate_name}}</a>
@@ -106,10 +106,10 @@
                                 <div class="product-thumb">
                                     <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
                                         @if($item->product_img_hover !=null)
-                                        <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
-                                        <img class="image-hover " src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
+                                        <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
+                                        <img class="image-hover " src="{{ URL::to('/') }}/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
                                         @else
-                                        <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
+                                        <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
                                         @endif
                                     </a>
                                     <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
@@ -148,10 +148,10 @@
                                     <div class="product-thumb">
                                         <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
                                             @if($item->product_img_hover !=null)
-                                            <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
-                                            <img class="image-hover " src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
+                                            <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
+                                            <img class="image-hover " src="{{ URL::to('/') }}/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
                                             @else
-                                            <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
+                                            <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
                                             @endif
                                         </a>
                                         <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
@@ -180,10 +180,10 @@
     </div>
     <!-- Product Tab End -->
     <div class="text-center learts-mt-70">
-        <a href="{{URL::to('/product')}}" class="btn btn-dark btn-outline-hover-dark"><i class="ti-plus"></i> Xem Thêm</a>
+        <a href="{{route('Danh-Sach-San-Pham')}}" class="btn btn-dark btn-outline-hover-dark"><i class="ti-plus"></i> Xem Thêm</a>
     </div>
 
 </div>
 <br>
-@include('pages.client.modal.modal-sanpham')
+@include('pages.client.Modal.modal-SanPham')
 @endsection

@@ -8,8 +8,8 @@
             <div class="product">
                 <div class="product-thumb">
                     <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
-                        <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
-                        <img class="image-hover " src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
+                        <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
+                        <img class="image-hover " src="{{ URL::to('/') }}/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
                     </a>
                     <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
                 </div>

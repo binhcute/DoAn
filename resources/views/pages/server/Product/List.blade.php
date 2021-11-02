@@ -34,7 +34,7 @@
             </tr>
           </thead>
           <tbody id="change-layout">
-            @include('pages.server.product.list-item')
+            @include('pages.server.Product.list-item')
           </tbody>
           <tfoot>
             <tr>
@@ -53,7 +53,6 @@
   @else
   <strong class="text-center">Danh Sách Trống</strong>
   @endif
-</div>
 </div>
 @endsection
 @section('page-js')
@@ -115,7 +114,7 @@ function changeStatus(event) {
     });
     event.preventDefault();
     var url = $(this).data('url');
-    console.log(url);
+    
     Swal.fire({
       title: 'Bạn Muốn Xóa Sản Phẩm Này ?',
       icon: 'warning',
@@ -123,7 +122,7 @@ function changeStatus(event) {
       cancelButtonColor: '#d33',
       confirmButtonColor: '#3085d6',
       cancelButtonText: 'Hủy',
-      confirmButtonText: 'Thay Đổi'
+      confirmButtonText: 'Xóa'
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({

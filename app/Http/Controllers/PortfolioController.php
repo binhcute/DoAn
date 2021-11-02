@@ -7,8 +7,7 @@ use App\Models\Portfolio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Alert;
-use App\Http\Requests\Admin\StorePortfolioRequest;
+use App\Http\Requests\Admin\Portfolio\StorePortfolioRequest;
 
 class PortfolioController extends Controller
 {
@@ -20,8 +19,10 @@ class PortfolioController extends Controller
     public function index()
     {
         $port = Portfolio::all();
-        return view('pages.server.portfolio.list')
-            ->with('port', $port);
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Portfolio.List')
+            ->with('port', $port)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -31,7 +32,9 @@ class PortfolioController extends Controller
      */
     public function create()
     {
-        return view('pages.server.portfolio.add');
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Portfolio.Add')
+        ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -52,7 +55,7 @@ class PortfolioController extends Controller
 
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/portfolio/avatar'); // upload path
+            $destinationPath = public_path('/image/portfolio/avatar'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -66,7 +69,7 @@ class PortfolioController extends Controller
 
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/portfolio'); // upload path
+            $destinationPath = public_path('/image/portfolio'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -103,8 +106,10 @@ class PortfolioController extends Controller
         $port = DB::table('tpl_portfolio')
             ->join('users', 'users.id', '=', 'tpl_portfolio.user_id')
             ->where('port_id', $id)->first();
-        return view('pages.server.portfolio.show')
-            ->with('port', $port);
+            $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Portfolio.Show')
+            ->with('port', $port)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -118,9 +123,11 @@ class PortfolioController extends Controller
         $user = DB::table('users')
             ->orderBy('id', 'desc')->get();
         $port = Portfolio::find($id);
-        return view('pages.server.portfolio.edit')
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Portfolio.Edit')
             ->with('port', $port)
-            ->with('user', $user);
+            ->with('user', $user)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -141,7 +148,7 @@ class PortfolioController extends Controller
 
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/portfolio/avatar'); // upload path
+            $destinationPath = public_path('/image/portfolio/avatar'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -154,7 +161,7 @@ class PortfolioController extends Controller
         $files = $request->file('img');
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/portfolio'); // upload path
+            $destinationPath = public_path('/image/portfolio'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -191,7 +198,7 @@ class PortfolioController extends Controller
         $destroy->delete();
         if ($destroy->delete()) {
             $port = Portfolio::all();
-            $giao_dien = view('pages.server.portfolio.list-item', compact(['port']))->render();
+            $giao_dien = view('pages.server.Portfolio.list-item', compact(['port']))->render();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Xóa Nhà Cung Cấp Thành Công',
@@ -213,7 +220,7 @@ class PortfolioController extends Controller
             $change->save();
             if ($change->save()) {
                 $port = Portfolio::all();
-                $giao_dien = view('pages.server.portfolio.list-item', compact(['port']))->render();
+                $giao_dien = view('pages.server.Portfolio.list-item', compact(['port']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Đã Ẩn Nhà Cung Cấp',
@@ -229,7 +236,7 @@ class PortfolioController extends Controller
             $change->save();
             if ($change->save()) {
                 $port = Portfolio::all();
-                $giao_dien = view('pages.server.portfolio.list-item', compact(['port']))->render();
+                $giao_dien = view('pages.server.Portfolio.list-item', compact(['port']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Đã Hiển Thị Nhà Cung Cấp',

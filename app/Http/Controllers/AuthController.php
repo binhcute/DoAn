@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Carbon\Carbon;
-use App\Http\Requests\Account\LoginRequest;
-use App\Http\Requests\Admin\StoreAccountRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\Admin\Account\StoreAccountRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -21,7 +21,7 @@ class AuthController extends Controller
     }
     public function register(StoreAccountRequest $request)
     {
-
+// dd($request->all());
         $user = new User();
         $user->firstName = $request->firstName;
         $user->lastName = $request->lastName;
@@ -36,7 +36,7 @@ class AuthController extends Controller
         $user->status = 0;
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/account'); // upload path
+            $destinationPath = public_path('/image/account'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -55,7 +55,7 @@ class AuthController extends Controller
             $data = [
                 'route' => $url
             ];
-            Mail::to($user->email)->send(new \App\Mail\VerifyAccount($data));
+            Mail::to($user->email)->send(new \App\Mail\KichHoatTaiKhoan($data));
             return response()->json(array(
                 'success' => 1,
                 'data' => $user,
@@ -70,6 +70,11 @@ class AuthController extends Controller
             ));
         }
     }
+
+    public function registerContinue(){
+        return view('auth.continue_register');
+    }
+
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
@@ -139,7 +144,7 @@ class AuthController extends Controller
                 'token' => $token,
                 'email' => $request->email,
             ];
-            Mail::to($request->email)->send(new \App\Mail\ResetPassword($data));
+            Mail::to($request->email)->send(new \App\Mail\ResetMatKhau($data));
             return view('auth.passwords.otp')->with('email',$request->email);
         }
     }

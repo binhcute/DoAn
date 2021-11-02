@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Category as CategoryResource;
-use App\Http\Requests\Admin\StoreCategoryRequest;
+use App\Http\Resources\CategoryResource;
+use App\Http\Requests\Admin\Category\StoreCategoryRequest;
 
 class CategoryController extends Controller
 {

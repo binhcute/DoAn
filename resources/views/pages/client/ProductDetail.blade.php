@@ -34,7 +34,7 @@
             <div class="col-lg-6 col-12 learts-mb-40">
                 <div class="product-images">
                     <button class="product-gallery-popup hintT-left" data-hint="Click to enlarge" data-images='[
-                            {"src": "{{ url::to("/")}}/server/assets/image/product/{{$product_detail->product_img}}", "w": 700, "h": 1100},
+                            {"src": "{{ url::to("/")}}/image/product/{{$product_detail->product_img}}", "w": 700, "h": 1100},
                             {"src": "client/images/product/single/1/product-zoom-2.jpg", "w": 700, "h": 1100},
                             {"src": "client/images/product/single/1/product-zoom-3.jpg", "w": 700, "h": 1100},
                             {"src": "client/images/product/single/1/product-zoom-4.jpg", "w": 700, "h": 1100}
@@ -42,11 +42,11 @@
                     <a href="https://www.youtube.com/watch?v=M829YSPnjUw" class="product-video-popup video-popup hintT-left" data-hint="Click to see video"><i class="fal fa-play"></i></a>
                     <div class="product-gallery-slider">
                         <div class="product-zoom">
-                            <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $product_detail->product_img }}" alt="">
+                            <img src="{{ URL::to('/') }}/image/product/{{ $product_detail->product_img }}" alt="">
                         </div>
                         @if ($product_detail->product_img_hover !=null)
                         <div class="product-zoom">
-                            <img src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $product_detail->product_img_hover }}" alt="">
+                            <img src="{{ URL::to('/') }}/image/product/hover/{{ $product_detail->product_img_hover }}" alt="">
                         </div>
                         @endif
 
@@ -54,10 +54,10 @@
                     <div class="product-thumb-slider">
                         @if ($product_detail->product_img_hover !=null)
                         <div class="item">
-                            <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $product_detail->product_img }}" alt="">
+                            <img src="{{ URL::to('/') }}/image/product/{{ $product_detail->product_img }}" alt="">
                         </div>
                         <div class="item">
-                            <img src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $product_detail->product_img_hover }}" alt="">
+                            <img src="{{ URL::to('/') }}/image/product/hover/{{ $product_detail->product_img_hover }}" alt="">
                         </div>
                         @endif
                     </div>
@@ -97,7 +97,7 @@
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
                             @break
-                            @case('4.0')
+                            @case('4')
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
@@ -118,7 +118,7 @@
                     <h3 class="product-title">{{$product_detail->product_name}}</h3>
                     <div class="product-price">{{number_format($product_detail->product_price).' '.'VND'}}</div>
                     <div class="product-description">
-                        <p><b>Date: </b><i>{{$product_detail->updated_at}}</i></p>
+                        <p><b>Date: </b><i>{{date('d-m-Y', strtotime($product_detail->updated_at))}}</i></p>
                     </div>
                     <div class="product-description">
                         @if($product_detail->product_quantity == 0)
@@ -136,7 +136,7 @@
                     <div class="product-brands">
                         <span class="title">Nhà Cung Cấp</span>
                         <div class="brands">
-                            <a href="{{route('Nha-Cung-Cap',[Str::slug($product_detail->port_name, '-'),$product_detail->port_id])}}"><img src="{{URL::to('/') }}/server/assets/image/portfolio/avatar/{{$product_detail->port_avatar}}" alt=""></a>
+                            <a href="{{route('Nha-Cung-Cap',[Str::slug($product_detail->port_name, '-'),$product_detail->port_id])}}"><img src="{{URL::to('/') }}/image/portfolio/avatar/{{$product_detail->port_avatar}}" alt=""></a>
                         </div>
                     </div>
                     <form action="{{URL('/AddCartDT/'.$product_detail->product_id)}}" method="get" enctype="multipart/form-data">
@@ -233,7 +233,7 @@
                 <div class="row learts-mb-n30">
                     <div class="col-12 learts-mb-30">
                         <div class="row learts-mb-n10">
-                            <div class="col-lg-2 col-md-3 col-12 learts-mb-10"><img src="{{URL::to('/')}}/server/assets/image/portfolio/avatar/{{$product_detail->port_avatar}}" alt=""></div>
+                            <div class="col-lg-2 col-md-3 col-12 learts-mb-10"><img src="{{URL::to('/')}}/image/portfolio/avatar/{{$product_detail->port_avatar}}" alt=""></div>
                             <div class="col learts-mb-10">
                                 <p>{!!$product_detail->port_description!!}</p>
                             </div>
@@ -242,7 +242,7 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="tab-reviews">
-                @include('pages.client.load-comment')
+                @include('pages.client.Product-Detail.load-comment')
             </div>
         </div>
 
@@ -271,10 +271,10 @@
                                     <span class="onsale">-13%</span>
                                 </span> -->
                             @if($item->product_img_hover !=null)
-                            <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
-                            <img class="image-hover " src="{{ URL::to('/') }}/server/assets/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
+                            <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
+                            <img class="image-hover " src="{{ URL::to('/') }}/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
                             @else
-                            <img src="{{ URL::to('/') }}/server/assets/image/product/{{ $item->product_img }}" alt="Product Image">
+                            <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
                             @endif
                         </a>
                         <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
@@ -301,18 +301,15 @@
     </div>
 </div>
 <!-- Recommended Products Section End -->
-@include('pages.client.modal.modal-sanpham')
+@include('pages.client.Modal.modal-SanPham')
 @endsection
 @section('page-js')
 <script type="text/javascript">
     function AddCartDT(id) {
-        console.log(id);
-        console.log($("#qty").val());
         $.ajax({
             url: 'item-cart/' + id + '/' + $("#qty").val(),
             type: "GET",
         }).done(function(response) {
-            console.log(response);
             Render(response);
             alertify.success('Đã Thêm Vào Giỏ Hàng');
         });
@@ -333,7 +330,7 @@
         event.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        console.log(form.serialize());
+        // console.log(form.serialize());
         $.ajax({
             type: "POST",
             url: url,
@@ -368,5 +365,23 @@
         });
     });
 </script>
+<!-- Lấy giá trị từ phân trang -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            phanTrangBaiViet(page);
+        });
+    });
 
+    function phanTrangBaiViet(page) {
+        $.ajax({
+            url: '?page=' + page,
+            success: function(data) {
+                $('#phan-trang-binh-luan-san-pham').html(data);
+            }
+        });
+    }
+</script>
 @endsection

@@ -10,8 +10,8 @@
                 <div class="col-lg-6 col-12 learts-mb-30">
                     <div class="product-images">
                         <div class="product-gallery-slider-quickview">
-                            <div class="product-zoom" data-image="{{URL::to('/') }}/server/assets/image/product/{{$modal->product_img}}">
-                                <img src="{{URL::to('/') }}/server/assets/image/product/{{$modal->product_img}}" alt="">
+                            <div class="product-zoom" data-image="{{URL::to('/') }}/image/product/{{$modal->product_img}}">
+                                <img src="{{URL::to('/') }}/image/product/{{$modal->product_img}}" alt="">
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         <div class="product-brands">
                             <span class="title">Nhà Cung Cấp</span>
                             <div class="brands">
-                                <a href="{{route('Nha-Cung-Cap',[Str::slug($modal->port_name, '-'),$modal->port_id])}}"><img src="{{URL::to('/') }}/server/assets/image/portfolio/avatar/{{$modal->port_avatar}}" alt=""></a>
+                                <a href="{{route('Nha-Cung-Cap',[Str::slug($modal->port_name, '-'),$modal->port_id])}}"><img src="{{URL::to('/') }}/image/portfolio/avatar/{{$modal->port_avatar}}" alt=""></a>
                             </div>
                         </div>
                         <div class="product-meta mb-0">

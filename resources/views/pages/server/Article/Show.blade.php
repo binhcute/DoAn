@@ -83,7 +83,7 @@
         </div>
         <div class="col-md-6">
           <div class="product-icon">
-            <img class="img-thumbnail" src="{{URL::to('/') }}/server/assets/image/article/{{ $article->article_img }}" alt="">
+            <img class="img-thumbnail" src="{{URL::to('/') }}/image/article/{{ $article->article_img }}" alt="">
           </div>
         </div>
       </div>

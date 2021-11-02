@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Input;
 use App\Cart;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
+use App\Events\MyEvent;
+use Carbon\Carbon;
+use App\Models\ThongBao;
 
 class CheckOutController extends Controller
 {
@@ -53,7 +56,7 @@ class CheckOutController extends Controller
 
         ];
 
-        $validator = Validator::make(Input::all(), $rule);
+        $validator = Validator::make($request->all(), $rule);
 
         if ($validator->fails()) {
             return redirect('/checkout')
@@ -62,14 +65,14 @@ class CheckOutController extends Controller
         }
 
         $ds_gio_hang = Session('Cart') ? Session('Cart') : null;
-        if($ds_gio_hang != null) {
-            foreach($ds_gio_hang-> product as $key => $san_pham){
-                $kho_san_pham = Product::where('product_id',$san_pham['product_info']->product_id)->first();
-                if($kho_san_pham->product_quantity < $san_pham['qty']){
+        if ($ds_gio_hang != null) {
+            foreach ($ds_gio_hang->product as $key => $san_pham) {
+                $kho_san_pham = Product::where('product_id', $san_pham['product_info']->product_id)->first();
+                if ($kho_san_pham->product_quantity < $san_pham['qty']) {
                     return response()->json([
                         'status' => 'error',
                         'message' => $kho_san_pham->product_name . ' chỉ còn ' . $kho_san_pham->product_quantity . ' sản phẩm!',
-                    ],200);
+                    ], 200);
                 }
             }
             $order = new Order;
@@ -90,7 +93,7 @@ class CheckOutController extends Controller
                 $san_pham_ton = Product::where('product_id', $order_dt->product_id)->first();
                 $san_pham_ton->product_quantity -= $item['qty'];
 
-                $san_pham_ton ->save();
+                $san_pham_ton->save();
                 $order_dt->save();
             }
             if ($order_dt->save()) {
@@ -107,13 +110,29 @@ class CheckOutController extends Controller
                 $message = [
                     'logo' => "{{URL::to('/')}}/client/images/logo/logo-2.png",
                     'slider' => "{{URL::to('/')}}/client/images/slider/image-4.png",
-                    'name' => 'Đơn Hàng Của Bạn',
                     'fullName' => Auth::user()->firstName . " " . Auth::user()->lastName,
+                    'name' => Auth::user()->lastName,
                     'address' => $order->address,
                     'phone' => $order->phone,
-                    'notes' => $order->notes
+                    'notes' => $order->notes,
+                    'created_at' => $order->created_at,
+                    'order_id' => $order->order_id
                 ];
-                Mail::to(auth()->user()->email)->send(new \App\Mail\MailNotify($message));
+                Mail::to(auth()->user()->email)->send(new \App\Mail\XuLyDonHang($message));
+
+                $noi_dung_thong_bao = [
+                    'id_nguoi_dung' => Auth::user()->id,
+                    'ten_nguoi_dung' => Auth::user()->lastName,
+                    'username_nguoi_dung' => Auth::user()->username,
+                    'email_nguoi_dung' => Auth::user()->email,
+                    'don_hang_id' => $order->order_id,
+                    'thoi_gian' => Carbon::now('Asia/Ho_Chi_Minh')->format('h:i:s d-m-Y')
+                ];
+                $them_thong_bao = new ThongBao();
+                $them_thong_bao->noi_dung = json_encode($noi_dung_thong_bao);
+                $them_thong_bao ->save();
+
+                event(new MyEvent($noi_dung_thong_bao));
                 $request->Session()->forget('Cart');
                 return response()->json([
                     'status' => 'success',
@@ -125,7 +144,6 @@ class CheckOutController extends Controller
                 'message' => 'Đặt hàng thất bại'
             ], 200);
         }
-       
     }
 
     /**

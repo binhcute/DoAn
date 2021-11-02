@@ -8,7 +8,7 @@
       @if($dt->status == 1)
       <div class="col-xxl-4 col-md-6">
         <div class="prooduct-details-box">
-          <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/server/assets/image/product/{{$dt->product_img}}" alt="#">
+          <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/image/product/{{$dt->product_img}}" alt="#">
             <div class="media-body ms-3">
               <div class="product-name">
                 <h6><a href="#">{{$dt->product_name}}</a></h6>
@@ -40,7 +40,7 @@
       @if($dt->status == 0)
       <div class="col-xxl-4 col-md-6">
         <div class="prooduct-details-box">
-          <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/server/assets/image/product/{{$dt->product_img}}" alt="#">
+          <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/image/product/{{$dt->product_img}}" alt="#">
             <div class="media-body ms-3">
               <div class="product-name">
                 <h6><a href="#">{{$dt->product_name}}</a></h6>
@@ -73,7 +73,7 @@
       @if($dt->status == 2)
       <div class="col-xxl-4 col-md-6">
         <div class="prooduct-details-box">
-          <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/server/assets/image/product/{{$dt->product_img}}" alt="#">
+          <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/image/product/{{$dt->product_img}}" alt="#">
             <div class="media-body ms-3">
               <div class="product-name">
                 <h6><a href="#">{{$dt->product_name}}</a></h6>
@@ -104,7 +104,7 @@
       @if($dt->status == 3)
       <div class="col-xxl-4 col-md-6">
         <div class="prooduct-details-box">
-          <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/server/assets/image/product/{{$dt->product_img}}" alt="#">
+          <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/image/product/{{$dt->product_img}}" alt="#">
             <div class="media-body ms-3">
               <div class="product-name">
                 <h6><a href="#">{{$dt->product_name}}</a></h6>

@@ -23,6 +23,7 @@ class OrderController extends Controller
         foreach ($a as $key => $value) {
             $order_id = $value->order_id;
         }
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         $order = DB::table('tpl_order')
             ->select(
                 'tpl_order.order_id',
@@ -43,9 +44,10 @@ class OrderController extends Controller
                 'tpl_order_dt.*'
             )
             ->get();
-        return view('pages.server.order.list')
+        return view('pages.server.Order.List')
             ->with('order', $order)
-            ->with('order_detail', $order_detail);
+            ->with('order_detail', $order_detail)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -99,11 +101,12 @@ class OrderController extends Controller
             ->join('tpl_order_dt', 'tpl_order.order_id', '=', 'tpl_order_dt.order_id')
             ->join('tpl_product', 'tpl_order_dt.product_id', '=', 'tpl_product.product_id')
             ->where('tpl_order.order_id', $id)->get();
+            $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
 
-
-        return view('pages.server.order.show')
+        return view('pages.server.Order.Show')
             ->with('order_detail', $order_detail)
-            ->with('order', $order);
+            ->with('order', $order)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     public function update_status_0($id)
@@ -137,8 +140,8 @@ class OrderController extends Controller
                 'tpl_order_dt.*'
             )
             ->get();
-            $giao_dien = view('pages.server.order.list-item', compact(['order','order_detail']))->render();
-            $giao_dien_duoi = view('pages.server.order.list-orderdetail', compact(['order','order_detail']))->render();
+            $giao_dien = view('pages.server.Order.list-item', compact(['order','order_detail']))->render();
+            $giao_dien_duoi = view('pages.server.Order.list-orderDetail', compact(['order','order_detail']))->render();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đơn Hàng Đã Giao Cho Shipper',
@@ -182,8 +185,8 @@ class OrderController extends Controller
                     'tpl_order_dt.*'
                 )
                 ->get();
-                $giao_dien = view('pages.server.order.list-item', compact(['order','order_detail']))->render();
-                $giao_dien_duoi = view('pages.server.order.list-orderdetail', compact(['order','order_detail']))->render();
+                $giao_dien = view('pages.server.Order.list-item', compact(['order','order_detail']))->render();
+                $giao_dien_duoi = view('pages.server.Order.list-orderDetail', compact(['order','order_detail']))->render();
                 
             return response()->json([
                 'status' => 'success',
@@ -229,8 +232,8 @@ class OrderController extends Controller
                     'tpl_order_dt.*'
                 )
                 ->get();
-                $giao_dien = view('pages.server.order.list-item', compact(['order','order_detail']))->render();
-                $giao_dien_duoi = view('pages.server.order.list-orderdetail', compact(['order','order_detail']))->render();
+                $giao_dien = view('pages.server.Order.list-item', compact(['order','order_detail']))->render();
+                $giao_dien_duoi = view('pages.server.Order.list-orderDetail', compact(['order','order_detail']))->render();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đơn hàng đã giao thành công',
@@ -275,8 +278,8 @@ class OrderController extends Controller
                     'tpl_order_dt.*'
                 )
                 ->get();
-                $giao_dien = view('pages.server.order.list-item', compact(['order','order_detail']))->render();
-                $giao_dien_duoi = view('pages.server.order.list-orderdetail', compact(['order','order_detail']))->render();
+                $giao_dien = view('pages.server.Order.list-item', compact(['order','order_detail']))->render();
+                $giao_dien_duoi = view('pages.server.Order.list-orderDetail', compact(['order','order_detail']))->render();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đơn hàng đã bị hủy',

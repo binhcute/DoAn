@@ -2,7 +2,7 @@
 <tr>
     <th scope="row">{{ $stt+1 }}</th>
     <td>{{ $item->article_name}}</td>
-    <td><img class="img-thumbnail" width="100" height="100" src="{{ URL::to('/') }}/server/assets/image/article/{{$item->article_img}}"></td>
+    <td><img class="img-thumbnail" width="100" height="100" src="{{ URL::to('/') }}/image/article/{{$item->article_img}}"></td>
     <td>
         @if($item->status==1)
 

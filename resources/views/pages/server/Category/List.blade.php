@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody id="change-layout">
-          @include('pages.server.category.list-item')
+          @include('pages.server.Category.list-item')
           </tbody>
           <tfoot>
             <tr>
@@ -50,7 +50,6 @@
   @else
   <strong class="text-center">Danh Sách Trống</strong>
   @endif
-</div>
 </div>
 @endsection
 @section('page-js')
@@ -111,15 +110,14 @@
     });
     event.preventDefault();
     var url = $(this).data('url');
-    console.log(url);
     Swal.fire({
-      title: 'Bạn Muốn Xóa Loại Sản Phẩm Này ?',
+      title: 'Bạn Muốn Xóa Danh Mục Này ?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#d33',
       confirmButtonColor: '#3085d6',
       cancelButtonText: 'Hủy',
-      confirmButtonText: 'Thay Đổi'
+      confirmButtonText: 'Xóa'
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({

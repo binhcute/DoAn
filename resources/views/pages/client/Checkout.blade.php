@@ -109,7 +109,7 @@
             <div class="row_g no-gutters row_content hide-on-mobile">
                 <div class="col_g l-5_g m-50_g">
                     <div class="perfume-cart__product ">
-                        <img class="product__img" src="{{URL::to('/')}}/server/assets/image/product/{{$item['product_info']->product_img}}" alt="">
+                        <img class="product__img" src="{{URL::to('/')}}/image/product/{{$item['product_info']->product_img}}" alt="">
                         <div>
                             <span class="product__name">
                             {{$item['product_info']->product_name}}
@@ -153,7 +153,7 @@
 
                 <div class="col_g col_g-mar">
                     <div class=" perfume-cart__product">
-                        <img class="product__img" src="{{URL::to('/')}}/server/assets/image/product/{{$item['product_info']->product_img}}" alt="">
+                        <img class="product__img" src="{{URL::to('/')}}/image/product/{{$item['product_info']->product_img}}" alt="">
                         <div>
                             <span class="product__name">
                             {{$item['product_info']->product_name}}
@@ -200,7 +200,6 @@
     <script>
         $('.submit-form-checkout').submit(function(event) {
             event.preventDefault();
-            console.log('fasdf');
             var form = $(this);
             var url = form.attr('action');
             $.ajax({

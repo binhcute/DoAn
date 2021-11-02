@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\ThongBao;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,7 @@ class ServerController extends Controller
         $category = Category::all();
         $order = Order::all();
         $account = User::all();
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         $countProduct = DB::table('tpl_product')
             ->select('user_id')
             ->where('user_id', '=', Auth::user()->id)->get();
@@ -44,10 +46,10 @@ class ServerController extends Controller
                 'tpl_order.status'
             )
             ->get();
-// dd($orderList);
         $countArticle = DB::table('tpl_article')
             ->select('user_id')
             ->where('user_id', '=', Auth::user()->id)->get();
+            // dd(json_decode($thongBaoMoi->noi_dung));
         return view('pages.server.index')
             ->with('product', $product)
             ->with('category', $category)
@@ -55,7 +57,8 @@ class ServerController extends Controller
             ->with('account', $account)
             ->with('countProduct', $countProduct)
             ->with('countArticle', $countArticle)
-            ->with('orderList', $orderList);
+            ->with('orderList', $orderList)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     public function ckeditorUpload(Request $request)
@@ -66,10 +69,10 @@ class ServerController extends Controller
             $extension = $request->file('upload')->getClientOriginalExtension();
             $fileName = $fileName . '_' . time() . '.' . $extension;
 
-            $request -> file('upload')->move(public_path('server/assets/image/img_ckeditor'), $fileName);
+            $request -> file('upload')->move(public_path('image/img_ckeditor'), $fileName);
 
             $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-            $url = asset('server/assets/image/img_ckeditor/' . $fileName);
+            $url = asset('image/img_ckeditor/' . $fileName);
             $msg = 'Image Upload Successfully';
             $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg');</script>";
             @header('Content-type: text/html; charset=utf-8');
@@ -79,7 +82,8 @@ class ServerController extends Controller
 
     public function api()
     {
-        return view('pages.server.api');
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.API')->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**

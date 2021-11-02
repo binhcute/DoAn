@@ -98,7 +98,6 @@
     <!-- <script src="{{asset('client/js/bootstrap3-typeahead.min.js_4.0.2/cdnjs/bootstrap3-typeahead.min.js')}}"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
   
-    <!-- <script src="{{URL::asset('js/app.js')}}"></script> -->
     <script type="text/javascript">
         $(document).ready(function($) {
             var engine1 = new Bloodhound({
@@ -129,7 +128,7 @@
                         ],
                         suggestion: function(data) {
                             
-                            return '<a href="/San-Pham/'+ data.product_name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\-]+/g, '-') + '-' + data.product_id + '" class="list-group-item">' + ` <div class="row" style="padding:2px 0px;"><div class="col-md-1" style="padding-right:8px;"><img src="/./server/assets/image/product/${data.product_img}"/ height="100%" width="200px;"></div><div class="col-md-10 pl-0"><span style="font-size: 1.4rem;">${data.product_name}</span></div></div>` + '</a>';
+                            return '<a href="/San-Pham/'+ data.product_name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\-]+/g, '-') + '-' + data.product_id + '" class="list-group-item">' + ` <div class="row" style="padding:2px 0px;"><div class="col-md-1" style="padding-right:8px;"><img src="/./image/product/${data.product_img}"/ height="100%" width="200px;"></div><div class="col-md-10 pl-0"><span style="font-size: 1.4rem;">${data.product_name}</span></div></div>` + '</a>';
                         }
                     }
                 }
@@ -144,19 +143,16 @@
                 url: '/./item-cart/' + id,
                 type: "GET",
             }).done(function(response) {
-                console.log(response);
                 Render(response);
                 alertify.success('Đã Thêm Vào Giỏ Hàng');
             });
         }
         $("#change-items").on("click", ".content i", function() {
-            console.log($(this).data("id"));
 
             $.ajax({
                 url: '../delete-item-cart/' + $(this).data("id"),
                 type: "GET",
             }).done(function(response) {
-                console.log(response);
                 Render(response);
                 alertify.error('Đã Xóa Sản Phẩm Thành Công');
             });
@@ -169,25 +165,12 @@
             $("#total-qty-show").text($("#total-qty").val());
         }
 
-        function AddFavorite(id) {
-            console.log(id);
-            $.ajax({
-                url: 'item-favorite/' + id,
-                type: "GET",
-            }).done(function(response) {
-                console.log(response);
-                Render1(response);
-                alertify.success('Đã Thêm Vào Yêu Thích');
-            });
-        }
         $("#change-item").on("click", ".content i", function() {
-            console.log($(this).data("id"));
 
             $.ajax({
                 url: 'delete-item-favorite/' + $(this).data("id"),
                 type: "GET",
             }).done(function(response) {
-                console.log(response);
                 Render1(response);
                 alertify.error('Đã Xóa Sản Phẩm Thành Công');
             });

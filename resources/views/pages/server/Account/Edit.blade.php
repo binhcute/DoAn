@@ -145,7 +145,7 @@
               <label class="col-sm-3 col-form-label">Chọn ảnh</label>
               <div class="col-sm-9">
                 <input class="form-control" type="file" name="avatar" data-bs-original-title="" title="">
-                <img src="{{URL::to('/') }}/server/assets/image/account/{{$account->avatar}}" width="300" height="200" alt="">
+                <img src="{{URL::to('/') }}/image/account/{{$account->avatar}}" width="300" height="200" alt="">
                 <label for="img">{{$account->avatar}}</label>
               </div>
             </div>

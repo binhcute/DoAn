@@ -22,7 +22,7 @@
                             <h6>{!!$article->article_description!!}</h6>
                             <br>
                             <div class="image">
-                                <a href="javascript:"><img src="{{ URL::to('/') }}/server/assets/image/article/{{$article->article_img }}" alt="Blog Image"></a>
+                                <a href="javascript:"><img src="{{ URL::to('/') }}/image/article/{{$article->article_img }}" alt="Blog Image"></a>
                             </div>
                             <p>{!!$article->article_detail!!}</p>
                         </div>
@@ -52,7 +52,7 @@
                 <div class="blog-author">
                     <div class="thumbnail">
                         @if($article->avatar!=null)
-                        <img src="{{URL::to('/') }}/server/assets/image/account/{{$article->avatar }}" alt="">
+                        <img src="{{URL::to('/') }}/image/account/{{$article->avatar }}" alt="">
                         @else
                         <img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="">
                         @endif
@@ -77,7 +77,7 @@
                         <div class="col-md-6 col-12 learts-mb-40">
                             <div class="blog">
                                 <div class="image">
-                                    <a href="{{route('Bai-Viet',[Str::slug($relate->article_name, '-'),$relate->article_id])}}"><img src="{{URL::to('/') }}/server/assets/image/article/{{$relate->article_img}}" alt="Blog Image"></a>
+                                    <a href="{{route('Bai-Viet',[Str::slug($relate->article_name, '-'),$relate->article_id])}}"><img src="{{URL::to('/') }}/image/article/{{$relate->article_img}}" alt="Blog Image"></a>
                                 </div>
                                 <div class="content">
                                     <ul class="meta">
@@ -131,17 +131,7 @@
             </div>
 
             <div class="col-xl-3 col-lg-4 col-12 learts-mb-10">
-                <!-- Search Start -->
-                <div class="single-widget learts-mb-40">
-                    <div class="widget-search">
-                        <form action="#">
-                            <input type="text" placeholder="Search products....">
-                            <button><i class="fal fa-search"></i></button>
-                        </form>
-                    </div>
-                </div>
-                <!-- Search End -->
-
+ 
                 <!-- Blog Post Widget Start -->
                 <div class="single-widget learts-mb-40">
                     <h3 class="widget-title product-filter-widget-title">Bài đăng gần đây</h3>
@@ -149,7 +139,7 @@
                         @foreach($recent as $rc)
                         <li class="widget-blog">
                             <div class="thumbnail">
-                                <a href="{{route('Bai-Viet',[Str::slug($rc->article_name, '-'),$rc->article_id])}}"><img src="{{URL::to('/') }}/server/assets/image/article/{{$rc->article_img}}" alt="Widget Blog Post"></a>
+                                <a href="{{route('Bai-Viet',[Str::slug($rc->article_name, '-'),$rc->article_id])}}"><img src="{{URL::to('/') }}/image/article/{{$rc->article_img}}" alt="Widget Blog Post"></a>
                             </div>
                             <div class="content">
                                 <h6 class="title"><a href="{{route('Bai-Viet',[Str::slug($rc->article_name, '-'),$rc->article_id])}}">{{$rc->article_name}}</a></h6>
@@ -189,7 +179,6 @@
         event.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        console.log(form.serialize());
         $.ajax({
             type: "POST",
             url: url,
@@ -220,5 +209,24 @@
             }
         });
     });
+</script>
+<!-- Lấy giá trị từ phân trang -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            phanTrangBaiViet(page);
+        });
+    });
+
+    function phanTrangBaiViet(page) {
+        $.ajax({
+            url: '?page=' + page,
+            success: function(data) {
+                $('#tab-comment').html(data);
+            }
+        });
+    }
 </script>
 @endsection

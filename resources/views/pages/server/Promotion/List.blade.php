@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody id="change-layout">
-          @include('pages.server.promotion.list-item')
+          @include('pages.server.Promotion.list-item')
           </tbody>
           <tfoot>
             <tr>
@@ -50,7 +50,6 @@
   @else
   <strong class="text-center">Danh Sách Trống</strong>
   @endif
-</div>
 </div>
 @endsection
 @section('page-js')
@@ -111,7 +110,7 @@
     });
     event.preventDefault();
     var url = $(this).data('url');
-    console.log(url);
+    
     Swal.fire({
       title: 'Bạn Muốn Xóa Loại Sản Phẩm Này ?',
       icon: 'warning',

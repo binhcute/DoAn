@@ -122,7 +122,7 @@
     <div class="col-xl-4 box-col-6">
       <div class="card custom-card">
         <div class="card-header"><img class="img-fluid" src="{{asset('server/assets/images/user-card/3.jpg')}}" alt=""></div>
-        <div class="card-profile"><img class="rounded-circle" src="{{URL::to('/')}}/server/assets/image/account/{{Auth::user()->avatar}}" alt=""></div>
+        <div class="card-profile"><img class="rounded-circle" src="{{URL::to('/')}}/image/account/{{Auth::user()->avatar}}" alt=""></div>
         <ul class="card-social">
           <li><a href="#"><i class="fa fa-facebook"></i></a></li>
           <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
@@ -169,7 +169,7 @@
                     @foreach ($orderList as $ol)
                     <tr>
                       <td>
-                        <div class="d-inline-block align-middle"><img class="img-40 m-r-15 rounded-circle align-top" src="{{URL::to('/')}}/server/assets/image/account/{{$ol -> avatar}}" alt="">
+                        <div class="d-inline-block align-middle"><img class="img-40 m-r-15 rounded-circle align-top" src="{{URL::to('/')}}/image/account/{{$ol -> avatar}}" alt="">
                           <div class="status-circle bg-primary"></div>
                           <div class="d-inline-block"><span>{{$ol->firstName}} {{$ol->lastName}}</span>
                             <p class="font-roboto">{{$ol->username}}</p>

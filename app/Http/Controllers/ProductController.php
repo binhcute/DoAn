@@ -7,7 +7,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use App\Http\Requests\Admin\StoreProductRequest;
+use App\Http\Requests\Admin\Product\StoreProductRequest;
 
 
 class ProductController extends Controller
@@ -20,8 +20,10 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::all();
-        return view('pages.server.product.list')
-            ->with('product', $product);
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Product.List')
+            ->with('product', $product)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -35,9 +37,11 @@ class ProductController extends Controller
             ->orderBy('port_id', 'desc')->get();
         $cate = DB::table('tpl_category')
             ->orderBy('cate_id', 'desc')->get();
-        return view('pages.server.product.add')
+            $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Product.Add')
             ->with('cate', $cate)
-            ->with('port', $port);
+            ->with('port', $port)
+            ->with('thongBaoMoi',$thongBaoMoi);
     }
 
     /**
@@ -61,7 +65,7 @@ class ProductController extends Controller
         $product->view = NULL;
         $files = $request->file('img');
         // Define upload path
-        $destinationPath = public_path('/server/assets/image/product'); // upload path
+        $destinationPath = public_path('/image/product'); // upload path
         // Upload Original Image           
         $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
         $files->move($destinationPath, $profileImage);
@@ -74,7 +78,7 @@ class ProductController extends Controller
         $files = $request->file('img_hover');
         if ($files != null) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/product/hover'); // upload path
+            $destinationPath = public_path('/image/product/hover'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -106,13 +110,15 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         $product = DB::table('tpl_product')
             ->join('tpl_category', 'tpl_category.cate_id', '=', 'tpl_product.cate_id')
             ->join('tpl_portfolio', 'tpl_portfolio.port_id', '=', 'tpl_product.port_id')
             ->join('users', 'users.id', '=', 'tpl_product.user_id')
             ->where('product_id', $id)->first();
-        return view('pages.server.product.show')
-            ->with('product', $product);
+        return view('pages.server.Product.Show')
+            ->with('product', $product)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -128,10 +134,12 @@ class ProductController extends Controller
             ->orderBy('cate_id', 'desc')->get();
         $port = DB::table('tpl_portfolio')
             ->orderBy('port_id', 'desc')->get();
-        return view('pages.server.product.edit')
+            $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        return view('pages.server.Product.Edit')
             ->with('product', $product)
             ->with('cate', $cate)
-            ->with('port', $port);
+            ->with('port', $port)
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -156,7 +164,7 @@ class ProductController extends Controller
         $files = $request->file('img');
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/product'); // upload path
+            $destinationPath = public_path('/image/product'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -169,7 +177,7 @@ class ProductController extends Controller
         $files = $request->file('img_hover');
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/product/hover'); // upload path
+            $destinationPath = public_path('/image/product/hover'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -206,7 +214,7 @@ class ProductController extends Controller
         $destroy->delete();
         if ($destroy->delete()) {
             $product = Product::all();
-            $giao_dien = view('pages.server.product.list-item', compact(['product']))->render();
+            $giao_dien = view('pages.server.Product.list-item', compact(['product']))->render();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Xóa Sản Phẩm Thành Công',
@@ -227,7 +235,7 @@ class ProductController extends Controller
             $change->save();
             if ($change->save()) {
                 $product = Product::all();
-                $giao_dien = view('pages.server.product.list-item', compact(['product']))->render();
+                $giao_dien = view('pages.server.Product.list-item', compact(['product']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Ẩn Sản Phẩm Thành Công',
@@ -243,7 +251,7 @@ class ProductController extends Controller
             $change->save();
             if ($change->save()) {
                 $product = Product::all();
-                $giao_dien = view('pages.server.product.list-item', compact(['product']))->render();
+                $giao_dien = view('pages.server.Product.list-item', compact(['product']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Hiển Thị Sản Phẩm Thành Công',

@@ -49394,3 +49394,165 @@
     justify-content: center;
 }
 
+/* Start CSS Thông báo đơn hàng */
+
+.option-right .icon__notif {
+  color: #fff;;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.header__noti-wrap {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.header__noti-wrap:hover .header__noti-list {
+  display: block;
+}
+
+.header__noti-notice {
+  position: absolute;
+  top: -10px;
+  right: -4px;
+  padding: 0px 4px;
+  font-size: 12px;
+  line-height: 1rem;
+  color: red;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 1px solid #008CBA;
+  font-weight: 500;
+}
+
+.header__noti-list {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: -16px;
+  background-color: #fff;
+  width: 420px;
+  border-radius: 2px;
+  box-shadow: 0 1px 1px #ccc;
+  cursor: default;
+  z-index: 1;
+  display: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+.header__noti-heading {
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+  padding: 4px;
+}
+
+.onhover-dropdown.header_noti-notice:hover .header__noti-list {
+  display: block;
+}
+
+.header__noti-list {
+  font-size: 14px;
+  color: #333;
+}
+
+.header__noti-list::after {
+  content: "";
+  position: absolute;
+  top: -7%;
+  right: 6px;
+  border-width: 15px 26px;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent;
+  /* box-shadow: 0 0 2px rgba(0, 0, 0, 0.6); */
+}
+
+.header__noti-list-item {
+  padding-left: 0;
+  list-style: none;
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  margin: 0;
+  cursor: pointer;
+}
+
+.header__noti-list-item::-webkit-scrollbar { 
+  display: none; 
+}
+
+.header__noti-item {
+  padding: 4px 12px;
+  margin-bottom: 4px; 
+  display: flex;
+  justify-content: flex-start; 
+}
+
+.header__noti-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.noti-item__content {
+  font-weight: 500;
+  font-size: 12px;
+  word-break: break-word;
+  cursor:pointer;
+}
+
+.noti-item__avt-img {
+  margin-left: 0;
+  margin-right: 6px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.header-noti__email-order,
+.header-noti__code-order {
+  font-style: italic;
+  font-size: 12px;
+  color: #555;
+}
+
+.header-noti__date-order {
+  float: left;
+  font-weight: 500;
+  font-size: 11px;
+  margin-top: -2px;
+  color: #008CBA;
+}  
+
+.btn__btn.btn--primary {
+  color: #fff;
+  background-color: #008CBA;
+  font-size: 15px;
+  float: right;
+  margin: 8px;
+}
+
+.btn__btn {
+  min-width: 124px;
+  height: 36px;
+  font-size: 1.5rem;
+  text-decoration: none;
+  border: none;
+  border-radius: 2px;
+  padding: 0 12px;
+  cursor: pointer;
+  color: var(--text-color);
+  background-color: var(--white-color);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.6rem;
+}
+
+/* End CSS Thông báo đơn hàng */
+
+.customizer-header {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+
+}
