@@ -125,6 +125,7 @@ class CheckOutController extends Controller
                     'ten_nguoi_dung' => Auth::user()->lastName,
                     'username_nguoi_dung' => Auth::user()->username,
                     'email_nguoi_dung' => Auth::user()->email,
+                    'avatar_nguoi_dung' => Auth::user()->avatar,
                     'don_hang_id' => $order->order_id,
                     'thoi_gian' => Carbon::now('Asia/Ho_Chi_Minh')->format('h:i:s d-m-Y')
                 ];
@@ -136,7 +137,8 @@ class CheckOutController extends Controller
                 $request->Session()->forget('Cart');
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Đặt hàng thành công'
+                    'message' => 'Đặt hàng thành công',
+                    'content' => 'Chúng tôi sẽ gọi đến bạn trong thời gian sớm nhất'
                 ], 200);
             }
             return response()->json([

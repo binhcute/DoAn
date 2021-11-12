@@ -110,7 +110,7 @@
                       </div>
                       <hr>
                       <div class="m-t-15">
-                        <button class="btn btn-primary m-r-10" type="button" title=""> <i class="fa fa-shopping-basket me-1"></i>Add To Cart</button>
+                        <button class="btn btn-primary m-r-10" type="button" title=""> <i class="fa fa-shopping-basket me-1"></i>Thêm vào Giỏ Hàng</button>
                         <button class="btn btn-success m-r-10" type="button" title=""> <i class="fa fa-shopping-cart me-1"></i>Buy Now</button><a class="btn btn-secondary" href="#"> <i class="fa fa-heart me-1"></i>Add To WishList</a>
                       </div>
                     </div>

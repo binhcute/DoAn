@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\Admin\Account\StoreAccountRequest;
+use App\Http\Requests\Admin\Account\UpdateAccountRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -18,12 +19,13 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $account = User::all();
+        $account = DB::table('users')
+            ->where('level', '0')->get();
         $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         // dd($thongBaoMoi);
         return view('pages.server.Account.List')
             ->with('account', $account)
-            ->with('thongBaoMoi',$thongBaoMoi);
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -33,10 +35,10 @@ class AccountController extends Controller
      */
     public function create()
     {
-        
+
         $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         return view('pages.server.account.add')
-        ->with('thongBaoMoi',$thongBaoMoi);
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -62,7 +64,7 @@ class AccountController extends Controller
 
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/account'); // upload path
+            $destinationPath = public_path('/image/account'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -88,7 +90,7 @@ class AccountController extends Controller
     {
         $account = DB::table('users')
             ->where('id', $id)->first();
-            
+
         $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         return view('pages.server.account.show')
             ->with('account', $account)
@@ -117,7 +119,7 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAccountRequest $request, $id)
     {
         $account = User::find($id);
         $account->firstName = $request->firstName;
@@ -134,7 +136,7 @@ class AccountController extends Controller
 
         if ($files != NULL) {
             // Define upload path
-            $destinationPath = public_path('/server/assets/image/account'); // upload path
+            $destinationPath = public_path('/image/account'); // upload path
             // Upload Original Image           
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
@@ -144,8 +146,18 @@ class AccountController extends Controller
             $account->avatar = "$profileImage";
         }
         $account->save();
-        Session::put('message', 'Cập Nhật Tài Khoản Thành Công');
-        return redirect()->route('TaiKhoan.index');
+        if($account->save()){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Cập Nhật Tài Khoản Thành Công'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cập Nhật Tài Khoản Thất Bại'
+            ], 200);
+        }
     }
 
     /**
@@ -162,20 +174,54 @@ class AccountController extends Controller
     //     return redirect()->route('TaiKhoan.index');
     // }
 
-    // public function disabled($id)
-    // {
-    //     $account = User::find($id);
-    //     $account->status = 0;
-    //     $account->save();
-    //     Session::put('info', 'Đã Ẩn Tài Khoản');
-    //     return redirect()->route('TaiKhoan.index');
-    // }
-    // public function enabled($id)
-    // {
-    //     $account = User::find($id);
-    //     $account->status = 1;
-    //     $account->save();
-    //     Session::put('info', 'Đã Hiển Thị Tài Khoản');
-    //     return redirect()->route('TaiKhoan.index');
-    // }
+    public function admin_list()
+    {
+        $account = DB::table('users')
+            ->where('level', '1')
+            ->whereNotIn('id', [1])->get();
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        // dd($thongBaoMoi);
+        return view('pages.server.Account.List_admin')
+            ->with('account', $account)
+            ->with('thongBaoMoi', $thongBaoMoi);
+    }
+    public function change_status($id)
+    {
+        $change = User::find($id);
+        if ($change->status == 1) {
+            $change->status = 0;
+            $change->save();
+            if ($change->save()) {
+                $account = DB::table('users')
+                    ->where('level', '0')->get();
+                $giao_dien = view('pages.server.Account.list_item_client', compact(['account']))->render();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Khóa Tài Khoản Thành Công',
+                    'giao_dien' => $giao_dien
+                ], 200);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Khóa Tài Khoản Thất Bại'
+            ], 200);
+        } else {
+            $change->status = 1;
+            $change->save();
+            if ($change->save()) {
+                $account = DB::table('users')
+                    ->where('level', '0')->get();
+                $giao_dien = view('pages.server.Account.list_item_client', compact(['account']))->render();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Kích Hoạt Tài Khoản Thành Công',
+                    'giao_dien' => $giao_dien
+                ], 200);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Kích Hoạt Tài Khoản Thất Bại'
+            ], 200);
+        }
+    }
 }

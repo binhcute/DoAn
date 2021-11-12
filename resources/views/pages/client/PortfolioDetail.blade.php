@@ -11,7 +11,7 @@
                     <div class="page-title">
                         <h1 class="title">Nhà Cung Cấp</h1>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{route('index')}}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('index')}}">Trang Chủ</a></li>
                             <li class="breadcrumb-item active">Nhà Cung Cấp</li>
                         </ul>
                     </div>

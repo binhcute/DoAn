@@ -11,15 +11,17 @@
           <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/image/product/{{$dt->product_img}}" alt="#">
             <div class="media-body ms-3">
               <div class="product-name">
-                <h6><a href="#">{{$dt->product_name}}</a></h6>
+                <h6>{{$dt->product_name}}</h6>
               </div>
-              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
               <div class="price d-flex">
-                <div class="text-muted me-2">Price</div>: {{number_format($dt->price)}}
+                <div class="text-muted me-2">Price</div>: {{number_format($dt->price)}} vnđ
+              </div>
+              <div class="price d-flex">
+                <div class="text-muted me-2">Số Lượng: {{$dt->quantity}}</div>
               </div>
               <div class="avaiabilty">
-                <div class="text-success">Số Lượng: {{$dt->quantity}}</div>
-              </div><a class="btn btn-primary btn-xs" href="#">Processing</a><i class="close" data-feather="x"></i>
+                <div class="text-success">Tông tiền: {{number_format($dt->amount)}} vnđ</div>
+              </div><a class="btn btn-warning btn-xs" href="#">Chờ xử lý</a>
             </div>
           </div>
         </div>
@@ -43,15 +45,17 @@
           <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/image/product/{{$dt->product_img}}" alt="#">
             <div class="media-body ms-3">
               <div class="product-name">
-                <h6><a href="#">{{$dt->product_name}}</a></h6>
+                <h6>{{$dt->product_name}}</h6>
               </div>
-              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
               <div class="price d-flex">
                 <div class="text-muted me-2">Price</div>: {{number_format($dt->price)}}
               </div>
+              <div class="price d-flex">
+                <div class="text-muted me-2">Số Lượng: {{$dt->quantity}}</div>
+              </div>
               <div class="avaiabilty">
-                <div class="text-success">Số Lượng: {{$dt->quantity}}</div>
-              </div><a class="btn btn-success btn-xs" href="#">Shipped</a><i class="close" data-feather="x"></i>
+                <div class="text-success">Tông tiền: {{number_format($dt->amount)}} vnđ</div>
+              </div><a class="btn btn-primary btn-xs">Đang vận chuyển</a>
             </div>
           </div>
         </div>
@@ -76,15 +80,17 @@
           <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/image/product/{{$dt->product_img}}" alt="#">
             <div class="media-body ms-3">
               <div class="product-name">
-                <h6><a href="#">{{$dt->product_name}}</a></h6>
+                <h6>{{$dt->product_name}}</h6>
               </div>
-              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
               <div class="price d-flex">
                 <div class="text-muted me-2">Price</div>: {{number_format($dt->price)}}
               </div>
+              <div class="price d-flex">
+                <div class="text-muted me-2">Số Lượng: {{$dt->quantity}}</div>
+              </div>
               <div class="avaiabilty">
-                <div class="text-success">Số Lượng: {{$dt->quantity}}</div>
-              </div><a class="btn btn-success btn-xs" href="#">Shipped</a><i class="close" data-feather="x"></i>
+                <div class="text-success">Tông tiền: {{number_format($dt->amount)}} vnđ</div>
+              </div><a class="btn btn-success btn-xs" href="#">Hoàn Thành</a>
             </div>
           </div>
         </div>
@@ -107,15 +113,17 @@
           <div class="media"><img class="align-self-center img-fluid img-60" src="{{URL::to('/')}}/image/product/{{$dt->product_img}}" alt="#">
             <div class="media-body ms-3">
               <div class="product-name">
-                <h6><a href="#">{{$dt->product_name}}</a></h6>
+                <h6>{{$dt->product_name}}</h6>
               </div>
-              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
               <div class="price d-flex">
                 <div class="text-muted me-2">Price</div>: {{number_format($dt->price)}}
               </div>
+              <div class="price d-flex">
+                <div class="text-muted me-2">Số Lượng: {{$dt->quantity}}</div>
+              </div>
               <div class="avaiabilty">
-                <div class="text-success">Số Lượng: {{$dt->quantity}}</div>
-              </div><a class="btn btn-danger btn-xs" href="#">Cancelled</a><i class="close" data-feather="x"></i>
+                <div class="text-success">Tông tiền: {{number_format($dt->amount)}} vnđ</div>
+              </div><a class="btn btn-danger btn-xs" href="#">Đã Hủy</a>
             </div>
           </div>
         </div>

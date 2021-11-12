@@ -46,6 +46,7 @@
     <link rel="stylesheet" href="{{asset('sweetarlet2/node_modules/sweetalert2/dist/sweetalert2.css')}}">
     <link rel="stylesheet" href="{{asset('client/css/grid_custom.css')}}">
     <link rel="stylesheet" href="{{asset('client/css/responsive.css')}}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
 </head>
 
@@ -121,14 +122,14 @@
                     },
                     templates: {
                         empty: [
-                            '<div class="header-title">Tên Sản Phẩm</div><div class="list-group search-results-dropdown"><div class="list-group-item">Không tìm thấy sản phẩm nào</div></div>'
+                            '<div class="header-title">Tên Sản Phẩm</div><div class="list-group search-results-dropdown"><div class="list-group-item name_search_custom">Không tìm thấy sản phẩm nào</div></div>'
                         ],
                         header: [
                             '<div class="header-title">Tên Sản Phẩm</div><div class="list-group search-results-dropdown"></div>'
                         ],
                         suggestion: function(data) {
                             
-                            return '<a href="/San-Pham/'+ data.product_name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\-]+/g, '-') + '-' + data.product_id + '" class="list-group-item">' + ` <div class="row" style="padding:2px 0px;"><div class="col-md-1" style="padding-right:8px;"><img src="/./image/product/${data.product_img}"/ height="100%" width="200px;"></div><div class="col-md-10 pl-0"><span style="font-size: 1.4rem;">${data.product_name}</span></div></div>` + '</a>';
+                            return '<a href="/San-Pham/'+ data.product_name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\-]+/g, '-') + '-' + data.product_id + '" class="list-group-item">' + ` <div class="row" style="padding:2px 0px;"><div class="col-md-1" style="padding-right:8px;"><img src="/./image/product/${data.product_img}" class="img__search_custom"/></div><div class="name_search_custom"><span>${data.product_name}</span></div></div>` + '</a>';
                         }
                     }
                 }

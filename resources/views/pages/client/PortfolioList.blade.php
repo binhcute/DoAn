@@ -10,7 +10,7 @@
                 <div class="page-title">
                     <h1 class="title">{{$port->port_name}}</h1>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Trang Chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('index')}}">Trang Chủ</a></li>
                         <li class="breadcrumb-item active">Nhà Cung Cấp</li>
                     </ul>
                 </div>
@@ -65,6 +65,7 @@
             <div class="row learts-mb-n50">
 
                 <div class="col-lg-9 col-12 learts-mb-50 order-lg-2">
+                    @if(count($product_by_portfolio) != 0)
                     <!-- Products Start -->
                     <div id="shop-products" class="products isotope-grid row row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
 
@@ -74,14 +75,14 @@
                             <div class="product">
                                 <div class="product-thumb">
                                     <a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}" class="image">
-                                    @if($item->product_img_hover !=null)    
-                                    <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
+                                        @if($item->product_img_hover !=null)
+                                        <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
                                         <img class="image-hover " src="{{ URL::to('/') }}/image/product/hover/{{ $item->product_img_hover }}" alt="Product Image">
-                                    @else
-                                    <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
-                                    @endif
+                                        @else
+                                        <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
+                                        @endif
                                     </a>
-                                    <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
+                                    <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Thêm vào Giỏ Hàng"><i class="far fa-shopping-cart"></i></a>
                                 </div>
                                 <div class="product-info">
                                     <h6 class="title"><a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}">{{$item->product_name}}</a></h6>
@@ -89,9 +90,9 @@
                                         {{number_format($item->product_price).' '.'VND'}}
                                     </span>
                                     <div class="product-buttons">
-                                        <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                                        <a onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                                        <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
+                                        <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Xem Nhanh"><i class="fal fa-search"></i></a>
+                                        <a onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Thêm vào Giỏ Hàng"><i class="fal fa-shopping-cart"></i></a>
+
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +100,11 @@
                         @endforeach
                     </div>
                     <!-- Products End -->
-
+                    @else
+                    <div class="text-center">
+                        <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="" width="50%">
+                    </div>
+                    @endif
                 </div>
                 <div class="col-lg-3 col-12 learts-mb-10 order-lg-1">
 

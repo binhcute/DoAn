@@ -17,7 +17,7 @@
                     <div class="desc">
                         <p>{!!$item->article_description!!}</p>
                     </div>
-                    <a href="{{route('Bai-Viet',[Str::slug($item->article_name, '-'),$item->article_id])}}" class="link">Read More</a>
+                    <a href="{{route('Bai-Viet',[Str::slug($item->article_name, '-'),$item->article_id])}}" class="link">Xem Ngay</a>
                 </div>
             </div>
         </div>

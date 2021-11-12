@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Http\Requests\Client\ChangePassword;
 
 class ClientController extends Controller
 {
@@ -48,10 +49,7 @@ class ClientController extends Controller
     {
         $product = Product::queryStatusOne()
             ->orderBy('product_id', 'asc')->paginate(8);
-        $product_hot = Product::queryStatusOne()
-            ->orderBy('product_price', 'desc')->limit(6)->get();
-        $product_new = Product::queryStatusOne()
-            ->orderBy('created_at', 'desc')->limit(6)->get();
+
         $product_cate = Category::queryStatusOne()->get();
         $portfolio = Portfolio::queryStatusOne()->get();
 
@@ -61,16 +59,12 @@ class ClientController extends Controller
             return view('pages.client.List-product.dsSanPham')
                 ->with('product', $product)
                 ->with('product_cate', $product_cate)
-                ->with('product_hot', $product_hot)
-                ->with('product_new', $product_new)
                 ->with('portfolio', $portfolio)
                 ->with('modal', $modal);
         }
         return view('pages.client.ProductList')
             ->with('product', $product)
             ->with('product_cate', $product_cate)
-            ->with('product_hot', $product_hot)
-            ->with('product_new', $product_new)
             ->with('portfolio', $portfolio)
             ->with('modal', $modal);
     }
@@ -184,13 +178,13 @@ class ClientController extends Controller
         $luot_xem->save();
         //Het Luot Xem
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return view('pages.client.Article-Detail.comment-article')
-            ->with('article', $article)
-            ->with('related', $related)
-            ->with('comment', $comment)
-            ->with('recent', $recent)
-            ->with('cate', $cate);
+                ->with('article', $article)
+                ->with('related', $related)
+                ->with('comment', $comment)
+                ->with('recent', $recent)
+                ->with('cate', $cate);
         }
 
         return view('pages.client.ArticleDetail')
@@ -257,34 +251,52 @@ class ClientController extends Controller
     //Account
     public function my_account()
     {
-        // if (Auth::check()) {
-        //     $id = Auth::user()->id;
-        // }
-        // $order = DB::table('tpl_order')
-        //     ->where('tpl_order.user_id', $id)->get();
-        // foreach ($order as $key => $value) {
-        //     $order_id = $value->order_id;
-        // }
-        // $sumOrder = DB::table('tpl_order_dt')
-        //     ->where('tpl_order_dt.order_id', $order_id)->get();
+        $dsDonHang = DB::table('tpl_order')
+            ->leftJoin('users', 'users.id', 'tpl_order.user_id')
+            ->select('tpl_order.*', 'users.firstName', 'users.lastName', 'users.username')
+            ->where('user_id', auth()->user()->id)->get();
+        $arrDonHang = array();
+        $arrChiTietDonHang = array();
+        foreach ($dsDonHang as $key => $DonHang) {
+            $arrDonHang[$key] = $DonHang;
+            $dsChiTietDonHang = DB::table('tpl_order_dt')
+                ->leftJoin('tpl_product', 'tpl_product.product_id', 'tpl_order_dt.product_id')
+                ->where('tpl_order_dt.order_id', $DonHang->order_id)->get();
 
-        // dd($order);
-        return view('pages.client.MyAccount');
-        // ->with('order', $order);
+            foreach ($dsChiTietDonHang as $key1 => $chiTietDonHang) {
+                $arrChiTietDonHang[$key1] = $chiTietDonHang;
+            }
+            $arrDonHang[$key]->san_pham = $arrChiTietDonHang;
+        }
+        // dd($dsDonHang);
+        return view('pages.client.MyAccount', compact(['dsDonHang', 'arrDonHang']));
     }
 
-    public function change_my_account(Request $request){
-        if(Auth::check()){
+    public function change_my_account(Request $request)
+    {
+        if (Auth::check()) {
             $taikhoan = User::find(Auth::user()->id);
-            $taikhoan -> lastName = $request->lastName;
-            $taikhoan -> firstName = $request->firstName;
-            $taikhoan -> avatar = $request->avatar;
-            $taikhoan -> email = $request->email;
-            $taikhoan -> phone = $request->phone;
-            $taikhoan -> address = $request->address;
-            $taikhoan -> birthday = $request->birthday;
-            $taikhoan -> gender = $request->gender;
-            $taikhoan -> save();
+            $taikhoan->lastName = $request->lastName;
+            $taikhoan->firstName = $request->firstName;
+            $taikhoan->email = $request->email;
+            $taikhoan->phone = $request->phone;
+            $taikhoan->address = $request->address;
+            $taikhoan->birthday = $request->birthday;
+            $taikhoan->gender = $request->gender;
+            $files = $request->file('img');
+
+            if ($files != NULL) {
+                // Define upload path
+                $destinationPath = public_path('/image/account'); // upload path
+                // Upload Original Image           
+                $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+                $files->move($destinationPath, $profileImage);
+
+                $insert['avatar'] = "$profileImage";
+                // Save In Database
+                $taikhoan->avatar = "$profileImage";
+            }
+            $taikhoan->save();
 
             return response()->json([
                 'status' => 'success',
@@ -293,25 +305,23 @@ class ClientController extends Controller
         }
     }
 
-    public function change_password()
+    public function post_change_password(ChangePassword $request)
     {
-        return view('pages.client.change-password');
-    }
-
-    public function post_change_password(Request $request){
         // dd($request->all());
         $hashedPassword = Auth::user()->password;
-        if(Auth::check() && Hash::check($request->old_password, $hashedPassword)){
-
-            if($request->new_pwd == $request->confirm_pwd){
-                // dd('dung');
-                $user = User::find(Auth::user()->id);
-                $user ->password = Hash::make($request->new_pwd);
-                $user ->save();
-                return back();
-            }
-        }    
-        dd('sai');
+        if (Auth::check() && Hash::check($request->old_password, $hashedPassword)) {
+            $user = User::find(Auth::user()->id);
+            $user->password = Hash::make($request->new_pwd);
+            $user->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thay Đổi Mật Khẩu Thành Công'
+            ]);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Thay Đổi Mật Khẩu Thất Bại'
+        ]);
     }
 
     public function cart()
@@ -326,6 +336,7 @@ class ClientController extends Controller
     {
         return view('pages.client.ContactUs');
     }
-    public function post_contact_us(Request $request){
+    public function post_contact_us(Request $request)
+    {
     }
 }

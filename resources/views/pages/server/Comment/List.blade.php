@@ -49,7 +49,8 @@
     </div>
   </div>
   @else
-  <strong class="text-center">Danh Sách Trống</strong>
+  <strong class="text-center">
+        <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="" width="50%"></strong>
   @endif
 </div>
 @endsection

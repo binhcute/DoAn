@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Admin\Article\StoreArticleRequest;
+use App\Http\Requests\Admin\Article\UpdateArticleRequest;
 
 
 class ArticleController extends Controller
@@ -122,7 +123,7 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateArticleRequest $request, $id)
     {
         $article = Article::find($id);
         $article->user_id = Auth::user()->id;

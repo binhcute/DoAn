@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Admin\Portfolio\StorePortfolioRequest;
+use App\Http\Requests\Admin\Portfolio\UpdatePortfolioRequest;
 
 class PortfolioController extends Controller
 {
@@ -137,7 +138,7 @@ class PortfolioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePortfolioRequest $request, $id)
     {
         $port = Portfolio::find($id);
         $port->user_id = Auth::user()->id;

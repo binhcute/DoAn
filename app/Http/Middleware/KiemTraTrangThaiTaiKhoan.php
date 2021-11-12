@@ -16,11 +16,10 @@ class KiemTraTrangThaiTaiKhoan
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->status == 1)
+        if (Auth::check())
             return $next($request);
         else {
-            Auth::logout();
-            return response()->json(['status' => 'error', 'message' => 'Tài Khoản Chưa Kích Hoạt']);
+            return redirect('/');
         }
     }
 }

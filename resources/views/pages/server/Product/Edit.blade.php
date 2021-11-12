@@ -38,7 +38,7 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Loại Sản Phẩm</label>
+              <label class="col-sm-3 col-form-label">Danh Mục</label>
               <div class="col-sm-9">
                 <select class="form-select" aria-label="select example" name="cate_id" id="cate_id">
                   @foreach($cate as $cate)
@@ -95,7 +95,7 @@
             <div class="col-sm-9">
               <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
               <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
-              <img id="event__img-0" src="{{URL::to('/')}}/image/product/{{$product->product_img}}" alt="slider" width="50%" height="320px">
+              <img id="event__img-0" src="{{URL::to('/')}}/image/product/{{$product->product_img}}" alt="slider" height="100%">
             </div>
 
           </div>
@@ -104,14 +104,14 @@
             <div class="col-sm-9">
               <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh chuyển</label>
               <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
-              <img id="event__img-hover-0" src="{{URL::to('/')}}/image/product/hover/{{$product->product_img_hover}}" alt="slider" width="50%" height="320px">
+              <img id="event__img-hover-0" src="{{URL::to('/')}}/image/product/hover/{{$product->product_img_hover}}" alt="slider" height="100%">
             </div>
           </div>
         </div>
       </div>
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
-          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Thay Đổi</button>
           <input class="btn btn-light" type="reset" value="Cancel">
         </div>
       </div>
@@ -244,17 +244,5 @@
     });
   })
 </script>
-<script>
-    var number = document.querySelectorAll('input[type="number"]');
-    for(var i = 0; i < number.length; i++){
-        // Listen for input event on numInput.
-        number[i].onkeydown = function(e) {
-            if(!((e.keyCode > 95 && e.keyCode < 106)
-            || (e.keyCode > 47 && e.keyCode < 58) 
-            || e.keyCode == 8)) {
-                return false;
-            }
-        }
-    }
-</script>
+
 @endsection

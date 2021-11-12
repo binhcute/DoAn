@@ -1,6 +1,6 @@
-@foreach($cmt as $item)
+@foreach($cmt as $stt => $item)
 <tr>
-    <th scope="row">{{ $item->comment_id }}</th>
+    <th scope="row">{{ $stt+1 }}</th>
     <td>{{ $item->firstName}} {{ $item->lastName}} <strong>({{$item->username}})</strong></td>
     <td>
         @if($item->role == 1)
@@ -70,19 +70,19 @@
         <form action="{{route('BinhLuan.show',$item->comment_id)}}" method="get">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont icofont-paper" style="font-size:20px;color:green"></i></i></button>
+            <button class="btn btn-outline-light" type="submit" title="Xem chi tiết"><i class="icofont icofont-paper" style="font-size:20px;color:green"></i></i></button>
         </form>
         @if ($item->status == 1)
         <form method="post" action="{{URL::to('/BinhLuan/change_status/'.$item->comment_id)}}" class="change_status_tri">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont-ui-check" style="font-size:20px;color:cornflowerblue"></i></button>
+            <button class="btn btn-outline-light" type="submit" title="Duyệt Bình Luận"><i class="icofont-ui-check" style="font-size:20px;color:cornflowerblue"></i></button>
         </form>
         @else
         <form method="post" action="{{URL::to('/BinhLuan/change_status/'.$item->comment_id)}}" class="change_status_tri">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont icofont-ui-close" style="font-size:20px;color:red"></i></button>
+            <button class="btn btn-outline-light" type="submit" title="Ẩn Bình Luận"><i class="icofont icofont-ui-close" style="font-size:20px;color:red"></i></button>
         </form>
         @endif
     </td>

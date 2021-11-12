@@ -9,9 +9,9 @@
                 <span class="bg"></span>
                 <span class="slide-border"></span>
                 <span class="icon"><img src="{{asset('client/images/slider/home1/slide-1-1.png')}}" alt="Slide Icon"></span>
-                <h2 class="title">Handicraft Shop</h2>
-                <h3 class="sub-title">Just for you</h3>
-                <div class="link"><a href="{{route('Danh-Sach-San-Pham')}}">shop now</a></div>
+                <h2 class="title">Learts Shop</h2>
+                <h3 class="sub-title">Dành cho bạn</h3>
+                <div class="link"><a href="{{route('Danh-Sach-San-Pham')}}">Mua Sắm Ngay</a></div>
             </div>
         </div>
         <div class="home1-slide-item swiper-slide" data-swiper-autoplay="5000" data-bg-image="{{asset('client/images/slider/home1/slide-2.jpg')}}">
@@ -22,20 +22,20 @@
                     <img src="{{asset('client/images/slider/home1/slide-2-2.png')}}" alt="Slide Icon">
                     <img src="{{asset('client/images/slider/home1/slide-2-3.png')}}" alt="Slide Icon">
                 </span>
-                <h2 class="title">Newly arrived</h2>
-                <h3 class="sub-title">Sale up to <br>10%</h3>
-                <div class="link"><a href="{{route('Danh-Sach-San-Pham')}}">shop now</a></div>
+                <h2 class="title">Learts Shop</h2>
+                <h3 class="sub-title">Tin Tức Mới</h3>
+                <div class="link"><a href="{{route('Danh-Sach-Bai-Viet')}}">Đọc Ngay</a></div>
             </div>
         </div>
         <div class="home1-slide-item swiper-slide" data-swiper-autoplay="5000" data-bg-image="{{asset('client/images/slider/home1/slide-3.jpg')}}">
             <div class="home1-slide3-content">
-                <h2 class="title">Affectious gifts</h2>
+                <h2 class="title">Learts Shop</h2>
                 <h3 class="sub-title">
                     <img class="left-icon " src="{{asset('client/images/slider/home1/slide-2-2.png')}}" alt="Slide Icon">
-                    For friends & family
+                    Quà tặng cho bạn bè và gia đình
                     <img class="right-icon " src="{{asset('client/images/slider/home1/slide-2-3.png')}}" alt="Slide Icon">
                 </h3>
-                <div class="link"><a href="{{route('Danh-Sach-San-Pham')}}">shop now</a></div>
+                <div class="link"><a href="{{route('Danh-Sach-San-Pham')}}">Mua Sắm Ngay</a></div>
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
                                         <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
                                         @endif
                                     </a>
-                                    <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
+                                    <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Thêm vào Giỏ Hàng"><i class="far fa-shopping-cart"></i></a>
                                 </div>
                                 <div class="product-info">
                                     <h6 class="title"><a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}">{{$item->product_name}}</a></h6>
@@ -120,9 +120,9 @@
                                         <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
                                     </span>
                                     <div class="product-buttons">
-                                        <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                                        <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                                        <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
+                                        <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Xem Nhanh"><i class="fal fa-search"></i></a>
+                                        <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Thêm vào Giỏ Hàng"><i class="fal fa-shopping-cart"></i></a>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                                             <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
                                             @endif
                                         </a>
-                                        <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
+                                        <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Thêm vào Giỏ Hàng"><i class="far fa-shopping-cart"></i></a>
                                     </div>
                                     <div class="product-info">
                                         <h6 class="title"><a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}">{{$item->product_name}}</a></h6>
@@ -162,9 +162,9 @@
                                             <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
                                         </span>
                                         <div class="product-buttons">
-                                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                                            <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                                            <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
+                                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Xem Nhanh"><i class="fal fa-search"></i></a>
+                                            <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Thêm vào Giỏ Hàng"><i class="fal fa-shopping-cart"></i></a>
+                                            
                                         </div>
                                     </div>
                                 </form>

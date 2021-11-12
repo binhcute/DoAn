@@ -11,7 +11,7 @@
                     <div class="page-title">
                         <h1 class="title">Danh Mục Sản Phẩm</h1>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{route('index')}}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('index')}}">Trang Chủ</a></li>
                             <li class="breadcrumb-item active">Danh Mục</li>
                         </ul>
                     </div>
@@ -30,14 +30,14 @@
                 @foreach ($categories as $item)
                 <div class="col learts-mb-30">
                     <div class="portfolio">
-                        <div class="thumbnail"><img src="server/assets/image/category/{{$item->cate_img}}" alt=""></div>
+                        <div class="thumbnail"><img src="image/category/{{$item->cate_img}}" alt=""></div>
                         <div class="content">
                             <div class="desc">
                                 <p>{!!$item->cate_description!!}</p>
                             </div>
                         </div>
                     </div>
-                    <h6 class="title"><a href="{{route('Danh-Muc',[Str::slug($item->cate_name, '-'),$item->cate_id])}}">{{ $item->cate_name }}</a></h6>
+                    <h2 class="title"><a href="{{route('Danh-Muc',[Str::slug($item->cate_name, '-'),$item->cate_id])}}">{{ $item->cate_name }}</a></h2>
                 </div>
                 @endforeach
 

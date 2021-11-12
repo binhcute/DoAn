@@ -26,48 +26,19 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Tài Khoản</th>
-              <th scope="col">Họ Tên</th>
+              <th scope="col">Thông Tin Người Dùng</th>
               <th scope="col">Trạng Thái</th>
               <th scope="col">Tác Vụ</th>
             </tr>
           </thead>
-          <tbody>
-            @foreach($account as $item)
-            <tr>
-              <th scope="row">{{ $item->id }}</th>
-              <td>{{ $item->username }}</td>
-              <td>{{ $item->firstName}} {{ $item->lastName}}</td>
-              <td>
-                @switch($item->level)
-                @case(0)
-                <strong style="color:#00c3da">Tài Khoản Khách</strong>
-                @break
-                @case(1)
-                <strong style="color:greenyellow">Tài Khoản Admin</strong>
-                @break
-                @endswitch
-              </td>
-              <td class="flex-column align-items-center justify-content-around">
-                <a href="{{route('TaiKhoan.show',$item->id)}}" method="get">
-                  <i class="icofont icofont-paper" style="font-size:20px;color:green"></i>
-                </a>
-                <a href="{{route('TaiKhoan.edit',$item->id)}}">
-                  <i class="icofont icofont-pencil-alt-5" style="font-size:20px;color:blue"></i>
-                </a>
-                <a href="{{URL::to('/XoaTaiKhoan',$item->id)}}" onclick="return confirm('Bạn muốn xóa danh mục này ?')">
-                  <input type="hidden" name="_token" value="{{csrf_token()}}">
-                  <input type="hidden" name="_method" value="delete">
-                  <i class="icofont icofont-trash" style="font-size:20px;color:red"></i>
-                </a>
-              </td>
-            </tr>
-            @endforeach
+          <tbody id="change-layout">
+           @include('pages.server.Account.list_item_client')
           </tbody>
           <tfoot>
             <tr>
             <th scope="col">#</th>
               <th scope="col">Tài Khoản</th>
-              <th scope="col">Họ Tên</th>
+              <th scope="col">Thông Tin Người Dùng</th>
               <th scope="col">Trạng Thái</th>
               <th scope="col">Tác Vụ</th> 
             </tr>
@@ -77,7 +48,64 @@
     </div>
   </div>
   @else
-  <strong class="text-center">Danh Sách Trống</strong>
+  <strong class="text-center">
+        <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="" width="50%"></strong>
   @endif
 </div>
+@endsection
+@section('page-js')
+<script>
+    function changeStatus(event) {
+    event.preventDefault();
+    var form = $(this);
+    var url = form.attr('action');
+    Swal.fire({
+      title: 'Thay Đổi Trạng Thái',
+      text: 'Bạn Muốn Thay Đổi Trạng Thái Danh Mục Này ?',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Hủy',
+      confirmButtonText: 'Thay Đổi'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: form.serialize(),
+          success: function(data) {
+            if (data.status == 'error') {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Thất Bại',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+            if (data.status == 'success') {
+              $("#change-layout").empty();
+              $("#change-layout").html(data.giao_dien)
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Thành Công',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+          }
+        });
+      }
+
+    });
+  }
+
+  $(function() {
+    $(document).on('click', '.change_status_tri', changeStatus);
+  });
+</script>
 @endsection

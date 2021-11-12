@@ -33,3 +33,5 @@ Route::apiResource('comment', 'Api\CommentController');
 
 Route::get('show-product-by-category/{category}','Api\ProductController@show_pro_by_cate');
 Route::get('show-product-by-portfolio/{portfolio}','Api\ProductController@show_pro_by_port');
+Route::get('San-Pham-Moi','Api\ProductController@show_pro_new');
+Route::get('show-user-by-id/{id}','Api\AccountController@show_user_by_id');
