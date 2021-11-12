@@ -10078,3 +10078,53 @@ body.offcanvas-open .sticky-header {
     text-align: center;
     color: #333;
 }
+
+.table-responsive.table-responsive_custom {
+    border: 1.5px solid rgba(0, 0, 0, 0.5)
+}
+
+.table-responsive__title {
+    font-weight: 500;
+    color: black;
+    font-size: 16px;
+    padding: 4px 12px;
+}
+
+.table-responsive_bill {
+    text-align: center;
+    font-size: 24px;
+}
+
+.table-responsive__title span {
+    font-weight: 400;
+}
+
+.tt-menu.tt-open {
+    width: 250% !important;
+    height: 60px;
+}
+
+.tt-dataset.tt-dataset-product_name .header-title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.img__search_custom {
+    max-width: 70px;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #ccc;
+}
+
+.name_search_custom {
+    padding-left: 55px;
+    font-size: 26px !important;
+    color: black;
+    line-height: 60px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}

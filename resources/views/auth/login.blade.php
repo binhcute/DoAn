@@ -124,9 +124,7 @@
                   </span>
                   @endif
                 </div>
-                <div class="form-group">
-                  <input type="number" name="phone" class="form-control" placeholder="Số Điện Thoại" required>
-                </div>
+
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                   <input type="text" class="form-control" id="username" name="username" placeholder="Tên Tài Khoản" required>
                   @if ($errors->has('username'))
@@ -147,7 +145,7 @@
                   <input type="password" class="form-control" id="password-confirm" name="password_confirmation" placeholder="Nhập Lại Mật Khẩu" required>
                 </div>
                 <div class="text-center">
-                  <button class="btn btn-primary" type="submit">Submit</button>
+                  <button class="btn btn-primary" type="submit">Đăng Ký</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                 </div>
             </form>

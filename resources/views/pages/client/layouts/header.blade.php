@@ -45,20 +45,12 @@
                         <a href="{{route('login')}}"><i class="fal fa-user"></i></a>
                         @endif
                     </div>
-                    <div><a href="#"><i class="fal fa-bell"></i>
-
-                        </a></div>
                     <div class="header-search">
                         <a href="#offcanvas-search" class="offcanvas-toggle"><i class="fal fa-search"></i></a>
                     </div>
 
                     <div class="header-cart">
-
-                        @if(Session::has("Cart") !=null)
-                        <a href="#offcanvas-cart" class="offcanvas-toggle"><span id="total-qty-show" class="cart-count">{{Session::get("Cart")->totalQuantity}}</span><i class="fal fa-shopping-cart"></i></a>
-                        @else
                         <a href="#offcanvas-cart" class="offcanvas-toggle"><i class="fal fa-shopping-cart"></i></a>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -74,7 +66,7 @@
                     <li><a href="{{route('index')}}"><span class="menu-text">Trang Chủ</span></a></li>
                     <li><a href="{{route('Danh-Sach-San-Pham')}}"><span class="menu-text">Sản Phẩm</span></a></li>
                     <li><a href="{{route('Danh-Sach-Bai-Viet')}}"><span class="menu-text">Bài Viết</span></a></li>
-                    <li><a href="{{URL::to('/contact_us')}}"><span class="menu-text">Liên hệ</span></a></li>
+                    <li><a href="{{route('Danh-Sach-Danh-Muc')}}"><span class="menu-text">Danh Mục</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -103,7 +95,7 @@
                     <ul>
                         <li><a href="{{route('Danh-Sach-San-Pham')}}"><span class="menu-text">Sản Phẩm</span></a></li>
                         <li><a href="{{route('Danh-Sach-Bai-Viet')}}"><span class="menu-text">Bài Viết</span></a></li>
-                        <li><a href="{{URL::to('/contact_us')}}"><span class="menu-text">Liên hệ</span></a></li>
+                        <li><a href="{{route('Danh-Sach-Danh-Muc')}}"><span class="menu-text">Danh Mục</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -185,11 +177,7 @@
                     </div>
 
                     <div class="header-cart">
-                        @if(Session::has("Cart") !=null)
-                        <a href="#offcanvas-cart" class="offcanvas-toggle"><span id="total-qty-show" class="cart-count">{{Session::get("Cart")->totalQuantity}}</span><i class="fal fa-shopping-cart"></i></a>
-                        @else
                         <a href="#offcanvas-cart" class="offcanvas-toggle"><i class="fal fa-shopping-cart"></i></a>
-                        @endif
                     </div>
                     <div class="mobile-menu-toggle">
                         <a href="#offcanvas-mobile-menu" class="offcanvas-toggle">
@@ -245,11 +233,9 @@
                     </div>
 
                     <div class="header-cart">
-                        @if(Session::has("Cart") !=null)
-                        <a href="#offcanvas-cart" class="offcanvas-toggle"><span id="total-qty-show" class="cart-count">{{Session::get("Cart")->totalQuantity}}</span><i class="fal fa-shopping-cart"></i></a>
-                        @else
+                        
                         <a href="#offcanvas-cart" class="offcanvas-toggle"><i class="fal fa-shopping-cart"></i></a>
-                        @endif
+                        
                     </div>
                     <div class="mobile-menu-toggle">
                         <a href="#offcanvas-mobile-menu" class="offcanvas-toggle">
@@ -286,13 +272,13 @@
                         <img src="{{asset('client/images/comment/comment-1.jpg')}}" alt="">
                         @endif
                         <div class="social">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
                         </div>
                         <div class="account-content">
-                            <a href="#" class="name">{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</a>
+                            <a href="{{route('Tai-Khoan')}}" class="name">{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</a>
                         </div>
                         <hr>
                     </div>
@@ -320,9 +306,7 @@
             <button class="offcanvas-close">×</button>
             <form action="#" class="typeahead" role="search">
                 <div class="row mb-n3">
-                    <div class="col-lg-8 col-12 mb-3"><input type="text" name="typeahead" class="form-control search-input-layout typeahead" placeholder="Hãy nhập từ bất kỳ..." autocomplete="off"></div>
-
-                    <button type="submit" class="btn btn-primary">Search <i class="fas fa-arrow-right"></i></button>
+                    <div class="col-lg-12 col-12 mb-3"><input style="padding: 8px; width:100%" type="text" name="typeahead" class="form-control search-input-layout typeahead" placeholder="Hãy nhập từ bất kỳ..." autocomplete="off"></div>
                 </div>
             </form>
         </div>
@@ -354,7 +338,7 @@
                 <li><a href="{{route('index')}}"><span class="menu-text">Trang Chủ</span></a></li>
                 <li><a href="{{route('Danh-Sach-San-Pham')}}"><span class="menu-text">Sản Phẩm</span></a></li>
                 <li><a href="{{route('Danh-Sach-Bai-Viet')}}"><span class="menu-text">Bài Viết</span></a></li>
-                <li><a href="{{URL::to('/contact_us')}}"><span class="menu-text">Liên hệ</span></a></li>
+                <li><a href="{{route('Danh-Sach-Danh-Muc')}}"><span class="menu-text">Danh Mục</span></a></li>
             </ul>
         </div>
         <div class="offcanvas-buttons">
@@ -375,11 +359,7 @@
                     @endif
                 </div>
                 <div class="header-cart">
-                    @if(Session::has("Cart") !=null)
-                    <a href="{{URL::to('/cart')}}"><span id="total-qty-show" class="cart-count">{{Session::get("Cart")->totalQuantity}}</span><i class="fal fa-shopping-cart"></i></a>
-                    @else
                     <a href="{{URL::to('/cart')}}"><i class="fal fa-shopping-cart"></i></a>
-                    @endif
                 </div>
             </div>
         </div>

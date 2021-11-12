@@ -48,13 +48,14 @@
     </div>
   </div>
   @else
-  <strong class="text-center">Danh Sách Trống</strong>
+  <strong class="text-center">
+    <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="" width="50%"></strong>
   @endif
 </div>
 @endsection
 @section('page-js')
 <script>
-    function changeStatus(event) {
+  function changeStatus(event) {
     event.preventDefault();
     var form = $(this);
     var url = form.attr('action');
@@ -101,6 +102,7 @@
 
     });
   }
+
   function deleteItem(event) {
     $.ajaxSetup({
       headers: {

@@ -23,86 +23,74 @@
         <form action="{{route('HoaDon.show',$item->order_id)}}" method="get">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont icofont-paper" style="font-size:20px;color:green"></i></i></button>
+            <button class="btn btn-outline-light" type="submit" title="Xem chi tiết"><i class="icofont icofont-paper" style="font-size:20px;color:green"></i></i></button>
         </form>
         @if($item->status==0)
         <form method="post" action="{{URL::to('/HoaDon/xuly/'.$item->order_id)}}" class="change-status-one">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont-clock-time" style="font-size:20px;color:violet"></i></button>
-        </form>
-        <form method="post" action="{{URL::to('/HoaDon/huy/'.$item->order_id)}}" class="change-status-three">
-            <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont icofont-ui-close" style="font-size:20px;color:red"></i></button>
+            <button class="btn btn-outline-light" type="submit" title="Chuyển về Đang Xử Lý"><i class="icofont-clock-time" style="font-size:20px;color:violet"></i></button>
         </form>
         <form method="post" action="{{URL::to('/HoaDon/thanhcong/'.$item->order_id)}}" class="change-status-two">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont icofont-ui-check" style="font-size:20px;color:blue"></i></button>
+            <button class="btn btn-outline-light" type="submit" title="Giao hàng thành công"><i class="icofont icofont-ui-check" style="font-size:20px;color:blue"></i></button>
+        </form>
+        <form method="post" action="{{URL::to('/HoaDon/huy/'.$item->order_id)}}" class="change-status-three">
+            <input type="hidden" name="_token" value="{{csrf_token()}}">
+            <input type="hidden" name="_method" value="put" />
+            <button class="btn btn-outline-light" type="submit" title="Giao hàng thất bại"><i class="icofont icofont-ui-close" style="font-size:20px;color:red"></i></button>
         </form>
         @endif
         @if($item->status==1)
         <form method="post" action="{{URL::to('/HoaDon/danggiao/'.$item->order_id)}}" class="change-status-zero">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont-motor-biker" style="font-size:20px;color:#00c3da"></i></button>
-        </form>
-        <form method="post" action="{{URL::to('/HoaDon/huy/'.$item->order_id)}}" class="change-status-three">
-            <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont icofont-ui-close" style="font-size:20px;color:red"></i></button>
+            <button class="btn btn-outline-light" type="submit" title="Chuyển về Đang Vận Chuyển"><i class="icofont-motor-biker" style="font-size:20px;color:#00c3da"></i></button>
         </form>
         <form method="post" action="{{URL::to('/HoaDon/thanhcong/'.$item->order_id)}}" class="change-status-two">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit"><i class="icofont icofont-ui-check" style="font-size:20px;color:blue"></i></button>
+            <button class="btn btn-outline-light" type="submit" title="Giao hàng thành công"><i class="icofont icofont-ui-check" style="font-size:20px;color:blue"></i></button>
+        </form>
+        <form method="post" action="{{URL::to('/HoaDon/huy/'.$item->order_id)}}" class="change-status-three">
+            <input type="hidden" name="_token" value="{{csrf_token()}}">
+            <input type="hidden" name="_method" value="put" />
+            <button class="btn btn-outline-light" type="submit" title="Giao hàng thất bại"><i class="icofont icofont-ui-close" style="font-size:20px;color:red"></i></button>
         </form>
         @endif
         @if($item->status==2)
         <form method="post" action="{{URL::to('/HoaDon/danggiao/'.$item->order_id)}}" class="change-status-zero">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit">
-                <i class="icofont-motor-biker" style="font-size:20px;color:#00c3da"></i>
-            </button>
-        </form>
-        <form method="post" action="{{URL::to('/HoaDon/huy/'.$item->order_id)}}" class="change-status-three">
-            <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit">
-                <i class="icofont icofont-ui-close" style="font-size:20px;color:red"></i>
-            </button>
+            <button class="btn btn-outline-light" type="submit" title="Chuyển về Đang Vận Chuyển"><i class="icofont-motor-biker" style="font-size:20px;color:#00c3da"></i></button>
         </form>
         <form method="post" action="{{URL::to('/HoaDon/xuly/'.$item->order_id)}}" class="change-status-one">
-            <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit">
-                <i class="icofont-clock-time" style="font-size:20px;color:violet"></i>
-            </button>
-        </form>
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <input type="hidden" name="_method" value="put" />
+        <button class="btn btn-outline-light" type="submit" title="Chuyển về Đang Xử Lý"><i class="icofont-clock-time" style="font-size:20px;color:violet"></i></button>
+    </form>
+    <form method="post" action="{{URL::to('/HoaDon/huy/'.$item->order_id)}}" class="change-status-three">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <input type="hidden" name="_method" value="put" />
+        <button class="btn btn-outline-light" type="submit" title="Giao hàng thất bại"><i class="icofont icofont-ui-close" style="font-size:20px;color:red"></i></button>
+    </form>
         @endif
         @if($item->status==3)
         <form method="post" action="{{URL::to('/HoaDon/danggiao/'.$item->order_id)}}" class="change-status-zero">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit">
-                <i class="icofont-motor-biker" style="font-size:20px;color:#00c3da"></i>
-            </button>
-        </form>
-        <form method="post" action="{{URL::to('/HoaDon/xuly/'.$item->order_id)}}" class="change-status-one">
-            <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit">
-                <i class="icofont-clock-time" style="font-size:20px;color:violet"></i>
-            </button>
+            <button class="btn btn-outline-light" type="submit" title="Chuyển về Đang Vận Chuyển"><i class="icofont-motor-biker" style="font-size:20px;color:#00c3da"></i></button>
         </form>
         <form method="post" action="{{URL::to('/HoaDon/thanhcong/'.$item->order_id)}}" class="change-status-two">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
-            <button class="btn btn-outline-light" type="submit">
-                <i class="icofont icofont-ui-check" style="font-size:20px;color:blue"></i>
-            </button>
+            <button class="btn btn-outline-light" type="submit" title="Giao hàng thành công"><i class="icofont icofont-ui-check" style="font-size:20px;color:blue"></i></button>
+        </form>
+        <form method="post" action="{{URL::to('/HoaDon/xuly/'.$item->order_id)}}" class="change-status-one">
+            <input type="hidden" name="_token" value="{{csrf_token()}}">
+            <input type="hidden" name="_method" value="put" />
+            <button class="btn btn-outline-light" type="submit" title="Chuyển về Đang Xử Lý"><i class="icofont-clock-time" style="font-size:20px;color:violet"></i></button>
         </form>
         @endif
     </td>

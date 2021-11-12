@@ -10,7 +10,7 @@
                 <div class="page-title">
                     <h1 class="title">Giỏ Hàng</h1>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('index')}}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('index')}}">Trang Chủ</a></li>
                         <li class="breadcrumb-item active">Giỏ Hàng</li>
                     </ul>
                 </div>
@@ -37,6 +37,8 @@
         }).done(function(response) {
             RenderList(response.giao_dien);
             alertify.error('Đã Xóa Sản Phẩm Thành Công');
+            tangSanPham();
+            giamSanPham();
         });
     }
 

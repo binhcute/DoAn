@@ -48,7 +48,8 @@
     </div>
   </div>
   @else
-  <strong class="text-center">Danh Sách Trống</strong>
+  <strong class="text-center">
+        <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="" width="50%"></strong>
   @endif
 </div>
 @endsection
@@ -60,7 +61,7 @@
     var url = form.attr('action');
     Swal.fire({
       title: 'Thay Đổi Trạng Thái',
-      text: 'Bạn Muốn Thay Đổi Trạng Thái Loại Sản Phẩm Này ?',
+      text: 'Bạn Muốn Thay Đổi Trạng Thái Danh Mục Này ?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#d33',
@@ -112,7 +113,7 @@
     var url = $(this).data('url');
     
     Swal.fire({
-      title: 'Bạn Muốn Xóa Loại Sản Phẩm Này ?',
+      title: 'Bạn Muốn Xóa Danh Mục Này ?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#d33',

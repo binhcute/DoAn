@@ -11,7 +11,7 @@
                 <div class="page-title">
                     <h1 class="title">Sản Phẩm</h1>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Trang Chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('index')}}">Trang Chủ</a></li>
                         <li class="breadcrumb-item active">Sản Phẩm</li>
                     </ul>
                 </div>
@@ -70,9 +70,9 @@
                     <div class="single-widget learts-mb-40">
                         <h3 class="widget-title product-filter-widget-title">Danh Mục Sản Phẩm</h3>
                         <ul class="widget-list">
-                            <li><a href="#">Sản Phẩm Hot</a></li>
-                            <li><a href="#">Sản Phẩm Mới</a></li>
-                            <li><a href="#">Sản Phẩm Khuyến Mãi</a></li>
+                            @foreach($product_cate as $category)
+                            <li><a href="{{route('Danh-Muc',[Str::slug($category->cate_name,'-'),$category->cate_id])}}">{{$category -> cate_name}}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                     <!-- Categories End -->

@@ -11,7 +11,7 @@
                 <div class="page-title">
                     <h1 class="title">Bài Viết</h1>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('index')}}">Trang Chủ</a></li>
                         <li class="breadcrumb-item active">Bài Viết</li>
                     </ul>
                 </div>
@@ -35,16 +35,7 @@
             </div>
 
             <div class="col-xl-3 col-lg-4 col-12 learts-mb-10">
-                <!-- Search Start -->
-                <div class="single-widget learts-mb-40">
-                    <div class="widget-search">
-                        <form class="typeahead" role="search">
-                            <input type="search" name="q" class="form-control search-input-article typeahead" placeholder="Hãy nhập từ bất kỳ..." autocomplete="off">
-                        </form>
-                    </div>
-                </div>
-                <!-- Search End -->
-
+ 
                 <!-- Blog Post Widget Start -->
                 <div class="single-widget learts-mb-40">
 
@@ -73,7 +64,9 @@
 
         </div>
         @else
-        <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="">
+        <div class="text-center">
+            <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="" width="50%">
+        </div>
         @endif
     </div>
 

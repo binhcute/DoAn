@@ -136,7 +136,7 @@
                     <div class="product-brands">
                         <span class="title">Nhà Cung Cấp</span>
                         <div class="brands">
-                            <a href="{{route('Nha-Cung-Cap',[Str::slug($product_detail->port_name, '-'),$product_detail->port_id])}}"><img src="{{URL::to('/') }}/image/portfolio/avatar/{{$product_detail->port_avatar}}" alt=""></a>
+                            <a href="{{route('Nha-Cung-Cap',[Str::slug($product_detail->port_name, '-'),$product_detail->port_id])}}"  class="hintT-top" data-hint="Xem các sản phẩm liên quan"><img src="{{URL::to('/') }}/image/portfolio/avatar/{{$product_detail->port_avatar}}" alt=""></a>
                         </div>
                     </div>
                     <form action="{{URL('/AddCartDT/'.$product_detail->product_id)}}" method="get" enctype="multipart/form-data">
@@ -159,7 +159,7 @@
                         </div>
                         <div class="product-buttons">
                             <button type="button" onclick="AddCartDT({{$product_detail->product_id}})" class="btn btn-dark btn-hover-primary"><i class="fal fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-                            </div>
+                        </div>
                     </form>
                     <br>
                     <div class="product-meta">
@@ -173,7 +173,7 @@
                                     <td class="label"><span>Danh Mục</span></td>
                                     <td class="value">
                                         <ul class="product-category">
-                                            <li><a href="{{route('Danh-Muc',[Str::slug($product_detail->cate_name,'-'),$product_detail->cate_id])}}">{{$product_detail->cate_name}}</a></li>
+                                            <li><a href="{{route('Danh-Muc',[Str::slug($product_detail->cate_name,'-'),$product_detail->cate_id])}}" class="hintT-top" data-hint="Xem các sản phẩm liên quan">{{$product_detail->cate_name}}</a></li>
                                         </ul>
                                     </td>
                                 </tr>
@@ -277,7 +277,7 @@
                             <img src="{{ URL::to('/') }}/image/product/{{ $item->product_img }}" alt="Product Image">
                             @endif
                         </a>
-                        <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Add to cart"><i class="far fa-shopping-cart"></i></a>
+                        <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="add-to-wishlist hintT-left" data-hint="Thêm vào Giỏ Hàng"><i class="far fa-shopping-cart"></i></a>
                     </div>
                     <div class="product-info">
                         <h6 class="title"><a href="{{route('San-Pham',[Str::slug($item->product_name, '-'),$item->product_id])}}">{{$item->product_name}}</a></h6>
@@ -285,9 +285,8 @@
                             <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
                         </span>
                         <div class="product-buttons">
-                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                            <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                            <a href="javascript:" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
+                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Xem Nhanh"><i class="fal fa-search"></i></a>
+                            <a href="javascript:" onclick="AddCart({{$item->product_id}})" class="product-button hintT-top" data-hint="Thêm vào Giỏ Hàng"><i class="fal fa-shopping-cart"></i></a>
                         </div>
                     </div>
                 </div>

@@ -17,7 +17,8 @@ use Validator;
 
 class AccountController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('auth.login');
     }
     public function register(StoreAccountRequest $request)
@@ -65,14 +66,14 @@ class AccountController extends Controller
             ];
             Mail::to($user->email)->send(new \App\Mail\KichHoatTaiKhoan($data));
             return response()->json(array(
-                'success' => 1,
+                'success' => true,
                 'data' => $user,
                 'status' => 'success',
                 'message' => 'Đăng Ký Thành Công, Vui Lòng Kiểm Tra Email Để Kích Hoạt Tài Khoản'
             ));
         } else {
             return response()->json(array(
-                'success' => 0,
+                'success' => false,
                 'status' => 'error',
                 'message' => 'Đăng ký thất bại'
             ));
@@ -83,32 +84,40 @@ class AccountController extends Controller
     {
         if (Auth::attempt([
             'username' => $request->username,
-            'password' => $request->password,
+            'password' => $request->password
         ])) {
-            $user = $request->user();
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
+            if (Auth::user()->status == 1) {
+                $user = $request->user();
+                $tokenResult = $user->createToken('Personal Access Token');
+                $token = $tokenResult->token;
 
-            if ($request->remember) {
-                $token->expires_at = Carbon::now()->addWeeks(1);
+                if ($request->remember) {
+                    $token->expires_at = Carbon::now()->addWeeks(1);
+                }
+                $token->save();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Đăng Nhập Thành Công',
+                    'access_token' => $tokenResult->accessToken,
+                    'token_type' => 'Bearer',
+                    'user' => $user,
+                    'expires_at' => Carbon::parse(
+                        $tokenResult->token->expires_at
+                    )->toDateTimeString()
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tài khoản chưa được kích hoạt'
+                ], 401);
             }
-            $token->save();
-
+        } else {
             return response()->json([
-                'status' => 'success',
-                'message' => 'Đăng Nhập Thành Công',
-                'access_token' => $tokenResult->accessToken,
-                'token_type' => 'Bearer',
-                'user' => $user,
-                'expires_at' => Carbon::parse(
-                    $tokenResult->token->expires_at
-                )->toDateTimeString()
-            ]);
+                'status' => 'error',
+                'message' => 'Tài khoản hoặc mật khẩu không chính xác, vui lòng đăng nhập lại'
+            ], 401);
         }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Tài khoản hoặc mật khẩu không chính xác, vui lòng đăng nhập lại'
-        ], 401);
     }
 
     public function userInfo(Request $request)
@@ -128,5 +137,27 @@ class AccountController extends Controller
         return response()->json([
             'message' => 'Successfully logged out'
         ]);
+    }
+
+    public function show_user_by_id($id)
+    {
+        $user_by_id = DB::table('users')
+            ->select(
+                'users.*'
+            )
+            ->where('users.id', $id)
+            ->where('users.status', 1)
+            ->get();
+
+        // dd($product_by_category);
+        return response()->json($user_by_id);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $account = User::find($id);
+        $account->update($request->all());
+        // $account->save();
+        return response()->json($account);
     }
 }

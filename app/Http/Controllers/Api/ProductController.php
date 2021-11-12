@@ -117,4 +117,15 @@ class ProductController extends Controller
         // dd($product_by_category);   
         return response()->json($product_by_portfolio);
     }
+
+    public function show_pro_new(){
+        $pro_new = DB::table('tpl_product')
+        ->orderBy('tpl_product.created_at', 'desc')
+        ->limit(6)
+        ->get();
+        
+        return response()->json([
+            'data' => $pro_new
+        ]);
+    }
 }

@@ -41,7 +41,7 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{asset('server/assets/css/responsive.css')}}">
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-  
+
   </head>
 
   <body onload="startTime()">
@@ -94,11 +94,15 @@
                   <ul class="header__noti-list-item">
                     @if($thongBaoMoi!==null)
                     @foreach($thongBaoMoi as $thongBao)
-                    <?php $chi_tiet = json_decode($thongBao->noi_dung,TRUE) ?>
+                    <?php $chi_tiet = json_decode($thongBao->noi_dung, TRUE) ?>
                     <a href="{{route('HoaDon.show', $chi_tiet['don_hang_id'])}}">
                       <li class="header__noti-item">
                         <div class="noti-item__avt">
+                          @if($chi_tiet['avatar_nguoi_dung']==null)
                           <img src="{{URL::to('/')}}/image/account/1.png" alt="" class="noti-item__avt-img">
+                          @else
+                          <img src="{{URL::to('/')}}/image/account/{{$chi_tiet['avatar_nguoi_dung']}}" alt="" class="noti-item__avt-img">
+                          @endif
                         </div>
                         <div class="noti-item__content">
                           Bạn có đơn hàng:
@@ -112,16 +116,7 @@
                     @endforeach
                     @else
                     <li class="header__noti-item">
-                      <div class="noti-item__avt">
-                        <img src="./asset/img/notice_avt.jpg" alt="" class="noti-item__avt-img">
-                      </div>
-                      <div class="noti-item__content">
-                        Bạn có đơn hàng:
-                        <span class="header-noti__code-order">ccc6da91-9f0f-4369-ba79-694382e3b1b7</span>
-                        mới từ
-                        <span class="header-noti__email-order">123456789@gmail.com</span>. <br />
-                        <span class="header-noti__date-order">10 giây trước</span>
-                      </div>
+                      <div>Danh Sách Trống</div>
                     </li>
                     @endif
                   </ul>
@@ -132,17 +127,19 @@
               </li>
               <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
               <li class="profile-nav onhover-dropdown p-0 me-0">
-                <div class="media profile-media"><img class="b-r-10" src="{{asset('server/assets/images/dashboard/profile.jpg')}}" alt="">
+                <div class="media profile-media">
+                  @if(Auth::user()->avatar != null)
+                  <img class="b-r-10" src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="" width="37px" height="37px">
+                  @else
+                  <img class="b-r-10" src="{{URL::to('/') }}/image/account/1.png" alt="" width="37px" height="37px">
+                  @endif
                   <div class="media-body"><span>{{ Auth::user()->lastName }}</span>
                     <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
                   </div>
                 </div>
                 <ul class="profile-dropdown onhover-show-div">
-                  <li><a href="{{route('MyAccount.index')}}"><i data-feather="user"></i><span>Tài khoản </span></a></li>
-                  <li><a href="#"><i data-feather="settings"></i><span>Cài đặt</span></a></li>
-                  <li><a href="{{ route('logout') }}"><i data-feather="log-in"> </i><span>Đăng xuất</span>
-
-                    </a></li>
+                  <li><a href="{{ route('MyAccount.index') }}"><i data-feather="user"></i><span>Tài khoản </span></a></li>
+                  <li><a href="{{ route('logout') }}"><i data-feather="log-in"> </i><span>Đăng xuất</span></a></li>
                 </ul>
               </li>
             </ul>
@@ -173,7 +170,6 @@
                   <li class="sidebar-main-title">
                     <div>
                       <h6>Thanh Công Cụ</h6>
-                      <p>Bao gồm các chức năng chính</p>
                     </div>
                   </li>
                   <li class="sidebar-list">
@@ -192,12 +188,11 @@
                   <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i data-feather="box"></i><span>Chức Năng</span></a>
                     <ul class="sidebar-submenu">
                       @if(Auth::user()->id ==1)
-                      <li><a href="{{route('TaiKhoan.index')}}">Quản Lý Tài Khoản</a></li>
+                      <li><a href="{{route('QuanLyTaiKhoanAdmin')}}">Quản Lý Admin</a></li>
                       @endif
-                      <li><a href="{{route('HoaDon.index')}}">Quản Lý Hóa Đơn</a></li>
-                      <li><a href="{{route('BinhLuan.store')}}">Quản Lý Bình Luận</a></li>
-                      <li><a href="{{URL::to('/QuanLyAPI')}}">Quản Lý API</a></li>
-                      <li><a href="{{route('KhuyenMai.index')}}">Quản Lý Mã Khuyến Mãi</a></li>
+                      <li><a href="{{route('TaiKhoan.index')}}">Tài Khoản Người Dùng</a></li>
+                      <li><a href="{{route('HoaDon.index')}}">Hóa Đơn Khách Hàng</a></li>
+                      <li><a href="{{route('BinhLuan.store')}}">Danh Sách Bình Luận</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -277,7 +272,7 @@
     <!-- login js-->
     <!-- Plugin used-->
     @yield('page-js')
-      <script>
+    <script>
       // Enable pusher logging - don't include this in production
       Pusher.logToConsole = true;
 

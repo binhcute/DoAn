@@ -33,9 +33,9 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Tên Loại Sản Phẩm</label>
+              <label class="col-sm-3 col-form-label">Tên Danh Mục</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên loại sản phẩm" value="{{ $cate->cate_name }}" name="name" id="name">
+                <input class="form-control" type="text" placeholder="Nhập tên Danh Mục" value="{{ $cate->cate_name }}" name="name" id="name">
               </div>
             </div>
             <div class="mb-3 row">
@@ -57,7 +57,7 @@
       </div>
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
-          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Thay Đổi</button>
           <input class="btn btn-light" type="reset" value="Cancel">
         </div>
       </div>

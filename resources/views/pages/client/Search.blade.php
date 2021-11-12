@@ -11,7 +11,7 @@
                     <div class="page-title">
                         <h1 class="title">Sản Phẩm</h1>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Trang Chủ</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('index')}}">Trang Chủ</a></li>
                             <li class="breadcrumb-item active">Sản Phẩm</li>
                         </ul>
                     </div>
@@ -87,9 +87,9 @@
                                         <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
                                         </span>
                                         <div class="product-buttons">
-                                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                                            <a onclick="addProduct('{{$item->product_id}}','{{$item->product_name}}','{{$item->product_price}}',this)" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                                            <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
+                                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Xem Nhanh"><i class="fal fa-search"></i></a>
+                                            <a onclick="addProduct('{{$item->product_id}}','{{$item->product_name}}','{{$item->product_price}}',this)" class="product-button hintT-top" data-hint="Thêm vào Giỏ Hàng"><i class="fal fa-shopping-cart"></i></a>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -111,9 +111,9 @@
                                             <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
                                         </span>
                                         <div class="product-buttons">
-                                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                                            <a onclick="addProduct('{{$item->product_id}}','{{$item->product_name}}','{{$item->product_price}}',this)" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                                            <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
+                                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Xem Nhanh"><i class="fal fa-search"></i></a>
+                                            <a onclick="addProduct('{{$item->product_id}}','{{$item->product_name}}','{{$item->product_price}}',this)" class="product-button hintT-top" data-hint="Thêm vào Giỏ Hàng"><i class="fal fa-shopping-cart"></i></a>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -135,9 +135,9 @@
                                             <span class="new">{{number_format($item->product_price).' '.'VND'}}</span>
                                         </span>
                                         <div class="product-buttons">
-                                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Quick View"><i class="fal fa-search"></i></a>
-                                            <a onclick="addProduct('{{$item->product_id}}','{{$item->product_name}}','{{$item->product_price}}',this)" class="product-button hintT-top" data-hint="Add to Cart"><i class="fal fa-shopping-cart"></i></a>
-                                            <a href="#" class="product-button hintT-top" data-hint="Compare"><i class="fal fa-random"></i></a>
+                                            <a href="#quickViewModal{{$item->product_id}}" data-toggle="modal" class="product-button hintT-top" data-hint="Xem Nhanh"><i class="fal fa-search"></i></a>
+                                            <a onclick="addProduct('{{$item->product_id}}','{{$item->product_name}}','{{$item->product_price}}',this)" class="product-button hintT-top" data-hint="Thêm vào Giỏ Hàng"><i class="fal fa-shopping-cart"></i></a>
+                                            
                                         </div>
                                     </div>
                                 </div>

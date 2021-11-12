@@ -61,7 +61,7 @@
             <td>{{$product->port_name}}</td>
             </tr>
             <tr>
-              <td> <b>Loại Sản Phẩm &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+              <td> <b>Danh Mục &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
               <td>{{$product->cate_name}}</td>
             </tr>
             <tr>

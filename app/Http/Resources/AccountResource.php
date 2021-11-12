@@ -26,6 +26,7 @@ class AccountResource extends JsonResource
             'email' => $this->email,
             'password' => $this->password,
             'level' => $this->level,
+            'birthday' => $this->birthday,
             'created_at' => (string)$this->created_at,
             'updated_at' => (string)$this->updated_at,
             'status' => $this->status

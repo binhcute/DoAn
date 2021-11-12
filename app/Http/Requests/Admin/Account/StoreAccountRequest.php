@@ -26,18 +26,27 @@ class StoreAccountRequest extends FormRequest
         return [
             'firstName' => 'required',
             'lastName' => 'required',
-            'username' => 'required|unique:users',
-            'password' => 'required',
-
+            'email' => 'required|email|unique:users',
+            'username' => 'required|unique:users|min:8|max:16',
+            'password' => 'required|min:8|max:32',
+            'password_confirmation' => 'same:password'
         ];
     }
     public function messages(){
         return [
             'firstName.required' => 'Họ không được bỏ trống',
             'lastName.required' => 'Tên không được bỏ trống',
-            'username.required' => 'Tên đăng nhập không được bỏ trống',
-            'username.unique' => 'Tên đăng nhập đã có người sử dụng',
+            'email.required' => 'Email không được bỏ trống',
+            'email.email' => 'Email không đúng',
+            'email.unique' => 'Email này đã có người sử dụng',
+            'username.required' => 'Tên tài khoản không được bỏ trống',
+            'username.unique' => 'Tên tài khoản đã có người sử dụng',
+            'username.min' => 'Tên tài khoản phải từ 8 đến 16 ký tự',
+            'username.max' => 'Tên tài khoản phải từ 8 đến 16 ký tự',
             'password.required' => 'Mật khẩu không được bỏ trống',
+            'password.min' => 'Mật khẩu phải từ 8 đến 32 ký tự',
+            'password.max' => 'Mật khẩu phải từ 8 đến 32 ký tự', 
+            'password_confirmation.same' => 'Nhập lại mật khẩu không trùng khớp' 
         ];
     }
 }

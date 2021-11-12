@@ -15,7 +15,7 @@ class ResetPassword extends Migration
     {
         Schema::create('tpl_reset_password', function (Blueprint $table) {
             $table->string('email')->primaryKey();
-            $table->string('token');
+            $table->string('token')->nullable();
             $table->timestamp('created_at')->nullable();
         });
     }

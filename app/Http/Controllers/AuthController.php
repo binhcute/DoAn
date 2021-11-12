@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Session;
 
 class AuthController extends Controller
 {
@@ -21,7 +22,7 @@ class AuthController extends Controller
     }
     public function register(StoreAccountRequest $request)
     {
-// dd($request->all());
+        // dd($request->all());
         $user = new User();
         $user->firstName = $request->firstName;
         $user->lastName = $request->lastName;
@@ -71,7 +72,8 @@ class AuthController extends Controller
         }
     }
 
-    public function registerContinue(){
+    public function registerContinue()
+    {
         return view('auth.continue_register');
     }
 
@@ -119,21 +121,20 @@ class AuthController extends Controller
             $token = Str::random(6);
             // dd($token);
             $kiemtraBang = DB::table('tpl_reset_password')
-            ->where('email','=',$request->email)->first();
-            if(!$kiemtraBang) {
+                ->where('email', '=', $request->email)->first();
+            if (!$kiemtraBang) {
                 DB::table('tpl_reset_password')->insert([
                     'email' => $request->email,
                     'token' => $token,
                     'created_at' => Carbon::now()
                 ]);
-            }
-            else{
+            } else {
                 DB::table('tpl_reset_password')
-                ->where(['tpl_reset_password.email' => $request->email])
-                ->update([
-                    'token' => $token,
-                    'created_at' => Carbon::now()
-                ]);
+                    ->where(['tpl_reset_password.email' => $request->email])
+                    ->update([
+                        'token' => $token,
+                        'created_at' => Carbon::now()
+                    ]);
             }
             // DB::table('tpl_reset_password')->insert([
             //             'email' => $request->email,
@@ -145,35 +146,42 @@ class AuthController extends Controller
                 'email' => $request->email,
             ];
             Mail::to($request->email)->send(new \App\Mail\ResetMatKhau($data));
-            return view('auth.passwords.otp')->with('email',$request->email);
+            Session::put('status', 'Đã gửi mã OTP về email của bạn');
+            return view('auth.passwords.otp')->with('email', $request->email);
         }
     }
 
-    public function postNhapOtp(Request $request){
+    public function postNhapOtp(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|exists:tpl_reset_password',
+        ]);
         $check = DB::table('tpl_reset_password')
-        ->where('token','=',$request->otp)
-        ->where('email','=',$request->email)
-        ->orderBy('created_at','desc')
-        ->first();
-        if($check){
-            return view('auth.passwords.reset')->with('email',$request->email);
+            ->where('token', '=', $request->tọken)
+            ->where('email', '=', $request->email)
+            ->orderBy('created_at', 'desc')
+            ->first();
+        if ($check) {
+            $email = DB::table('users')
+                ->where('email', '=', $request->email)->first();
+            return view('auth.passwords.reset', compact(['email']));
         }
-        return back();
+        Session::put('status', 'Sai mã OTP');
+        return reload('auth.passwords.reset');
     }
 
-    public function postDatLaiMatKhau(Request $request){
+    public function postDatLaiMatKhau(Request $request)
+    {
         DB::table('users')
-        ->where('email','=',$request->email)
-        ->update([
-            'password' =>  Hash::make($request->password)
-        ]);
+            ->where('email', '=', $request->email)
+            ->update([
+                'password' =>  Hash::make($request->password)
+            ]);
         DB::table('tpl_reset_password')
-        ->where('email','=',$request->email)
-        ->update([
-            'token' => NULL
-        ]);
+            ->where('email', '=', $request->email)
+            ->update([
+                'token' => NULL
+            ]);
         return view('auth.login');
     }
-
-
 }

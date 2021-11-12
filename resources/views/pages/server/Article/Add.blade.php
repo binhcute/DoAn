@@ -86,7 +86,7 @@
               <div class="col-sm-9">
                 <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
                 <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
-                <img id="event__img-0" src="{{asset('image/example/add.jpg')}}" alt="slider" width="50%" height="320px">
+                <img id="event__img-0" src="{{asset('image/example/add.png')}}" alt="slider" height="100%">
               </div>
 
             </div>
@@ -95,7 +95,7 @@
       </div>
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
-          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Thêm</button>
           <input class="btn btn-light" type="reset" value="Cancel">
         </div>
       </div>

@@ -32,14 +32,8 @@
                 <div class="myaccount-tab-list nav">
                     <a href="#dashboad" class="active" data-toggle="tab">Thông tin <i class="far fa-home"></i></a>
                     <a href="#orders" data-toggle="tab">Hóa Đơn <i class="far fa-file-alt"></i></a>
-                    <a href="#address" data-toggle="tab">Địa Chỉ của bạn <i class="far fa-map-marker-alt"></i></a>
                     <a href="#account-info" data-toggle="tab">Thông tin tài khoản <i class="far fa-user"></i></a>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">Đăng Xuất <i class="far fa-sign-out-alt"></i>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </a>
+                    <a href="{{ route('logout') }}">Đăng Xuất <i class="far fa-sign-out-alt"></i></a>
                 </div>
             </div>
             <!-- My Account Tab List End -->
@@ -51,10 +45,12 @@
                     <!-- Single Tab Content Start -->
                     <div class="tab-pane fade show active" id="dashboad">
                         <div class="myaccount-content dashboad">
-                            <p>Xin chào <strong>{{Auth::user()->username }}</strong> (nếu không phải <strong>{{Auth::user()->username }}</strong>?
-                                <a href="{{ route('logout') }}"><i data-feather="log-in"> </i>Xin hãy đăng xuất.)</a>
+                            <p>Xin chào {{Auth::user()->firstName}} {{Auth::user()->lastName}} <strong>({{Auth::user()->username }})</strong> (nếu không phải <strong>{{Auth::user()->username }}</strong>?
+                                <a href="{{ route('logout') }}"><i data-feather="log-in"> </i>Xin hãy đăng xuất</a>
+                                )
                             </p>
-                            <p>Từ trang tổng quan tài khoản, bạn có thể xem các <span>đơn đặt hàng gần đây</span>, quản lý <span>địa chỉ giao hàng và thah toán</span>, cũng như <span>chỉnh sửa mật khẩu và chi tiết tài khoản của mình</span>.</p>
+                            <p><a data-toggle="modal" data-target="#modal-change"><strong>Bạn có thể thay đổi mật khẩu tại đây!</strong></a></p>
+
                         </div>
                     </div>
                     <!-- Single Tab Content End -->
@@ -62,32 +58,40 @@
                     <!-- Single Tab Content Start -->
                     <div class="tab-pane fade" id="orders">
                         <div class="myaccount-content order">
-                            <div class="table-responsive">
+                            @if($arrDonHang)
+                            <div class="table-responsive table-responsive_custom">
+                                @foreach($arrDonHang as $stt => $DonHang)
+
+                                <div class="table-responsive__title table-responsive_bill">Hóa Đơn số <span>{{$stt+1}}</span></div>
+                                <div class="table-responsive__title">Tên người nhận: <span>{{$DonHang->firstName}} {{$DonHang->lastName}}</span></div>
+                                <div class="table-responsive__title">Tài khoản: <span>{{$DonHang->username}}</span></div>
+                                <div class="table-responsive__title">Địa chỉ: <span>{{$DonHang->address}}</span></div>
+                                <div class="table-responsive__title">Điện thoại: <span>{{$DonHang->phone}}</span></div>
 
                                 <div class="perfume-cart__contents ">
                                     <!-- Tiêu đề -->
                                     <div class="row_g no-gutters row_g-title hide-on-mobile">
 
-                                        <div class="col_g l-4_g m-50_g">
+                                        <div class="col_g l-4_g m-4_g">
                                             <div class="perfume-cart__title">
                                                 Sản phẩm
                                             </div>
                                         </div>
 
-                                        <div class="col_g l-1_g m-10-2_g">
+                                        <div class="col_g l-2_g m-10-2_g">
                                             <div class="perfume-cart__title">
                                                 Số lượng
                                             </div>
                                         </div>
 
 
-                                        <div class="col_g l-2_g m-10-2_g">
+                                        <div class="col_g l-3_g m-10-3_g">
                                             <div class="perfume-cart__title">
                                                 Thành tiền
                                             </div>
                                         </div>
 
-                                        <div class="col_g l-1_g m-10-2_g">
+                                        <div class="col_g l-3_g m-10-3_g">
                                             <div class="perfume-cart__title">
                                                 Trạng Thái
                                             </div>
@@ -95,37 +99,52 @@
 
                                     </div>
                                     <!-- Nội dung -->
+                                    @foreach($DonHang->san_pham as $stt => $san_pham)
                                     <div class="row_g no-gutters row_content hide-on-mobile">
-                                        <div class="col_g l-4_g m-50_g">
+                                        <div class="col_g l-4_g m-4_g">
                                             <div class=" perfume-cart__product">
-                                                <img class="product__img" src="{{URL::to('/')}}/image/product/product_info']->product_img}}" alt="">
+                                                <img class="product__img" src="{{URL::to('/')}}/image/product/{{$san_pham->product_img}}" alt="">
                                                 <div>
                                                     <span class="product__name">
-                                                        product_info']->product_name}}
+                                                        {{$san_pham->product_name}} x {{$san_pham->quantity}}
                                                     </span>
                                                 </div>
 
                                             </div>
                                         </div>
 
-                                        <div class="col_g l-1_g m-10-2_g">
+                                        <div class="col_g l-2_g m-10-2_g">
                                             <div class="perfume-cart__content perfume-cart__quantity perfume-cart__center">
-                                                <span class="perfume-cart__promotion">price'])}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col_g l-2_g m-10-2_g">
-                                            <div class="perfume-cart__content  perfume-cart__center">
-                                                <span class="perfume-cart__promotion">price'])}}</span>
-                                                <span>vnđ</span>
+                                                <span class="perfume-cart__promotion">{{number_format($san_pham->price)}} vnđ</span>
                                             </div>
                                         </div>
 
-                                        <div class="col_g l-2_g m-10-2_g">
+                                        <div class="col_g l-3_g m-10-3_g">
                                             <div class="perfume-cart__content perfume-cart__center">
-                                                <span class="perfume-cart__into-money">price'])}}</span>
+                                                <span class="perfume-cart__into-money">{{number_format($san_pham->amount)}} vnđ</span>
                                             </div>
                                         </div>
+                                        <div class="col_g l-3_g m-10-3_g">
+                                            <div class="perfume-cart__content perfume-cart__center">
+                                                <span class="perfume-cart__into-money">
 
+                                                    @switch($DonHang->status)
+                                                    @case(0)
+                                                    <strong style="color:#00c3da">Đang vận chuyển</strong>
+                                                    @break
+                                                    @case(1)
+                                                    <strong style="color:greenyellow">Đang chờ xử lý</strong>
+                                                    @break
+                                                    @case(2)
+                                                    <strong style="color:dodgerblue">Giao hàng thành công</strong>
+                                                    @break
+                                                    @case(3)
+                                                    <strong style="color:orangered">Đơn hàng đã bị hủy</strong>
+                                                    @break
+                                                    @endswitch
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- Sản phẩm của giỏ hàng trên Mobile -->
@@ -133,29 +152,20 @@
 
                                         <div class="col_g col_g-mar">
                                             <div class=" perfume-cart__product">
-                                                <img class="product__img" src="{{URL::to('/')}}/image/product/product_info']->product_img}}" alt="">
+                                                <img class="product__img" src="{{URL::to('/')}}/image/product/{{$san_pham->product_img}}" alt="">
                                                 <div>
                                                     <span class="product__name">
-                                                        product_info']->product_name}}
+                                                        {{$san_pham->product_name}} x {{$san_pham->quantity}}
                                                     </span>
 
-                                                    <div class="col_g c-0_g">
-                                                        <div class="perfume-cart__content perfume-cart__center">
-                                                            <span class="perfume-cart__unit-sprice">product_info']->product_price}}</span>
-                                                            <span>vnđ</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col_g c-0_g">
-                                                        <div class="perfume-cart__content  perfume-cart__center">
-                                                            <span class="perfume-cart__promotion">product_info']->product_price}}</span>
-                                                            <span>vnđ</span>
-                                                        </div>
+                                                    <div class="perfume-cart__content perfume-cart__center">
+                                                        <span class="perfume-cart__unit-sprice">Giá {{number_format($san_pham->price)}}</span>
+                                                        <span>vnđ</span>
                                                     </div>
 
                                                     <div class="perfume-cart__content perfume-cart__center ">
                                                         <span class="perfume-cart__title-num">Tổng Tiền:</span>
-                                                        <span class="perfume-cart__into-money">price']}}</span>
+                                                        <span class="perfume-cart__into-money">{{number_format($san_pham->amount)}}</span>
                                                         <span>vnđ</span>
                                                     </div>
 
@@ -165,92 +175,82 @@
                                         </div>
 
                                     </div>
+                                    @endforeach
                                 </div>
+                                <hr>
+                                @endforeach
                             </div>
+                            @else
+                            <div class="text-center">
+                                <h4>Bạn chưa có đơn hàng nào</h4>
+                                <img src="{{URL::to('/')}}/image/example/empty_cart.jpg" width="50%">
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <!-- Single Tab Content End -->
 
 
-                    <!-- Single Tab Content Start -->
-                    <div class="tab-pane fade" id="address">
-                        <div class="myaccount-content address">
-                            <p>The following addresses will be used on the checkout page by default.</p>
-                            <div class="row learts-mb-n30">
-                                <div class="col-md-6 col-12 learts-mb-30">
-                                    <h4 class="title">Địa Chỉ Của Bạn <a href="#" class="edit-link">edit</a></h4>
-                                    <address>
-                                        <p><strong>{{Auth::user()->firstName}} {{Auth::user()->lastName}}</strong></p>
-                                        <p>{!!Auth::user()->address!!}</p>
-                                        <p>Mobile: {{Auth::user()->phone}}</p>
-                                    </address>
-                                </div>
-                                <div class="col-md-6 col-12 learts-mb-30">
-                                    <h4 class="title">Shipping Address <a href="#" class="edit-link">edit</a></h4>
-                                    <address>
-                                        <p><strong>Alex Tuntuni</strong></p>
-                                        <p>1355 Market St, Suite 900 <br>
-                                            San Francisco, CA 94103</p>
-                                        <p>Mobile: (123) 456-7890</p>
-                                    </address>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Tab Content End -->
 
                     <!-- Single Tab Content Start -->
                     <div class="tab-pane fade" id="account-info">
                         <div class="myaccount-content account-details">
                             <div class="account-details-form">
-                                <form action="{{route('post.change_account')}}" method="post" enctype="multipart/form-data" class="thay-doi-thong-tin-nguoi-dung">
+                                <form action="{{route('post.change_account')}}" method="post" enctype="multipart/form-data" id="thay-doi-thong-tin-nguoi-dung">
                                     @csrf
+                                    <meta name="csrf-token" content="{{ csrf_token() }}">
                                     <div class="row learts-mb-n30">
                                         @if(Auth::user()->avatar!=null)
                                         <div class="col-12 learts-mb-30">
-                                            <label for="event__input-hover-0">Avatar <abbr class="required">*</abbr></label>
-                                            <div class="account-client">
-                                                <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
+                                            <label id="id_label_hover_0" for="event__input-hover-0">Avatar <abbr class="required">*</abbr></label>
+                                            <div class="account-client text-center">
+                                                <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
 
                                                 <img id="event__img-hover-0" alt="slider" src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="">
 
                                             </div>
+
                                         </div>
                                         @else
                                         <div class="col-12 learts-mb-30">
-                                            <div class="single-input-item">
-                                                <label for="display-name">Avatar <abbr class="required">*</abbr></label>
-                                                <input type="file" name="display-name">
+                                            <label for="event__input-0">Avatar <abbr class="required">*</abbr></label>
+                                            <div class="account-client text-center">
+
+                                                <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
+
+                                                <img id="event__img-0" alt="slider" src="{{URL::to('/') }}/image/account/1.png" alt="">
+
+                                                <label id="id-label-0" for="event__input-0">Chọn Ảnh <abbr class="required">*</abbr></label>
                                             </div>
+
                                         </div>
                                         @endif
                                         <div class="col-md-6 col-12 learts-mb-30">
                                             <div class="single-input-item">
                                                 <label for="first-name">Họ <abbr class="required">*</abbr></label>
-                                                <input type="text" name="firstName" value="{{Auth::user()->firstName}}">
+                                                <input type="text" name="firstName" value="{{Auth::user()->firstName}}" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12 learts-mb-30">
                                             <div class="single-input-item">
                                                 <label for="last-name">Tên <abbr class="required">*</abbr></label>
-                                                <input type="text" name="lastName" value="{{Auth::user()->lastName}}">
+                                                <input type="text" name="lastName" value="{{Auth::user()->lastName}}" required>
                                             </div>
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <label for="email">Email<abbr class="required">*</abbr></label>
-                                            <input type="email" name="email" value="{{Auth::user()->email}}">
+                                            <input type="email" name="email" value="{{Auth::user()->email}}" required>
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <label for="email">Số Điện Thoại<abbr class="required">*</abbr></label>
                                             <input type="number" name="phone" value="{{Auth::user()->phone}}">
                                         </div>
                                         <div class="col-12 learts-mb-30">
-                                            <label for="email">Địa Chỉ<abbr class="required">*</abbr></label>
+                                            <label for="email">Địa Chỉ</label>
                                             <input type="text" name="address" value="{{Auth::user()->address}}">
                                         </div>
                                         <div class="col-12 learts-mb-30">
-                                            <label for="gender">Giới tính<abbr class="required">*</abbr></label>
+                                            <label for="gender">Giới tính</label>
                                             @switch (Auth::user()->gender)
                                             @case(1)
                                             <input type="radio" checked name="gender" value="1">Nam
@@ -263,40 +263,15 @@
                                             @endswitch
                                         </div>
                                         <div class="col-12 learts-mb-30">
-                                            <label for="email">Ngày Sinh<abbr class="required">*</abbr></label>
+                                            <label for="email">Ngày Sinh</label>
                                             <input type="date" name="birthday" value="{{Auth::user()->birthday}}">
                                         </div>
                                         <div class="col-12 learts-mb-30">
-                                            <button type="submit" class="btn btn-dark btn-outline-hover-dark">Save Changes</button>
+                                            <button type="submit" class="btn btn-dark btn-hover-primary">Cập Nhật Thông Tin</button>
                                         </div>
                                     </div>
                                 </form>
-                                <form action="{{route('post.change_password')}}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="col-12 learts-mb-30 learts-mt-30">
-                                        <fieldset>
-                                            <legend>Password change</legend>
-                                            <div class="row learts-mb-n30">
-                                                <div class="col-12 learts-mb-30">
-                                                    <label for="old_password">Current password (leave blank to leave unchanged)</label>
-                                                    <input type="password" name="old_password">
-                                                </div>
-                                                <div class="col-12 learts-mb-30">
-                                                    <label for="new-pwd">New password (leave blank to leave unchanged)</label>
-                                                    <input type="password" name="new_pwd" id="new_pwd">
-                                                </div>
-                                                <div class="col-12 learts-mb-30">
-                                                    <label for="confirm-pwd">Confirm new password</label>
-                                                    <input type="password" name="confirm_pwd" id="confirm_pwd">
-                                                    <span id="message-pwd"></span>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-12 learts-mb-30">
-                                        <button type="submit" class="btn btn-dark btn-outline-hover-dark">Save Changes</button>
-                                    </div>
-                                </form>
+
                             </div>
                         </div>
                     </div> <!-- Single Tab Content End -->
@@ -306,18 +281,59 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modal-change" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Thay Đổi Mật Khẩu</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="noti-validate">
+                <form action="{{route('post.change_password')}}" method="post" enctype="multipart/form-data" id="thay-doi-mat-khau-nguoi-dung">
+                    @csrf
+                    <div class="col-12 learts-mb-30 learts-mt-30">
+                        <fieldset>
+                            <div class="row learts-mb-n30">
+                                <div class="col-12 learts-mb-30">
+                                    <label for="old_password">Vui lòng nhập mật khẩu cũ</label>
+                                    <input type="password" name="old_password">
+                                </div>
+                                <div class="col-12 learts-mb-30">
+                                    <label for="new-pwd">Mật khẩu mới</label>
+                                    <input type="password" name="new_pwd" id="new_pwd">
+                                </div>
+                                <div class="col-12 learts-mb-30">
+                                    <label for="confirm-pwd">Nhập lại mật khẩu mới</label>
+                                    <input type="password" name="confirm_pwd" id="confirm_pwd">
+                                    <span id="message-pwd"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-12 learts-mb-30">
+                        <button type="submit" class="btn btn-dark btn-outline-hover-dark">Thay đổi mật khẩu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- My Account Section End -->
 <!-- delete and choose file -->
 <script type="text/javascript">
-    function uploadFileHover(input, tam) {
+    function uploadBannerFile(input, tam) {
+        $('#id-label-' + tam).html(input.files[0].name);
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                $('#event__img-hover-' + tam).attr('src', e.target.result);
+                $('#event__img-' + tam).attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }
-        $('#event__input-hover-' + tam).change(function() {
+        $('#event__input-' + tam).change(function() {
             readURL(this);
         });
     }
@@ -328,41 +344,93 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $('.thay-doi-thong-tin-nguoi-dung').submit(function(event) {
+    $('#thay-doi-thong-tin-nguoi-dung').submit(function(event) {
         event.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        // console.log(form.serialize());
-        // $.ajax({
-        //     type: "POST",
-        //     url: url,
-        //     data: form.serialize(),
-        //     success: function(data) {
-        //         if (data.status == 'error') {
-        //             Swal.fire({
-        //                 position: 'center',
-        //                 icon: 'error',
-        //                 title: 'Thất Bại',
-        //                 text: data.message,
-        //                 showConfirmButton: true,
-        //                 timer: 2500
-        //             })
-        //         }
-        //         if (data.status == 'success') {
-        //             Swal.fire({
-        //                 position: 'center',
-        //                 icon: 'success',
-        //                 title: 'Thành Công',
-        //                 text: data.message,
-        //                 showConfirmButton: true,
-        //                 timer: 2500
-        //             })
-        //             window.setTimeout(function() {
-        //                 window.location.reload();
-        //             }, 2500);
-        //         }
-        //     }
-        // });
+        console.log(form.serialize());
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(data) {
+                if (data.status == 'error') {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Thất Bại',
+                        text: data.message,
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
+                }
+                if (data.status == 'success') {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Thành Công',
+                        text: data.message,
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
+                    window.setTimeout(function() {
+                        window.location.reload();
+                    }, 2500);
+                }
+            }
+        });
+    });
+    $('#thay-doi-mat-khau-nguoi-dung').submit(function(event) {
+        event.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        console.log(form.serialize());
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(data) {
+                if (data.status == 'error') {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Thất Bại',
+                        text: data.message,
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
+                }
+                if (data.status == 'success') {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Thành Công',
+                        text: data.message,
+                        showConfirmButton: true,
+                        timer: 2500
+                    })
+                    window.setTimeout(function() {
+                        window.location.reload();
+                    }, 2500);
+                }
+            },
+            error: function(response) {
+                $.each(response.responseJSON.errors, function(field_name, error) {
+                        $('#noti-validate').before('<div class="alert alert-danger noti-alert-danger" role="alert" style="font-size: 1.5rem;">' + error + '</div>');
+                    }),
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
+                        showConfirmButton: true,
+                        timer: 2500
+                    }),
+                    window.setTimeout(function() {
+                        $('.alert.alert-danger.noti-alert-danger').remove();
+                    }, 20000);
+            }
+        });
     });
 </script>
 <!-- <script>
@@ -374,4 +442,5 @@
     $('#message-pwd').html('Not Matching').css('color', 'red');
 });
 </script> -->
+
 @endsection

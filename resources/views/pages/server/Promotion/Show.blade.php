@@ -37,11 +37,11 @@
           <tbody>
             <tr>
             <tr>
-              <td> <b>Id Loại Sản Phẩm &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+              <td> <b>Id Danh Mục &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
               <td class="txt-success">{{$cate->cate_id}}</td>
             </tr>
             <tr>
-              <td> <b>Tên Loại Sản Phẩm &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+              <td> <b>Tên Danh Mục &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
               <td>{{$cate->cate_name}}</td>
             </tr>
             <tr>

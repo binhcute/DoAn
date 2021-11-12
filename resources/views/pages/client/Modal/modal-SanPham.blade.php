@@ -34,7 +34,7 @@
                         </div>
                         <div class="product-buttons">
                             <a href="#" class="btn btn-icon btn-outline-body btn-hover-dark"><i class="fal fa-heart"></i></a>
-                            <a href="javascript:" onclick="AddCart({{$modal->product_id}})" class="btn btn-dark btn-outline-hover-dark"><i class="fal fa-shopping-cart"></i> Add to Cart</a>
+                            <a href="javascript:" onclick="AddCart({{$modal->product_id}})" class="btn btn-dark btn-outline-hover-dark"><i class="fal fa-shopping-cart"></i> Thêm vào Giỏ Hàng</a>
                             <a href="#" class="btn btn-icon btn-outline-body btn-hover-dark"><i class="fal fa-random"></i></a>
                         </div>
                         <div class="product-brands">

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Admin\Category\StoreCategoryRequest;
+use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
 
 
 class CategoryController extends Controller
@@ -67,13 +68,13 @@ class CategoryController extends Controller
         if($cate->save()){
             return response()->json([
                 'status' => 'success',
-                'message' => 'Thêm Loại Sản Phẩm Thành Công'
+                'message' => 'Thêm Danh Mục Thành Công'
             ], 200);
         }
         else{
             return response()->json([
                 'status' => 'error',
-                'message' => 'Thêm Loại Sản Phẩm Thất Bại'
+                'message' => 'Thêm Danh Mục Thất Bại'
             ], 200);
         }
     }
@@ -120,7 +121,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
         // dd($request->all());
         $cate = Category::find($id);
@@ -143,13 +144,13 @@ class CategoryController extends Controller
         if($cate->update()){
             return response()->json([
                 'status' => 'success',
-                'message' => 'Chỉnh Sửa Loại Sản Phẩm Thành Công'
+                'message' => 'Chỉnh Sửa Danh Mục Thành Công'
             ], 200);
         }
         else{
             return response()->json([
                 'status' => 'error',
-                'message' => 'Chỉnh Sửa Loại Sản Phẩm Thất Bại'
+                'message' => 'Chỉnh Sửa Danh Mục Thất Bại'
             ], 200);
         }
     }
@@ -169,14 +170,14 @@ class CategoryController extends Controller
             $giao_dien = view('pages.server.Category.list-item', compact(['cate']))->render();
             return response()->json([
                 'status' => 'success',
-                'message' => 'Xóa Loại Sản Phẩm Thành Công',
+                'message' => 'Xóa Danh Mục Thành Công',
                 'giao_dien' => $giao_dien
             ], 200);
         }
         else{
             return response()->json([
                 'status' => 'error',
-                'message' => 'Xóa Loại Sản Phẩm Thất Bại'
+                'message' => 'Xóa Danh Mục Thất Bại'
             ], 200);
         }
     }
