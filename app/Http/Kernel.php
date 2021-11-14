@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'KiemTra_Admin_User' => \App\Http\Middleware\KiemTra_Admin_User::class,
         'KiemTraDangNhap' => \App\Http\Middleware\KiemTraTrangThaiTaiKhoan::class,
+        'KiemTraLoginIndex' => \App\Http\Middleware\CheckDangNhapLoginIndex::class
     ];
 }

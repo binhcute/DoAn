@@ -42,7 +42,7 @@ Route::group(['middleware' => 'KiemTra_Admin_User'], function () {
     //Portfolio
     Route::resource('/NhaCungCap', 'PortfolioController');
     Route::get('/XoaNhaCungCap/{NhaCungCap}', 'PortfolioController@destroy');
-    Route::post('SuaNhaCungCap/{SuaNhaCungCap}','PortfolioController@update')->name('SuaNhaCungCap');
+    Route::post('SuaNhaCungCap/{SuaNhaCungCap}', 'PortfolioController@update')->name('SuaNhaCungCap');
     Route::put('/NhaCungCap/change_status/{NhaCungCap}', 'PortfolioController@change_status');
     //CMT
     Route::resource('/BinhLuan', 'CommentController')->except('store');
@@ -50,12 +50,12 @@ Route::group(['middleware' => 'KiemTra_Admin_User'], function () {
     //Account
     Route::resource('/TaiKhoan', 'AccountController');
     Route::put('/TaiKhoan/change_status/{TaiKhoan}', 'AccountController@change_status');
-    Route::get('/TaiKhoanAdmin','AccountController@admin_list')->name('QuanLyTaiKhoanAdmin');
+    Route::get('/TaiKhoanAdmin', 'AccountController@admin_list')->name('QuanLyTaiKhoanAdmin');
     Route::put('/TaiKhoan/change_status/{TaiKhoan}', 'AccountController@change_status');
     Route::put('/TaiKhoan/change_status_admin/{TaiKhoan}', 'AccountController@change_status_admin');
-    Route::get('/XoaTaiKhoan/{TaiKhoan}','AccountController@destroy');
-    Route::get('/XoaTaiKhoanAdmin/{TaiKhoan}','AccountController@destroy_admin');
-    
+    Route::get('/XoaTaiKhoan/{TaiKhoan}', 'AccountController@destroy');
+    Route::get('/XoaTaiKhoanAdmin/{TaiKhoan}', 'AccountController@destroy_admin');
+
     //Slider
 
     // Route::resource('/Slider','SliderController');
@@ -70,7 +70,7 @@ Route::group(['middleware' => 'KiemTra_Admin_User'], function () {
     // Route::put('/Logo/enabled/{Logo}','LogoController@enabled');
 
     //Promotion
-    Route::resource('/KhuyenMai','PromotionController');
+    Route::resource('/KhuyenMai', 'PromotionController');
     Route::get('/XoaKhuyenMai/{KhuyenMai}', 'PromotionController@destroy');
     Route::post('SuaKhuyenMai/{KhuyenMai}', 'PromotionController@update')->name('SuaKhuyenMai');
 
@@ -86,24 +86,25 @@ Route::group(['middleware' => 'KiemTra_Admin_User'], function () {
 
 //Đăng Nhập
 
-Route::post('LoginCheck', 'CheckLoginController@check');
+Route::group(['middleware' => 'KiemTraLoginIndex'], function () {
+    Route::post('LoginCheck', 'CheckLoginController@check');
 
-Route::get('/login', 'AuthController@index')->name('login');
-Route::post('/login', 'AuthController@login');
-Route::get('/logout','AuthController@logout')->name('logout');
-Route::post('/register', 'AuthController@register')->name('register');
+    Route::get('/login', 'AuthController@index')->name('login');
+    Route::post('/login', 'AuthController@login');
+    Route::get('/logout', 'AuthController@logout')->name('logout');
+    Route::post('/register', 'AuthController@register')->name('register');
 
-Route::get('/verifyAccount', 'AuthController@verifyAccount')->name('verifyAccount');
+    Route::get('/verifyAccount', 'AuthController@verifyAccount')->name('verifyAccount');
 
-Route::get('/QuenMatKhau','AuthController@getQuenMatKhau')->name('getQuenMatKhau');
-Route::post('/QuenMatKhau','AuthController@postQuenMatKhau')->name('postQuenMatKhau');
-Route::post('/LayLaiMatKhau','AuthController@postNhapOtp')->name('post.otp');
-Route::post('/DatLaiMatKhau','AuthController@postDatLaiMatKhau')->name('post.datmatkhau');
+    Route::get('/QuenMatKhau', 'AuthController@getQuenMatKhau')->name('getQuenMatKhau');
+    Route::post('/QuenMatKhau', 'AuthController@postQuenMatKhau')->name('postQuenMatKhau');
+    Route::post('/LayLaiMatKhau', 'AuthController@postNhapOtp')->name('post.otp');
+    Route::post('/DatLaiMatKhau', 'AuthController@postDatLaiMatKhau')->name('post.datmatkhau');
 
-// Route::get('Dang-Ky','AuthController@registerContinue')->name('registerContinue');
-// Route::get('/QuenMatKhau-otp','AuthController@getQuenMatKhau')->name('get.otp');
-//
-
+    // Route::get('Dang-Ky','AuthController@registerContinue')->name('registerContinue');
+    // Route::get('/QuenMatKhau-otp','AuthController@getQuenMatKhau')->name('get.otp');
+    //
+});
 Route::post('/DatHang', 'CheckOutController@store')->name('Dat-Hang');
 Route::resource('/BinhLuan', 'CommentController')->only('store');
 //Client
@@ -114,13 +115,13 @@ Route::get('/contact_us', 'ClientController@contact_us');
 //Kiểm tra đăng nhập
 Route::group(['middleware' => 'KiemTraDangNhap'], function () {
 
-Route::get('/checkout', 'ClientController@check_out');
-//Thong tin tai khoan
-Route::get('Tai-Khoan', 'ClientController@my_account')
-    ->name('Tai-Khoan');
-Route::post('post-thay-doi-thong-tin-nguoi-dung','ClientController@change_my_account')->name('post.change_account');
+    Route::get('/checkout', 'ClientController@check_out');
+    //Thong tin tai khoan
+    Route::get('Tai-Khoan', 'ClientController@my_account')
+        ->name('Tai-Khoan');
+    Route::post('post-thay-doi-thong-tin-nguoi-dung', 'ClientController@change_my_account')->name('post.change_account');
 
-Route::post('post-thay-doi-mat-khau','ClientController@post_change_password')->name('post.change_password');
+    Route::post('post-thay-doi-mat-khau', 'ClientController@post_change_password')->name('post.change_password');
 });
 
 

@@ -33,20 +33,20 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Tên Danh Mục</label>
+              <label for="name" class="col-sm-3 col-form-label">Tên Danh Mục <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên Danh Mục" name="name" id="name">
+                <input class="form-control" type="text" placeholder="Nhập tên Danh Mục" name="name" id="name" required>
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Mô Tả</label>
+              <label for="description" class="col-sm-3 col-form-label">Mô Tả</label>
               <div class="col-sm-9">
                 <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung mô tả..." name="description"></textarea>
               </div>
             </div>
 
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Trạng Thái</label>
+              <label for="status" class="col-sm-3 col-form-label">Trạng Thái <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <select class="form-select" name="status" id="status" required="" aria-label="select example">
                   <option value="">Open this select menu</option>
@@ -56,7 +56,7 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chọn ảnh</label>
+              <label class="col-sm-3 col-form-label">Chọn ảnh <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
                 <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">

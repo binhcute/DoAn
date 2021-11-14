@@ -22,7 +22,7 @@ Route::post('/login','Api\AccountController@login');
 Route::delete('/logout','Api\AccountController@logout')->middleware('auth:api');
 Route::post('/register','Api\AccountController@register');
 Route::get('/user','Api\AccountController@userInfo')->middleware('auth:api');
-Route::put('/user/update/{id}','Api\AccountController@update')->middleware('auth:api');
+Route::put('/user/update','Api\AccountController@update')->middleware('auth:api');
 Route::apiResource('product', 'Api\ProductController');
 Route::apiResource('category', 'Api\CategoryController');
 Route::apiResource('portfolio', 'Api\PortfolioController');

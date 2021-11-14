@@ -33,9 +33,9 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Tên Bài Viết</label>
+              <label for="name" class="col-sm-3 col-form-label">Tên Bài Viết <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên Bài Viết" id="name" name="name">
+                <input class="form-control" type="text" placeholder="Nhập tên Bài Viết" id="name" name="name" required>
               </div>
               @error('name')
               <span class="invalid-feedback" role="alert">
@@ -44,9 +44,9 @@
               @enderror
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Mô Tả</label>
+              <label for="description" class="col-sm-3 col-form-label">Mô Tả <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Mô tả ngắn 255 từ" id="description" name="description">
+                <input class="form-control" type="text" placeholder="Mô tả ngắn 1000 từ" id="description" name="description" required>
               </div>
               @error('description')
               <span class="invalid-feedback" role="alert">
@@ -55,15 +55,15 @@
               @enderror
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Từ Khóa</label>
+              <label for="keyword" class="col-sm-3 col-form-label">Từ Khóa</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" placeholder="Tối đa 50 ký tự" maxlength="50" id="keyword" name="keyword">
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chi Tiết</label>
+              <label for="detail" class="col-sm-3 col-form-label">Chi Tiết <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="detail"></textarea>
+                <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="detail" required></textarea>
                 @error('detail')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -72,7 +72,7 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Trạng Thái</label>
+              <label for="status" class="col-sm-3 col-form-label">Trạng Thái</label>
               <div class="col-sm-9">
                 <select class="form-select" id="status" name="status" required="" aria-label="select example">
                   <option value="">Open this select menu</option>
@@ -82,7 +82,7 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chọn ảnh</label>
+              <label class="col-sm-3 col-form-label">Chọn ảnh <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
                 <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">

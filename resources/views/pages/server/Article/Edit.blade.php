@@ -33,27 +33,27 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Tên Bài Viết</label>
+              <label for="name" class="col-sm-3 col-form-label">Tên Bài Viết <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên Bài Viết" name="name" id="name" value="{{$article->article_name}}">
+                <input class="form-control" type="text" placeholder="Nhập tên Bài Viết" name="name" id="name" value="{{$article->article_name}}" required>
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Mô Tả</label>
+              <label for="description" class="col-sm-3 col-form-label">Mô Tả <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Mô tả ngắn 255 từ" name="description" id="description" value="{{$article->article_description}}">
+                <input class="form-control" type="text" placeholder="Mô tả ngắn 1000 từ" name="description" id="description" value="{{$article->article_description}}" required>
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Từ Khóa</label>
+              <label for="keyword" class="col-sm-3 col-form-label">Từ Khóa</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" placeholder="Tối đa 50 ký tự" maxlength="50" name="keyword" id="keyword" value="{{$article->article_keyword}}">
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chi Tiết</label>
+              <label class="col-sm-3 col-form-label">Chi Tiết <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="detail">{{$article->article_detail}}</textarea>
+                <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="detail" required>{{$article->article_detail}}</textarea>
               </div>
             </div>
             <div class="mb-3 row">

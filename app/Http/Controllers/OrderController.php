@@ -34,6 +34,7 @@ class OrderController extends Controller
                 'tpl_order.note'
             )
             ->join('users', 'users.id', '=', 'tpl_order.user_id')
+            ->orderBy('tpl_order.order_id','desc')
             ->get();
         $order_detail = DB::table('tpl_order_dt')
             ->join('tpl_order', 'tpl_order.order_id', '=', 'tpl_order_dt.order_id')
@@ -127,6 +128,7 @@ class OrderController extends Controller
                 'tpl_order.updated_at',
                 'tpl_order.status',
                 'users.username',
+                'users.email',
                 'tpl_order.note'
             )
             ->join('users', 'users.id', '=', 'tpl_order.user_id')
@@ -172,6 +174,7 @@ class OrderController extends Controller
                     'tpl_order.updated_at',
                     'tpl_order.status',
                     'users.username',
+                    'users.email',
                     'tpl_order.note'
                 )
                 ->join('users', 'users.id', '=', 'tpl_order.user_id')
@@ -219,6 +222,7 @@ class OrderController extends Controller
                     'tpl_order.updated_at',
                     'tpl_order.status',
                     'users.username',
+                    'users.email',
                     'tpl_order.note'
                 )
                 ->join('users', 'users.id', '=', 'tpl_order.user_id')
@@ -265,6 +269,7 @@ class OrderController extends Controller
                     'tpl_order.updated_at',
                     'tpl_order.status',
                     'users.username',
+                    'users.email',
                     'tpl_order.note'
                 )
                 ->join('users', 'users.id', '=', 'tpl_order.user_id')

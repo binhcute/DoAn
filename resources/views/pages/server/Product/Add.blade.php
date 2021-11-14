@@ -33,13 +33,13 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Tên Sản Phẩm</label>
+              <label for="name" class="col-sm-3 col-form-label">Tên Sản Phẩm <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" name="name" id="name">
+                <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" name="name" id="name" required>
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Danh Mục</label>
+              <label for="cate_id" class="col-sm-3 col-form-label">Danh Mục <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <select class="form-select" required="" aria-label="select example" name="cate_id" id="cate_id">
                   <option value="">---Chọn---</option>
@@ -50,7 +50,7 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Nhà Cung Cấp</label>
+              <label for="port_id" class="col-sm-3 col-form-label">Nhà Cung Cấp <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <select class="form-select" required="" aria-label="select example" name="port_id" id="port_id">
                   <option value="">---Chọn---</option>
@@ -61,31 +61,31 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Số Lượng</label>
+              <label for="quantity" class="col-sm-3 col-form-label">Số Lượng <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <input class="form-control" name="quantity" id="quantity" required type="number" placeholder="Số Lượng" data-bs-original-title="" title="">
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Giá</label>
+              <label for="price" class="col-sm-3 col-form-label">Giá <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="number" placeholder="Giá" name="price" id="price">
+                <input class="form-control" type="number" placeholder="Giá" name="price" id="price" required>
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Từ Khóa</label>
+              <label for="keyword" class="col-sm-3 col-form-label">Từ Khóa</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" placeholder="Tối đa 10 ký tự" maxlength="10" name="keyword" id="keyword">
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chi Tiết</label>
+              <label for="description" class="col-sm-3 col-form-label">Chi Tiết</label>
               <div class="col-sm-9">
                 <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="description"></textarea>
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Trạng Thái</label>
+              <label for="status" class="col-sm-3 col-form-label">Trạng Thái <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <select class="form-select" name="status" id="status" required="" aria-label="select example">
                   <option value="">Open this select menu</option>
@@ -95,7 +95,7 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chọn ảnh</label>
+              <label for="img" class="col-sm-3 col-form-label">Chọn ảnh <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
                 <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
@@ -106,7 +106,7 @@
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Chọn ảnh phụ</label>
               <div class="col-sm-9">
-                <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh phụ</label>
+                <label for="img_hover" id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh phụ</label>
                 <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
                 <img id="event__img-hover-0" src="{{asset('image/example/add.png')}}" alt="slider" height="100%">
               </div>
