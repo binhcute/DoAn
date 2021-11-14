@@ -32,19 +32,19 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Tên Nhà Cung Cấp</label>
+              <label for="name" class="col-sm-3 col-form-label">Tên Nhà Cung Cấp <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên Nhà Cung Cấp" name="name" id="name" value="{{$port ->port_name}}">
+                <input class="form-control" type="text" placeholder="Nhập tên Nhà Cung Cấp" name="name" id="name" value="{{$port ->port_name}}" required>
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Xuất Xứ</label>
+              <label for="origin" class="col-sm-3 col-form-label">Xuất Xứ</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" placeholder="Nhập Xuất Xứ" name="origin" id="origin" value="{{$port ->port_origin}}">
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chi Tiết</label>
+              <label for="description" class="col-sm-3 col-form-label">Chi Tiết</label>
               <div class="col-sm-9">
                 <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="description">{{$port->port_description}}</textarea>
               </div>

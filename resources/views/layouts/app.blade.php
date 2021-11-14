@@ -178,6 +178,57 @@
         });
       });
     </script>
+    <script>
+    $('#reset-check').submit(function(event) {
+        event.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(data) {
+                if (data.status == 'error') {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Thất Bại',
+                        text: data.message,
+                        timer: 2500
+                    })
+                }
+                if (data.status == 'success') {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Thành Công',
+                        text: data.message,
+                        timer: 2500
+                    })
+                    window.setTimeout(function() {
+                        window.location.replace("{{URL::to('/login')}} ");
+                    }, 2500);
+                }
+            },
+            error: function(response) {
+                $.each(response.responseJSON.errors, function(field_name, error) {
+                        $('#noti-validated').after('<p style="color:red" class="noti-alert-danger">' + error + '</p>');
+                    }),
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
+                        showConfirmButton: true,
+                        timer: 2500
+                    }),
+                    window.setTimeout(function() {
+                        $('noti-alert-danger').remove();
+                    }, 20000);
+            }
+        });
+    });
+</script>
   </div>
 </body>
 

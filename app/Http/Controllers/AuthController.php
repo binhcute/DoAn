@@ -157,7 +157,7 @@ class AuthController extends Controller
             'token' => 'required|exists:tpl_reset_password',
         ]);
         $check = DB::table('tpl_reset_password')
-            ->where('token', '=', $request->tọken)
+            ->where('token', '=', $request->token)
             ->where('email', '=', $request->email)
             ->orderBy('created_at', 'desc')
             ->first();
@@ -167,7 +167,7 @@ class AuthController extends Controller
             return view('auth.passwords.reset', compact(['email']));
         }
         Session::put('status', 'Sai mã OTP');
-        return reload('auth.passwords.reset');
+        return view('auth.passwords.reset');
     }
 
     public function postDatLaiMatKhau(Request $request)
@@ -182,6 +182,9 @@ class AuthController extends Controller
             ->update([
                 'token' => NULL
             ]);
-        return view('auth.login');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Thay Đổi Mật Khẩu Thành Công'
+        ]);
     }
 }

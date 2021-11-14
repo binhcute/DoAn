@@ -5,7 +5,7 @@
 <div class="card-body">
     <h4>Lấy Lại Mật Khẩu</h4>
     <hr>
-    <form method="POST" action="{{ route('post.datmatkhau') }}">
+    <form method="POST" action="{{ route('post.datmatkhau') }}" id="reset-check">
         @csrf
 
         <div class="form-group row">
@@ -27,7 +27,7 @@
             <label for="email" class="col-form-label">Tài Khoản</label>
 
             <div class="form-input position-relative">
-               <input disabled id="username" type="text" class="form-control" name="email" value="{{ $email->username }}" required>
+                <input disabled id="username" type="text" class="form-control" name="email" value="{{ $email->username }}" required>
 
 
             </div>
@@ -64,4 +64,5 @@
         </div>
     </form>
 </div>
+
 @endsection
