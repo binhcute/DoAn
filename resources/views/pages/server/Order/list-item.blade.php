@@ -1,8 +1,13 @@
 @foreach($order as $item)
 <tr>
     <th scope="row">{{ $item->order_id }}</th>
-    <td>{{ $item->username}}</td>
-    <td>{{ $item->updated_at }}</td>
+    <td>
+        <p><strong>Hóa đơn số</strong>: {{ $item->order_id }}</p>
+        <p><strong>Email</strong>: {{ $item->email }}</p>
+        <p><strong>Tài Khoản</strong>: {{ $item->username }}</p>
+        
+    </td>
+    <td>{{date('d-m-Y', strtotime($item->updated_at)) }}</td>
     <td>
         @switch($item->status)
         @case(0)

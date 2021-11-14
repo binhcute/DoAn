@@ -52,6 +52,10 @@ Route::group(['middleware' => 'KiemTra_Admin_User'], function () {
     Route::put('/TaiKhoan/change_status/{TaiKhoan}', 'AccountController@change_status');
     Route::get('/TaiKhoanAdmin','AccountController@admin_list')->name('QuanLyTaiKhoanAdmin');
     Route::put('/TaiKhoan/change_status/{TaiKhoan}', 'AccountController@change_status');
+    Route::put('/TaiKhoan/change_status_admin/{TaiKhoan}', 'AccountController@change_status_admin');
+    Route::get('/XoaTaiKhoan/{TaiKhoan}','AccountController@destroy');
+    Route::get('/XoaTaiKhoanAdmin/{TaiKhoan}','AccountController@destroy_admin');
+    
     //Slider
 
     // Route::resource('/Slider','SliderController');

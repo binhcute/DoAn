@@ -7,6 +7,7 @@ use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\Client\AddCommentRequest;
 
 class CommentController extends Controller
 {
@@ -42,7 +43,7 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddCommentRequest $request)
     {
         // dd('aaaaaaa');
         $comment = new Comment();

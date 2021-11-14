@@ -19,21 +19,17 @@
   <div class="card">
     <div class="card-header">
       <h5>Thêm Nhà Cung Cấp</h5>
-      <div style="padding-top:10px" id="noti-validate"></div>
+      <div style="padding-top:10px"></div>
     </div>
     <form class="form theme-form" action="{{ route('NhaCungCap.store')}}" method="post" enctype="multipart/form-data" id="add-data">
       @csrf
-      <div class="card-body">
+      <div class="card-body" id="noti-validate">
         <div class="row">
           <div class="col">
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label pt-0">Người Nhập Hiện Tại</label>
               <div class="col-sm-9">
                 <div class="form-control-static">{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</div>
-              </div>
-              <div class="col-sm-9">
-                <div class="form-control-static">{{ Auth::user()->fullname }}</div>
-                <input class="form-control-static" disabled="disabled" value="{{Auth::user()->id }}" hidden="true" name="user_id">
               </div>
             </div>
             <div class="mb-3 row">

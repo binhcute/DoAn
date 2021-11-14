@@ -19,11 +19,11 @@
   <div class="card">
     <div class="card-header">
       <h5>Thêm Sản Phẩm</h5>
-      <div style="padding-top:10px" id="noti-validate"></div>
+      <div style="padding-top:10px"></div>
     </div>
     <form class="form theme-form" action="{{ route('SanPham.store')}}" method="post" enctype="multipart/form-data" id="add-data">
       @csrf
-      <div class="card-body">
+      <div class="card-body" id="noti-validate">
         <div class="row">
           <div class="col">
             <div class="mb-3 row">
@@ -104,9 +104,9 @@
 
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chọn ảnh chuyển</label>
+              <label class="col-sm-3 col-form-label">Chọn ảnh phụ</label>
               <div class="col-sm-9">
-                <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh chuyển</label>
+                <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh phụ</label>
                 <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
                 <img id="event__img-hover-0" src="{{asset('image/example/add.png')}}" alt="slider" height="100%">
               </div>

@@ -24,7 +24,7 @@
     <form class="form theme-form" action="{{ route('TaiKhoan.update',$account->id)}}" method="post" enctype="multipart/form-data" id="edit-data">
       @csrf
       <input type="hidden" name="_method" value="put" />
-      <div class="card-body">
+      <div class="card-body" id="noti-validate">
         <div class="row">
           <div class="col">
             <div class="mb-3 row">
@@ -229,8 +229,24 @@
             window.location.replace("{{route('TaiKhoan.index')}}");
           }, 2500);
         }
+      },
+      error: function(response) {
+        $.each(response.responseJSON.errors, function(field_name, error) {
+            $('#noti-validate').after('<div class="alert alert-danger noti-alert-danger" role="alert" style="font-size: 1.5rem;">' + error + '</div>');
+          }),
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thất bại',
+            text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
+            showConfirmButton: true,
+            timer: 2500
+          }),
+          window.setTimeout(function() {
+            $('.alert.alert-danger.noti-alert-danger').remove();
+          }, 20000);
       }
-    })
+    });
   })
 </script>
 

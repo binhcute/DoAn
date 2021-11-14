@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Category;
+namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class AddCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,14 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
+            'rate' => 'required',
+            'comment_description' => 'required'
         ];
     }
-    public function messages()
-    {
+    public function messages(){
         return [
-            'name.required' => 'Tên danh mục không được bỏ trống',
-            'name.max' => 'Tên danh mục phải ít hơn 100 ký tự'
+            'rate.required' => 'Vui lòng chọn đánh giá sao',
+            'comment_description.required' => 'Vui lòng nhập nội dung bình luận'
         ];
     }
 }

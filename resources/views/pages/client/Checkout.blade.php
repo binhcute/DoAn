@@ -124,7 +124,7 @@
                         </div>
                         <table class=" table">
                             <tbody style="border:none;">
-                                <tr>
+                                <tr id="noti-validate">
                                     <th style="width:50%"></th>
                                     <th class="">Tổng số lượng: {{Session::get("Cart")->totalQuantity}} Sản Phẩm</th>
                                     <th>Tổng Tiền: {{number_format(Session::get('Cart')->totalPrice).' '.'VND'}}</th>
@@ -177,7 +177,23 @@
                             window.location.replace("{{URL::to('/')}}");
                         }, 2500);
                     }
-                }
+                },
+                error: function(response) {
+                $.each(response.responseJSON.errors, function(field_name, error) {
+                        $('#noti-validate').before('<div class="alert alert-danger noti-alert-danger" role="alert" style="font-size: 1.5rem;">' + error + '</div>');
+                    }),
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: 'Vui Lòng Kiểm Tra Lại Thông Tin',
+                        showConfirmButton: true,
+                        timer: 2500
+                    }),
+                    window.setTimeout(function() {
+                        $('.alert.alert-danger.noti-alert-danger').remove();
+                    }, 20000);
+            }
             });
         })
     </script>

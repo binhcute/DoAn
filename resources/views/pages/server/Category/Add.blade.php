@@ -19,11 +19,11 @@
   <div class="card">
     <div class="card-header">
       <h5>Thêm Danh Mục</h5>
-      <div style="padding-top:10px" id="noti-validate"></div>
+      <div style="padding-top:10px"></div>
     </div>
     <form class="form theme-form" action="{{ route('LoaiSanPham.store')}}" method="post" enctype="multipart/form-data" id="add-data">
       @csrf
-      <div class="card-body">
+      <div class="card-body" id="noti-validate">
         <div class="row">
           <div class="col">
             <div class="mb-3 row">

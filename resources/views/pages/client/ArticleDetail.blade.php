@@ -19,7 +19,7 @@
                         </ul>
 
                         <div class="desc">
-                            <h6>{!!$article->article_description!!}</h6>
+                            <h2>{!!$article->article_description!!}</h2>
                             <br>
                             <div class="image">
                                 <a href="javascript:"><img src="{{ URL::to('/') }}/image/article/{{$article->article_img }}" alt="Blog Image"></a>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="Comments-wrapper">
-                    <div class="block-title pb-0 border-bottom-0">
+                    <div class="block-title pb-0 border-bottom-0" id="noti-validate">
                         <h2 class="title">Hãy để lại suy nghĩ của bạn</h2>
                     </div>
                     @if(Auth::check())
@@ -131,7 +131,7 @@
             </div>
 
             <div class="col-xl-3 col-lg-4 col-12 learts-mb-10">
- 
+
                 <!-- Blog Post Widget Start -->
                 <div class="single-widget learts-mb-40">
                     <h3 class="widget-title product-filter-widget-title">Bài đăng gần đây</h3>
@@ -206,6 +206,22 @@
                         timer: 2500
                     })
                 }
+            },
+            error: function(response) {
+                $.each(response.responseJSON.errors, function(field_name, error) {
+                        $('#noti-validate').after('<div class="alert alert-danger noti-alert-danger" role="alert" style="font-size: 1.5rem;">' + error + '</div>');
+                    }),
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: 'Vui Lòng Kiểm Tra Lại Thông Tin',
+                        showConfirmButton: true,
+                        timer: 2500
+                    }),
+                    window.setTimeout(function() {
+                        $('.alert.alert-danger.noti-alert-danger').remove();
+                    }, 20000);
             }
         });
     });

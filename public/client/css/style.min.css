@@ -5313,7 +5313,6 @@ body.offcanvas-open .sticky-header {
     overflow: hidden; */
 }
 .product-thumb .image img {
-
     z-index: 3;
     width: 100%;
     height: 100%;
@@ -5497,7 +5496,7 @@ body.offcanvas-open .sticky-header {
     -o-transition: all 0.5s ease 0s;
     transition: all 0.5s ease 0s;
 }
-.product-info .title a {    
+.product-info .title a {
     text-overflow: ellipsis;
     -webkit-line-clamp: 1;
     overflow: hidden;
@@ -6786,43 +6785,43 @@ body.offcanvas-open .sticky-header {
     display: flex;
     justify-content: center;
     padding-bottom: 10px;
-    }
+}
 
-    .form-reviews__rating label {
+.form-reviews__rating label {
     font-size: 1.2rem;
     cursor: pointer;
     color: #444;
     margin: 0 2px;
     transition: all 0.2s ease;
-    }
+}
 
-    .icon1 {
+.icon1 {
     order: 1;
-    }
+}
 
-    .icon2 {
+.icon2 {
     order: 2;
-    }
+}
 
-    .icon3 {
+.icon3 {
     order: 3;
-    }
+}
 
-    .icon4 {
+.icon4 {
     order: 4;
-    }
+}
 
-    .icon5 {
+.icon5 {
     order: 5;
-    }
+}
 
-    input:not(:checked) ~ label:hover,
-    input:not(:checked) ~ label:hover ~ label {
+input:not(:checked) ~ label:hover,
+input:not(:checked) ~ label:hover ~ label {
     color: #fd4;
-    }
-    input:checked ~ label {
+}
+input:checked ~ label {
     color: #fd4;
-    }
+}
 @media only screen and (min-width: 992px) and (max-width: 1199px),
     only screen and (min-width: 768px) and (max-width: 991px) {
     .product-info-tab-list {
@@ -8081,7 +8080,7 @@ body.offcanvas-open .sticky-header {
     margin-bottom: 20px;
 }
 .portfolio .content .desc p {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 400;
 }
 .portfolio .content .link a {
@@ -8104,6 +8103,12 @@ body.offcanvas-open .sticky-header {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     opacity: 1;
+}
+.name_port__1 {
+    border: solid 1px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: beige;
+    padding: 8px 8px;
 }
 @media only screen and (max-width: 767px) {
     .portfolio .content {
@@ -8785,12 +8790,10 @@ body.offcanvas-open .sticky-header {
     background-color: transparent;
 }
 
-
 .product__list-new,
 .product__list-hot {
-    display:none;
+    display: none;
 }
-
 
 .shop-product-filter button:hover,
 .shop-product-filter button.active {
@@ -9793,7 +9796,7 @@ body.offcanvas-open .sticky-header {
     margin-right: 15%;
 }
 
-.perfume-cart__contents{
+.perfume-cart__contents {
     width: 100%;
 }
 
@@ -9801,7 +9804,6 @@ body.offcanvas-open .sticky-header {
     margin-top: 10px;
     border-radius: 4px;
     width: 100%;
-
 }
 
 .perfume-cart__name {
@@ -9854,7 +9856,6 @@ body.offcanvas-open .sticky-header {
     color: #000;
 }
 
-
 .perfume-cart__product {
     display: flex;
     padding: 8px;
@@ -9883,7 +9884,7 @@ body.offcanvas-open .sticky-header {
     border-radius: 2px;
 }
 
-.quantity_num{
+.quantity_num {
     text-align: center;
     width: 52px !important;
     height: 26px;
@@ -9929,7 +9930,7 @@ body.offcanvas-open .sticky-header {
 .row_g.row-cart__pay {
     background-color: #fafdff;
     margin-bottom: 1.5px;
-} 
+}
 
 .perfume-cart__content.cart__total-pay {
     color: #017fff;
@@ -9968,7 +9969,7 @@ body.offcanvas-open .sticky-header {
     text-align: center;
     border-radius: 2px;
     cursor: pointer;
-    margin: 8px 0px ;
+    margin: 8px 0px;
 }
 
 .cart-pay__btn:hover,
@@ -10023,14 +10024,14 @@ body.offcanvas-open .sticky-header {
     height: 36px;
     border: none;
     outline: none;
-    background-color: transparent; 
+    background-color: transparent;
     padding: 0 4px;
 }
 
 .address-receive__numphone::-webkit-outer-spin-button,
 .address-receive__numphone::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .address-receive__change {
@@ -10068,7 +10069,6 @@ body.offcanvas-open .sticky-header {
 }
 /* End CSS thanh toán - Bill*/
 
-
 #phan-trang-binh-luan-san-pham span.title {
     font-size: 24px;
     font-weight: 500;
@@ -10080,7 +10080,7 @@ body.offcanvas-open .sticky-header {
 }
 
 .table-responsive.table-responsive_custom {
-    border: 1.5px solid rgba(0, 0, 0, 0.5)
+    border: 1.5px solid rgba(0, 0, 0, 0.5);
 }
 
 .table-responsive__title {

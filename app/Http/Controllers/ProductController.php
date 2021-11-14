@@ -20,7 +20,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::all();
+        $product = Product::queryJoinCateAndPort()
+            ->select(
+                'tpl_product.*',
+                'tpl_category.cate_id',
+                'tpl_category.cate_name',
+                'tpl_portfolio.port_id',
+                'tpl_portfolio.port_name'
+            )->get();
         $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         return view('pages.server.Product.List')
             ->with('product', $product)
@@ -38,11 +45,11 @@ class ProductController extends Controller
             ->orderBy('port_id', 'desc')->get();
         $cate = DB::table('tpl_category')
             ->orderBy('cate_id', 'desc')->get();
-            $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         return view('pages.server.Product.Add')
             ->with('cate', $cate)
             ->with('port', $port)
-            ->with('thongBaoMoi',$thongBaoMoi);
+            ->with('thongBaoMoi', $thongBaoMoi);
     }
 
     /**
@@ -89,13 +96,12 @@ class ProductController extends Controller
             $product->product_img_hover = "$profileImage";
         }
         $product->save();
-        if($product->save()){
+        if ($product->save()) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Thêm Sản Phẩm Thành Công'
             ], 200);
-        }
-        else{
+        } else {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Thêm Sản Phẩm Thất Bại'
@@ -135,7 +141,7 @@ class ProductController extends Controller
             ->orderBy('cate_id', 'desc')->get();
         $port = DB::table('tpl_portfolio')
             ->orderBy('port_id', 'desc')->get();
-            $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
+        $thongBaoMoi = DB::table('tpl_thong_bao')->orderBy('tpl_thong_bao.created_at', 'desc')->get();
         return view('pages.server.Product.Edit')
             ->with('product', $product)
             ->with('cate', $cate)
@@ -214,7 +220,14 @@ class ProductController extends Controller
         $destroy = Product::find($id);
         $destroy->delete();
         if ($destroy->delete()) {
-            $product = Product::all();
+            $product = Product::queryJoinCateAndPort()
+                ->select(
+                    'tpl_product.*',
+                    'tpl_category.cate_id',
+                    'tpl_category.cate_name',
+                    'tpl_portfolio.port_id',
+                    'tpl_portfolio.port_name'
+                )->get();
             $giao_dien = view('pages.server.Product.list-item', compact(['product']))->render();
             return response()->json([
                 'status' => 'success',
@@ -235,7 +248,14 @@ class ProductController extends Controller
             $change->status = 0;
             $change->save();
             if ($change->save()) {
-                $product = Product::all();
+                $product = Product::queryJoinCateAndPort()
+                    ->select(
+                        'tpl_product.*',
+                        'tpl_category.cate_id',
+                        'tpl_category.cate_name',
+                        'tpl_portfolio.port_id',
+                        'tpl_portfolio.port_name'
+                    )->get();
                 $giao_dien = view('pages.server.Product.list-item', compact(['product']))->render();
                 return response()->json([
                     'status' => 'success',
@@ -251,7 +271,14 @@ class ProductController extends Controller
             $change->status = 1;
             $change->save();
             if ($change->save()) {
-                $product = Product::all();
+                $product = Product::queryJoinCateAndPort()
+                    ->select(
+                        'tpl_product.*',
+                        'tpl_category.cate_id',
+                        'tpl_category.cate_name',
+                        'tpl_portfolio.port_id',
+                        'tpl_portfolio.port_name'
+                    )->get();
                 $giao_dien = view('pages.server.Product.list-item', compact(['product']))->render();
                 return response()->json([
                     'status' => 'success',

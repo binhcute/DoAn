@@ -26,7 +26,7 @@ class StoreArticleRequest extends FormRequest
         return [
             'img' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|max:100',
-            'description' => 'required|min:20|max:255',
+            'description' => 'required|min:20|max:1000',
             'detail' => 'required|min:50'
         ];
     }
@@ -40,7 +40,7 @@ class StoreArticleRequest extends FormRequest
             'name.max' => 'Tên bài viết phải ít hơn 100 ký tự',
             'description.required' => 'Mô tả bài viết không được bỏ trống',
             'description.min' => 'Mô tả bài viết phải nhiều hơn 20 ký tự',
-            'description.max' => 'Mô tả bài viết phải ít hơn 255 ký tự',
+            'description.max' => 'Mô tả bài viết phải ít hơn 1000 ký tự',
             'detail.required' => 'Nội dung bài viết không được bỏ trống',
             'detail.min' => 'Nội dung bài viết phải nhiều hơn 50 ký tự'
         ];

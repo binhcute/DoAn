@@ -1,5 +1,5 @@
 <div class="product-review-wrapper">
-    <span class="title">Thêm Bình Luận</span>
+    <span class="title" id="noti-validate">Thêm Bình Luận</span>
     @if(Auth::check())
     <div class="review-form">
         <form action="{{route('BinhLuan.store')}}" method="post" id="rating-start" enctype="multipart/form-data" class="add-comment">
