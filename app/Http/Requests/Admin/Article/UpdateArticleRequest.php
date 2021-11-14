@@ -24,7 +24,6 @@ class UpdateArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'img' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|max:100',
             'description' => 'required|min:20|max:255',
             'detail' => 'required|min:50'
@@ -33,9 +32,6 @@ class UpdateArticleRequest extends FormRequest
     public function messages()
     {
         return [
-            'img.required' => 'Hình ảnh không được bỏ trống',
-            'img.mimes' => 'Hình ảnh không đúng định dạng',
-            'img.max' => 'Hình ảnh có kích cỡ quá khổ',
             'name.required' => 'Tên bài viết không được bỏ trống',
             'name.max' => 'Tên bài viết phải ít hơn 100 ký tự',
             'description.required' => 'Mô tả bài viết không được bỏ trống',

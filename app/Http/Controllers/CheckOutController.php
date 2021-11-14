@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Events\MyEvent;
 use Carbon\Carbon;
 use App\Models\ThongBao;
+use App\Http\Requests\Client\CheckOutRequest;
 
 class CheckOutController extends Controller
 {
@@ -47,23 +48,8 @@ class CheckOutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CheckOutRequest $request)
     {
-
-        $rule = [
-            'address' => 'required',
-            'phone' => 'required|digits_between:10,12'
-
-        ];
-
-        $validator = Validator::make($request->all(), $rule);
-
-        if ($validator->fails()) {
-            return redirect('/checkout')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         $ds_gio_hang = Session('Cart') ? Session('Cart') : null;
         if ($ds_gio_hang != null) {
             foreach ($ds_gio_hang->product as $key => $san_pham) {
@@ -73,78 +59,79 @@ class CheckOutController extends Controller
                         'status' => 'error',
                         'message' => $kho_san_pham->product_name . ' chỉ còn ' . $kho_san_pham->product_quantity . ' sản phẩm!',
                     ], 200);
+                } else {
+                    $order = new Order;
+                    $order->user_id = Auth::user()->id;
+                    $order->note = $request->note;
+                    $order->address = $request->address;
+                    $order->phone = $request->phone;
+                    $order->status = 1;
+                    $order->save();
+                    foreach (Session::get('Cart')->product as $key => $item) {
+                        $order_dt = new OrderDetail;
+                        $order_dt->order_id = $order->order_id;
+                        $order_dt->product_id = $item['product_info']->product_id;
+                        $order_dt->quantity = $item['qty'];
+                        $order_dt->price = $item['price'];
+                        $order_dt->amount = $item['qty'] *  $item['price'];
+
+                        $san_pham_ton = Product::where('product_id', $order_dt->product_id)->first();
+                        $san_pham_ton->product_quantity -= $item['qty'];
+
+                        $san_pham_ton->save();
+                        $order_dt->save();
+                    }
+                    if ($order_dt->save()) {
+                        foreach (Session::get('Cart')->product as $key => $item) {
+                            $product_name = $item['product_info']->product_name;
+                            $product_quantity = $item['qty'];
+                            $product_price = $item['price'];
+                            $product_amount = $item['qty'] *  $item['price'];
+                        }
+                        // $productName = DB::table('tpl_order_dt')
+                        //     ->join('tpl_product', 'tpl_product.product.product_id', 'tpl_order_dt.product_id')
+                        //     ->select('tpl_product.product_name')
+                        //     ->where('tpl_order_dt.order_dt_id', $order_dt->order_dt_id)->first();
+                        $message = [
+                            'logo' => "{{URL::to('/')}}/client/images/logo/logo-2.png",
+                            'slider' => "{{URL::to('/')}}/client/images/slider/image-4.png",
+                            'fullName' => Auth::user()->firstName . " " . Auth::user()->lastName,
+                            'name' => Auth::user()->lastName,
+                            'address' => $order->address,
+                            'phone' => $order->phone,
+                            'notes' => $order->notes,
+                            'created_at' => $order->created_at,
+                            'order_id' => $order->order_id
+                        ];
+                        Mail::to(auth()->user()->email)->send(new \App\Mail\XuLyDonHang($message));
+
+                        $noi_dung_thong_bao = [
+                            'id_nguoi_dung' => Auth::user()->id,
+                            'ten_nguoi_dung' => Auth::user()->lastName,
+                            'username_nguoi_dung' => Auth::user()->username,
+                            'email_nguoi_dung' => Auth::user()->email,
+                            'avatar_nguoi_dung' => Auth::user()->avatar,
+                            'don_hang_id' => $order->order_id,
+                            'thoi_gian' => Carbon::now('Asia/Ho_Chi_Minh')->format('h:i:s d-m-Y')
+                        ];
+                        $them_thong_bao = new ThongBao();
+                        $them_thong_bao->noi_dung = json_encode($noi_dung_thong_bao);
+                        $them_thong_bao->save();
+
+                        event(new MyEvent($noi_dung_thong_bao));
+                        $request->Session()->forget('Cart');
+                        return response()->json([
+                            'status' => 'success',
+                            'message' => 'Đặt hàng thành công',
+                            'content' => 'Chúng tôi sẽ gọi đến bạn trong thời gian sớm nhất'
+                        ], 200);
+                    }
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Đặt hàng thất bại'
+                    ], 200);
                 }
             }
-            $order = new Order;
-            $order->user_id = Auth::user()->id;
-            $order->note = $request->note;
-            $order->address = $request->address;
-            $order->phone = $request->phone;
-            $order->status = 1;
-            $order->save();
-            foreach (Session::get('Cart')->product as $key => $item) {
-                $order_dt = new OrderDetail;
-                $order_dt->order_id = $order->order_id;
-                $order_dt->product_id = $item['product_info']->product_id;
-                $order_dt->quantity = $item['qty'];
-                $order_dt->price = $item['price'];
-                $order_dt->amount = $item['qty'] *  $item['price'];
-
-                $san_pham_ton = Product::where('product_id', $order_dt->product_id)->first();
-                $san_pham_ton->product_quantity -= $item['qty'];
-
-                $san_pham_ton->save();
-                $order_dt->save();
-            }
-            if ($order_dt->save()) {
-                foreach (Session::get('Cart')->product as $key => $item) {
-                    $product_name = $item['product_info']->product_name;
-                    $product_quantity = $item['qty'];
-                    $product_price = $item['price'];
-                    $product_amount = $item['qty'] *  $item['price'];
-                }
-                // $productName = DB::table('tpl_order_dt')
-                //     ->join('tpl_product', 'tpl_product.product.product_id', 'tpl_order_dt.product_id')
-                //     ->select('tpl_product.product_name')
-                //     ->where('tpl_order_dt.order_dt_id', $order_dt->order_dt_id)->first();
-                $message = [
-                    'logo' => "{{URL::to('/')}}/client/images/logo/logo-2.png",
-                    'slider' => "{{URL::to('/')}}/client/images/slider/image-4.png",
-                    'fullName' => Auth::user()->firstName . " " . Auth::user()->lastName,
-                    'name' => Auth::user()->lastName,
-                    'address' => $order->address,
-                    'phone' => $order->phone,
-                    'notes' => $order->notes,
-                    'created_at' => $order->created_at,
-                    'order_id' => $order->order_id
-                ];
-                Mail::to(auth()->user()->email)->send(new \App\Mail\XuLyDonHang($message));
-
-                $noi_dung_thong_bao = [
-                    'id_nguoi_dung' => Auth::user()->id,
-                    'ten_nguoi_dung' => Auth::user()->lastName,
-                    'username_nguoi_dung' => Auth::user()->username,
-                    'email_nguoi_dung' => Auth::user()->email,
-                    'avatar_nguoi_dung' => Auth::user()->avatar,
-                    'don_hang_id' => $order->order_id,
-                    'thoi_gian' => Carbon::now('Asia/Ho_Chi_Minh')->format('h:i:s d-m-Y')
-                ];
-                $them_thong_bao = new ThongBao();
-                $them_thong_bao->noi_dung = json_encode($noi_dung_thong_bao);
-                $them_thong_bao ->save();
-
-                event(new MyEvent($noi_dung_thong_bao));
-                $request->Session()->forget('Cart');
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Đặt hàng thành công',
-                    'content' => 'Chúng tôi sẽ gọi đến bạn trong thời gian sớm nhất'
-                ], 200);
-            }
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Đặt hàng thất bại'
-            ], 200);
         }
     }
 

@@ -30,6 +30,7 @@ class OrderController extends Controller
                 'tpl_order.updated_at',
                 'tpl_order.status',
                 'users.username',
+                'users.email',
                 'tpl_order.note'
             )
             ->join('users', 'users.id', '=', 'tpl_order.user_id')

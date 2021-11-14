@@ -30,14 +30,15 @@
                 @foreach ($portfolio as $item)
                 <div class="col learts-mb-30">
                     <div class="portfolio">
-                        <div class="thumbnail"><img src="server/assets/image/portfolio/{{$item->port_img}}" alt=""></div>
-                        <div class="content">
+                        <div class="thumbnail"><img src="image/portfolio/{{$item->port_img}}" alt=""></div>
+                        <div class="content text__center">
                             <div class="desc">
+                                <p>Xuất Xứ: {{$item->port_origin}}</p>
                                 <p>{!!$item->port_description!!}</p>
                             </div>
                         </div>
                     </div>
-                            <h5 class="title"><a href="{{route('Nha-Cung-Cap',[Str::slug($item->port_name,'-'), $item->port_id])}}">{{ $item->port_name}}</a></h5>
+                            <h2 class="title name_port__1"><a href="{{route('Nha-Cung-Cap',[Str::slug($item->port_name,'-'), $item->port_id])}}">{{ $item->port_name}}</a></h2>
                 </div>
                 @endforeach
 

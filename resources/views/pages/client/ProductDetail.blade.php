@@ -136,7 +136,7 @@
                     <div class="product-brands">
                         <span class="title">Nhà Cung Cấp</span>
                         <div class="brands">
-                            <a href="{{route('Nha-Cung-Cap',[Str::slug($product_detail->port_name, '-'),$product_detail->port_id])}}"  class="hintT-top" data-hint="Xem các sản phẩm liên quan"><img src="{{URL::to('/') }}/image/portfolio/avatar/{{$product_detail->port_avatar}}" alt=""></a>
+                            <a href="{{route('Nha-Cung-Cap',[Str::slug($product_detail->port_name, '-'),$product_detail->port_id])}}" class="hintT-top" data-hint="Xem các sản phẩm liên quan"><img src="{{URL::to('/') }}/image/portfolio/avatar/{{$product_detail->port_avatar}}" alt=""></a>
                         </div>
                     </div>
                     <form action="{{URL('/AddCartDT/'.$product_detail->product_id)}}" method="get" enctype="multipart/form-data">
@@ -356,10 +356,23 @@
                         showConfirmButton: true,
                         timer: 2500
                     })
-                    // window.setTimeout(function() {
-                    //     window.location.reload();
-                    // }, 2500);
                 }
+            },
+            error: function(response) {
+                $.each(response.responseJSON.errors, function(field_name, error) {
+                        $('#noti-validate').after('<div class="alert alert-danger noti-alert-danger" role="alert" style="font-size: 1.5rem;">' + error + '</div>');
+                    }),
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: 'Vui Lòng Kiểm Tra Lại Thông Tin',
+                        showConfirmButton: true,
+                        timer: 2500
+                    }),
+                    window.setTimeout(function() {
+                        $('.alert.alert-danger.noti-alert-danger').remove();
+                    }, 20000);
             }
         });
     });

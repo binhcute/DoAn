@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <h2 class="title"><a href="{{route('Danh-Muc',[Str::slug($item->cate_name, '-'),$item->cate_id])}}">{{ $item->cate_name }}</a></h2>
+                    <h2 class="title name_port__1"><a href="{{route('Danh-Muc',[Str::slug($item->cate_name, '-'),$item->cate_id])}}">{{ $item->cate_name }}</a></h2>
                 </div>
                 @endforeach
 

@@ -155,9 +155,12 @@ class AccountController extends Controller
 
     public function update(Request $request, $id)
     {
-        $account = User::find($id);
+        $account = User::findOrFail($id);
         $account->update($request->all());
-        // $account->save();
-        return response()->json($account);
+        $account->save();
+        return response()->json([
+            'success'=>true,
+            'user'=>$request->user()
+        ]);
     }
 }

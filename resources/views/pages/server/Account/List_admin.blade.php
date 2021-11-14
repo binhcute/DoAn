@@ -7,7 +7,7 @@
       <div class="col-6">
         <h3>Danh Sách Tài Khoản</h3>
         <a style="margin-left:50px" class="btn btn-success" href="{{route('TaiKhoan.create')}}"><i class="fa fa-plus"></i> Thêm Mới</a>
-        </div>
+      </div>
       <div class="col-6">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.index')}}"> <i data-feather="home"></i></a></li>
@@ -25,51 +25,22 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Tài Khoản</th>
-              <th scope="col">Họ Tên</th>
+              <th scope="col" class="text-center">Tài Khoản</th>
+              <th scope="col">Thông Tin Tài Khoản</th>
               <th scope="col">Trạng Thái</th>
               <th scope="col">Tác Vụ</th>
             </tr>
           </thead>
-          <tbody>
-            @foreach($account as $stt => $item)
-            <tr>
-              <th scope="row">{{ $stt+1 }}</th>
-              <td>{{ $item->username }}</td>
-              <td>{{ $item->firstName}} {{ $item->lastName}}</td>
-              <td>
-                @switch($item->status)
-                @case(0)
-                <strong style="color:red">Ngưng Hoạt Động</strong>
-                @break
-                @case(1)
-                <strong style="color:blue">Đang Hoạt Động</strong>
-                @break
-                @endswitch
-              </td>
-              <td class="flex-column align-items-center justify-content-around">
-                <a href="{{route('TaiKhoan.show',$item->id)}}" method="get" title="Xem chi tiết">
-                  <i class="icofont icofont-paper" style="font-size:20px;color:green"></i>
-                </a>
-                <a href="{{route('TaiKhoan.edit',$item->id)}}" title="Chỉnh sửa">
-                  <i class="icofont icofont-pencil-alt-5" style="font-size:20px;color:blue"></i>
-                </a>
-                <a href="{{URL::to('/XoaTaiKhoan',$item->id)}}" title="Xóa" onclick="return confirm('Bạn muốn xóa danh mục này ?')">
-                  <input type="hidden" name="_token" value="{{csrf_token()}}">
-                  <input type="hidden" name="_method" value="delete">
-                  <i class="icofont icofont-trash" style="font-size:20px;color:red"></i>
-                </a>
-              </td>
-            </tr>
-            @endforeach
+          <tbody id="change-layout">
+            @include('pages.server.Account.list_item_admin')
           </tbody>
           <tfoot>
             <tr>
-            <th scope="col">#</th>
-              <th scope="col">Tài Khoản</th>
-              <th scope="col">Họ Tên</th>
+              <th scope="col">#</th>
+              <th scope="col" class="text-center">Tài Khoản</th>
+              <th scope="col">Thông Tin Tài Khoản</th>
               <th scope="col">Trạng Thái</th>
-              <th scope="col">Tác Vụ</th> 
+              <th scope="col">Tác Vụ</th>
             </tr>
           </tfoot>
         </table>
@@ -78,7 +49,112 @@
   </div>
   @else
   <strong class="text-center">
-        <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="" width="50%"></strong>
+    <img src="{{URL::to('/')}}/image/example/list-empty.png" alt="" width="50%"></strong>
   @endif
 </div>
+@endsection
+@section('page-js')
+<script>
+  function changeStatus(event) {
+    event.preventDefault();
+    var form = $(this);
+    var url = form.attr('action');
+    Swal.fire({
+      title: 'Thay Đổi Trạng Thái',
+      text: 'Bạn Muốn Thay Đổi Trạng Thái Tài Khoản Này ?',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Hủy',
+      confirmButtonText: 'Thay Đổi'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: form.serialize(),
+          success: function(data) {
+            if (data.status == 'error') {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Thất Bại',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+            if (data.status == 'success') {
+              $("#change-layout").empty();
+              $("#change-layout").html(data.giao_dien)
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Thành Công',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+          }
+        });
+      }
+
+    });
+  }
+  function deleteItem(event) {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    event.preventDefault();
+    var url = $(this).data('url');
+    Swal.fire({
+      title: 'Bạn Muốn Xóa Tài Khoản Này ?',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Hủy',
+      confirmButtonText: 'Xóa'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "GET",
+          url: url,
+          success: function(data) {
+            if (data.status == 'error') {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Thất Bại',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+            if (data.status == 'success') {
+              $("#change-layout").empty();
+              $("#change-layout").html(data.giao_dien);
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Thành Công',
+                text: data.message,
+                showConfirmButton: true,
+                timer: 2500
+              })
+            }
+          }
+        });
+      }
+    });
+  }
+  $(function() {
+    $(document).on('click', '.change_status_tri', changeStatus);
+    $(document).on('click', '.delete-item', deleteItem);
+  });
+</script>
 @endsection

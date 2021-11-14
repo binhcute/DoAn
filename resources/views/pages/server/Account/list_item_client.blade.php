@@ -2,16 +2,15 @@
 <tr>
     <th scope="row">{{ $stt+1 }}</th>
     <td>
-        <div class="text-center ">
+        <div class="text-center">
             <img src="{{URL::to('/')}}/image/account/1.png" alt="" width="100px">
             <p>
                 <strong>
-
                     {{ $item->username }}
                 </strong>
             </p>
+        </div>
     </td>
-    </div>
     <td>
         <p>Họ Tên: <strong>{{ $item->firstName}} {{ $item->lastName}}</strong>
             @if($item->gender==0)
@@ -51,11 +50,7 @@
         <a href="{{route('TaiKhoan.edit',$item->id)}}" title="Chỉnh sửa">
             <i class="icofont icofont-pencil-alt-5" style="font-size:20px;color:blue"></i>
         </a>
-        <a href="{{URL::to('/XoaTaiKhoan',$item->id)}}" title="Xóa" onclick="return confirm('Bạn muốn xóa danh mục này ?')">
-            <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <input type="hidden" name="_method" value="delete">
-            <i class="icofont icofont-trash" style="font-size:20px;color:red"></i>
-        </a>
+
 
     </td>
 </tr>

@@ -146,13 +146,12 @@ class AccountController extends Controller
             $account->avatar = "$profileImage";
         }
         $account->save();
-        if($account->save()){
+        if ($account->save()) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Cập Nhật Tài Khoản Thành Công'
             ], 200);
-        }
-        else{
+        } else {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Cập Nhật Tài Khoản Thất Bại'
@@ -166,13 +165,45 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function destroy($id)
-    // {
-    //     $account = User::find($id);
-    //     $account->delete();
-    //     Session::put('detroy', 'Đã Xóa Tài Khoản');
-    //     return redirect()->route('TaiKhoan.index');
-    // }
+    public function destroy($id)
+    {
+        $destroy = User::find($id);
+        $destroy->delete();
+        if ($destroy->delete()) {
+            $account = DB::table('users')
+                ->where('level', '0')->get();
+            $giao_dien = view('pages.server.Account.list_item_client', compact(['account']))->render();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xóa Tài Khoản Thành Công',
+                'giao_dien' => $giao_dien
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Xóa Tài Khoản Thất Bại'
+        ], 200);
+    }
+    public function destroy_admin($id)
+    {
+        $destroy = User::find($id);
+        $destroy->delete();
+        if ($destroy->delete()) {
+            $account = DB::table('users')
+                ->where('level', '0')
+                ->whereNotIn('id', [1])->get();
+            $giao_dien = view('pages.server.Account.list_item_admin', compact(['account']))->render();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xóa Tài Khoản Thành Công',
+                'giao_dien' => $giao_dien
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Xóa Tài Khoản Thất Bại'
+        ], 200);
+    }
 
     public function admin_list()
     {
@@ -212,6 +243,47 @@ class AccountController extends Controller
                 $account = DB::table('users')
                     ->where('level', '0')->get();
                 $giao_dien = view('pages.server.Account.list_item_client', compact(['account']))->render();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Kích Hoạt Tài Khoản Thành Công',
+                    'giao_dien' => $giao_dien
+                ], 200);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Kích Hoạt Tài Khoản Thất Bại'
+            ], 200);
+        }
+    }
+    public function change_status_admin($id)
+    {
+        $change = User::find($id);
+        if ($change->status == 1) {
+            $change->status = 0;
+            $change->save();
+            if ($change->save()) {
+                $account = DB::table('users')
+                    ->where('level', '1')
+                    ->whereNotIn('id', [1])->get();
+                $giao_dien = view('pages.server.Account.list_item_admin', compact(['account']))->render();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Khóa Tài Khoản Thành Công',
+                    'giao_dien' => $giao_dien
+                ], 200);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Khóa Tài Khoản Thất Bại'
+            ], 200);
+        } else {
+            $change->status = 1;
+            $change->save();
+            if ($change->save()) {
+                $account = DB::table('users')
+                    ->where('level', '1')
+                    ->whereNotIn('id', [1])->get();
+                $giao_dien = view('pages.server.Account.list_item_admin', compact(['account']))->render();
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Kích Hoạt Tài Khoản Thành Công',

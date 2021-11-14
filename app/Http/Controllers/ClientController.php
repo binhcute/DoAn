@@ -124,6 +124,7 @@ class ClientController extends Controller
         $article = Article::queryStatusOne()->orderBy('created_at', 'desc')->paginate(3);
         //Bài Viết Xem nhiều
         $view_hot = DB::table('tpl_article')
+            ->where('status', '1')
             ->orderBy('tpl_article.view', 'desc')->limit(3)->get();
 
         if ($request->ajax()) {
@@ -147,7 +148,7 @@ class ClientController extends Controller
             ->join('users', 'users.id', '=', 'tpl_article.user_id')
             ->where('tpl_article.article_id', $id)->first();
 
-        $related = DB::table('tpl_article')->inRandomOrder()->limit(2)->get();
+        $related = DB::table('tpl_article')->where('status','1')->inRandomOrder()->limit(2)->get();
         $comment = DB::table('tpl_comment')
             ->select(
                 'tpl_comment.comment_description',
@@ -207,6 +208,7 @@ class ClientController extends Controller
 
     public function categories_list($slug, $id)
     {
+        $trash = Category::onlyTrashed()->where('cate_id', $id)->first();
         $product_cate = Category::queryStatusOne()->get();
         $portfolio = Portfolio::queryStatusOne()->get();
         $categories = Category::find($id);
@@ -220,7 +222,8 @@ class ClientController extends Controller
             ->with('portfolio', $portfolio)
             ->with('product_cate', $product_cate)
             ->with('product_by_category', $product_by_category)
-            ->with('modal', $modal);
+            ->with('modal', $modal)
+            ->with('trash', $trash);
     }
 
     //Brand
@@ -233,6 +236,7 @@ class ClientController extends Controller
 
     public function portfolio_list($slug, $id)
     {
+        $trash = Portfolio::onlyTrashed()->where('port_id', $id)->first();
         $product_cate = Category::queryStatusOne()->get();
         $portfolio = Portfolio::queryStatusOne()->get();
         $port = Portfolio::find($id);
@@ -245,7 +249,8 @@ class ClientController extends Controller
             ->with('portfolio', $portfolio)
             ->with('product_cate', $product_cate)
             ->with('product_by_portfolio', $product_by_portfolio)
-            ->with('modal', $modal);
+            ->with('modal', $modal)
+            ->with('trash', $trash);
     }
 
     //Account

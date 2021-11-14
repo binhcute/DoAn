@@ -22,7 +22,7 @@
     </div>
     <form class="form theme-form" action="{{ route('SuaSanPham',$product->product_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
       @csrf
-      <div class="card-body" id ="noti-validate">
+      <div class="card-body" id="noti-validate">
         <div class="row">
           <div class="col">
             <div class="mb-3 row">
@@ -100,11 +100,15 @@
 
           </div>
           <div class="mb-3 row">
-            <label class="col-sm-3 col-form-label">Chọn ảnh chuyển</label>
+            <label class="col-sm-3 col-form-label">Chọn ảnh phụ</label>
             <div class="col-sm-9">
-              <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh chuyển</label>
+              <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh phụ</label>
               <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
+              @if($product->product_img_hover != null)
               <img id="event__img-hover-0" src="{{URL::to('/')}}/image/product/hover/{{$product->product_img_hover}}" alt="slider" height="100%">
+              @else
+              <img id="event__img-hover-0" src="{{URL::to('/')}}/image/example/add.png" alt="slider" height="100%">
+              @endif
             </div>
           </div>
         </div>
@@ -176,12 +180,12 @@
     var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
     // Khai báo formData
     var formData = new FormData($(this)[0]);
-    if(imageItem[0].files[0] != undefined){
-      formData.append('data_input_item', imageItem[0].files[0]);  
+    if (imageItem[0].files[0] != undefined) {
+      formData.append('data_input_item', imageItem[0].files[0]);
     }
-    if(imageHover[0].files[0] != undefined){
+    if (imageHover[0].files[0] != undefined) {
       formData.append('data_input_hover', imageHover[0].files[0]);
-    
+
     }
     formData.append('name', $('#name').val());
     formData.append('cate_id', $('#cate_id').val());

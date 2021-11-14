@@ -26,9 +26,8 @@
           <thead>
             <tr>
               <th scope="col">STT</th>
-              <th scope="col">Tên</th>
-              <th scope="col">Giá</th>
-              <th scope="col">Hình Ảnh</th>
+              <th scope="col" class="text-center">Sản Phẩm</th>
+              <th scope="col">Thông Tin</th>
               <th scope="col">Trạng Thái</th>
               <th scope="col">Tác Vụ</th>
             </tr>
@@ -39,9 +38,8 @@
           <tfoot>
             <tr>
               <th scope="col">STT</th>
-              <th scope="col">Tên</th>
-              <th scope="col">Giá</th>
-              <th scope="col">Hình Ảnh</th>
+              <th scope="col" class="text-center">Sản Phẩm</th>
+              <th scope="col">Thông Tin</th>
               <th scope="col">Trạng Thái</th>
               <th scope="col">Tác Vụ</th>
             </tr>
