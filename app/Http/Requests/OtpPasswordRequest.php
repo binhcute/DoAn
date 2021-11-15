@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Portfolio;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePortfolioRequest extends FormRequest
+class OtpPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,13 @@ class UpdatePortfolioRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
+            'token' => 'required|exists:tpl_reset_password'
         ];
     }
-    public function messages()
-    {
+    public function messages(){
         return [
-            'name.required' => 'Tên nhà cung cấp không được bỏ trống',
-            'name.max' => 'Tên nhà cung cấp phải ít hơn 100 ký tự'
+            'token.required' => 'Mã OTP không được để trống',
+            'token.exists' => 'Mã OTP không đúng'
         ];
     }
 }

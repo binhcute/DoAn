@@ -26,7 +26,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => 'required|max:100',
             'quantity' => 'required|max:1000|numeric|gt:0',
-            'price' => 'required|numeric|gt:0'
+            'price' => 'required|numeric|min:1000|gt:0'
         ];
     }
     public function messages()
@@ -38,7 +38,8 @@ class UpdateProductRequest extends FormRequest
             'quantity.required' => 'Số lượng không được bỏ trống',
             'quantity.gt' => 'Số lượng không được âm',
             'price.required' => 'Giá sản phẩm không được bỏ trống',
-            'price.gt' => 'Giá sản phẩm không được âm'
+            'price.gt' => 'Giá sản phẩm không được âm',
+            'price.min' => 'Giá sản phẩm phải lớn hơn 1.000đ',
         ];
     }
 }

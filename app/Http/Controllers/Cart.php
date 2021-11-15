@@ -39,14 +39,14 @@ class Cart
                 $new_product = $this->product[$id];
             }
         }
-        for( $i = 0 ; $i < $qty ; $i++ ) {
-            $new_product['qty']++;
-        }
+        // for( $i = 0 ; $i < $qty ; $i++ ) {
+        //     $new_product['qty']++;
+        // }
+        $new_product['qty'] += $qty;
         $new_product['price'] = $new_product['qty'] * $product->product_price;
         $this->product[$id] = $new_product;
-        $this->totalQuantity += $this->product[$id]['qty'];
-        // dd($this->totalQuantity);
-        $this->totalPrice = $this->product[$id]['qty']*$product->product_price;
+        $this->totalQuantity += $qty;
+        $this->totalPrice += ($qty*$product->product_price);
     }
 
     public function DeleteItemCart($id)

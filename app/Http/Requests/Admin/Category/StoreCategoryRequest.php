@@ -26,17 +26,19 @@ class StoreCategoryRequest extends FormRequest
         return [
             'img' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|max:100|unique:tpl_category,cate_name',
+            'status' => 'required'
         ];
     }
     public function messages()
     {
         return [
-            'img.required' => 'Hình ảnh không được bỏ trống',
+            'img.required' => 'Hình ảnh danh mục không được bỏ trống',
             'img.mimes' => 'Hình ảnh không đúng định dạng',
             'img.max' => 'Hình ảnh có kích cỡ quá khổ',
             'name.required' => 'Tên danh mục không được bỏ trống',
             'name.max' => 'Tên danh mục phải ít hơn 100 ký tự',
-            'name.unique' => 'Tên danh mục này đã tồn tại'
+            'name.unique' => 'Tên danh mục này đã tồn tại',
+            'status.required' => 'Trạng thái danh mục không được bỏ trống'
         ];
     }
 }

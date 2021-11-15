@@ -19,6 +19,7 @@
   <div class="card">
     <div class="card-header">
       <h5>Chỉnh Sửa Sản Phẩm</h5>
+      <div style="padding-top:10px"></div>
     </div>
     <form class="form theme-form" action="{{ route('SuaSanPham',$product->product_id)}}" method="post" enctype="multipart/form-data" id="edit-data">
       @csrf
@@ -34,7 +35,7 @@
             <div class="mb-3 row">
               <label for="name" class="col-sm-3 col-form-label">Tên Sản Phẩm <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" name="name" id="name" value="{{$product ->product_name}}" required>
+                <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" name="name" id="name" value="{{$product ->product_name}}">
               </div>
             </div>
             <div class="mb-3 row">
@@ -68,13 +69,13 @@
             <div class="mb-3 row">
               <label for="quantity" class="col-sm-3 col-form-label">Số Lượng <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control digits" name="quantity" id="quantity" type="number" placeholder="Số Lượng" data-bs-original-title="" title="" value="{{$product->product_quantity}}" required>
+                <input class="form-control digits" name="quantity" id="quantity" type="number" placeholder="Số Lượng" data-bs-original-title="" title="" value="{{$product->product_quantity}}">
               </div>
             </div>
             <div class="mb-3 row">
               <label for="price" class="col-sm-3 col-form-label">Giá <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="number" id="price" placeholder="Giá" name="price" value="{{$product->product_price}}" required>
+                <input class="form-control" type="number" id="price" placeholder="Giá" name="price" value="{{$product->product_price}}">
               </div>
             </div>
             <div class="mb-3 row">
@@ -116,7 +117,7 @@
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
           <button class="btn btn-primary" type="submit">Thay Đổi</button>
-          <input class="btn btn-light" type="reset" value="Cancel">
+          <input class="btn btn-light" type="reset" value="Đặt Lại">
         </div>
       </div>
     </form>
@@ -238,8 +239,7 @@
             icon: 'error',
             title: 'Thất bại',
             text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
-            showConfirmButton: true,
-            timer: 2500
+            showConfirmButton: true
           }),
           window.setTimeout(function() {
             $('.alert.alert-danger.noti-alert-danger').remove();

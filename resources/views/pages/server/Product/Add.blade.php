@@ -35,13 +35,13 @@
             <div class="mb-3 row">
               <label for="name" class="col-sm-3 col-form-label">Tên Sản Phẩm <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" name="name" id="name" required>
+                <input class="form-control" type="text" placeholder="Nhập tên sản phẩm" name="name" id="name" autofocus>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="cate_id" class="col-sm-3 col-form-label">Danh Mục <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <select class="form-select" required="" aria-label="select example" name="cate_id" id="cate_id">
+                <select class="form-select" aria-label="select example" name="cate_id" id="cate_id">
                   <option value="">---Chọn---</option>
                   @foreach($cate as $item)
                   <option value="{{$item->cate_id}}">{{$item->cate_name}}</option>
@@ -52,7 +52,7 @@
             <div class="mb-3 row">
               <label for="port_id" class="col-sm-3 col-form-label">Nhà Cung Cấp <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <select class="form-select" required="" aria-label="select example" name="port_id" id="port_id">
+                <select class="form-select" aria-label="select example" name="port_id" id="port_id">
                   <option value="">---Chọn---</option>
                   @foreach($port as $item)
                   <option value="{{$item->port_id}}">{{$item->port_name}}</option>
@@ -63,13 +63,13 @@
             <div class="mb-3 row">
               <label for="quantity" class="col-sm-3 col-form-label">Số Lượng <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" name="quantity" id="quantity" required type="number" placeholder="Số Lượng" data-bs-original-title="" title="">
+                <input class="form-control" name="quantity" id="quantity" type="number" placeholder="Số Lượng" data-bs-original-title="" title="">
               </div>
             </div>
             <div class="mb-3 row">
               <label for="price" class="col-sm-3 col-form-label">Giá <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="number" placeholder="Giá" name="price" id="price" required>
+                <input class="form-control" type="number" placeholder="Giá" name="price" id="price">
               </div>
             </div>
             <div class="mb-3 row">
@@ -87,15 +87,15 @@
             <div class="mb-3 row">
               <label for="status" class="col-sm-3 col-form-label">Trạng Thái <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <select class="form-select" name="status" id="status" required="" aria-label="select example">
-                  <option value="">Open this select menu</option>
+                <select class="form-select" name="status" id="status" aria-label="select example">
+                  <option value="">---Chọn---</option>
                   <option value="1">Hiển Thị</option>
                   <option value="0">Ẩn</option>
                 </select>
               </div>
             </div>
             <div class="mb-3 row">
-              <label for="img" class="col-sm-3 col-form-label">Chọn ảnh <abbr class="required">*</abbr></label>
+              <label class="col-sm-3 col-form-label">Chọn ảnh <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
                 <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
@@ -106,7 +106,7 @@
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Chọn ảnh phụ</label>
               <div class="col-sm-9">
-                <label for="img_hover" id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh phụ</label>
+                <label id="id-label-hover-0" for="event__input-hover-0" class="form-control">Thêm ảnh phụ</label>
                 <input hidden class="form-control imageHover" id="event__input-hover-0" name="img_hover" type="file" onchange="uploadFileHover(this, 0)" accept=".jpg, .png">
                 <img id="event__img-hover-0" src="{{asset('image/example/add.png')}}" alt="slider" height="100%">
               </div>
@@ -117,7 +117,7 @@
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
           <button class="btn btn-primary" type="submit">Thêm</button>
-          <input class="btn btn-light" type="reset" value="Cancel">
+          <input class="btn btn-light" type="reset" value="Đặt Lại">
         </div>
       </div>
     </form>
@@ -234,10 +234,9 @@
           Swal.fire({
             position: 'center',
             icon: 'error',
-            title: 'Thất bại',
-            text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
-            showConfirmButton: true,
-            timer: 2500
+            title: 'Thêm Sản Phẩm Thất Bại',
+            text: 'Vui lòng kiểm tra lại các trường',
+            showConfirmButton: true
           }),
           window.setTimeout(function() {
             $('.alert.alert-danger.noti-alert-danger').remove();

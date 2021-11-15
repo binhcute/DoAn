@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Portfolio;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePortfolioRequest extends FormRequest
+class ForgetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,15 @@ class UpdatePortfolioRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
+            'email' => 'required|email|exists:users'
         ];
     }
     public function messages()
     {
         return [
-            'name.required' => 'Tên nhà cung cấp không được bỏ trống',
-            'name.max' => 'Tên nhà cung cấp phải ít hơn 100 ký tự'
+            'email.required' => 'Email không đươc bỏ trống',
+            'email.email' => 'Phải là Email',
+            'email.exists' => 'Email không tồn tại'
         ];
     }
 }

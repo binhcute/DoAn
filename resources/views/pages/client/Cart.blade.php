@@ -52,9 +52,9 @@
             $('#danh_sach').empty();
             $('#danh_sach').html(response.giao_dien);
 
-            if ($('.quantity_num').val() == 1) {
-                $('.quantity__minus').prop("disabled", true);
-            }
+            // if ($('.quantity_num').val() == 1) {
+            //     $('.quantity__minus').prop("disabled", true);
+            // }
 
             alertify.success('Đã Cập Nhật Sản Phẩm Thành Công');
             tangSanPham();
