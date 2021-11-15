@@ -61,7 +61,7 @@
                 </div>
                 <div class="col_g l-3_g m-3_g">
                     <div class="perfume-cart__content perfume-cart__quantity perfume-cart__center">
-                        <button class="quantity__minus" data-product-id="{{$item['product_info']->product_id}}">-</button>
+                        <button class="quantity__minus"  {{$item['qty'] == 1 ? 'disabled' : ''}}  data-product-id="{{$item['product_info']->product_id}}">-</button>
                         <input readonly id="quantity__number" class="quantity_num" value="{{$item['qty']}}">
                         <button class="quantity__plus" data-product-id="{{$item['product_info']->product_id}}">+</button>
                     </div>
@@ -107,7 +107,7 @@
                             <div class="perfume-cart__content perfume-cart__quantity perfume-cart__center">
                                 <div class="perfume-cart__btn">
                                     <span class="perfume-cart__title-num">Số lượng:</span>
-                                    <button class="quantity__minus" data-product-id="{{$item['product_info']->product_id}}">-</button>
+                                    <button class="quantity__minus" {{$item['qty'] == 1 ? 'disabled' : ''}} data-product-id="{{$item['product_info']->product_id}}">-</button>
                                     <input readonly id="quantity__number" class="quantity_num" value="{{$item['qty']}}">
                                     <button class="quantity__plus" data-product-id="{{$item['product_info']->product_id}}">+</button>
                                 </div>
@@ -163,6 +163,7 @@
 </div>
 
 <script>
+
     let valueCount_1 = 0;
     tangSanPham();
 
@@ -176,13 +177,13 @@
                 // Tăng giá trị lên 1
                 valueCount_1.value++;
 
+                SaveItemListCart($(this).data('product-id'), valueCount_1.value);
+                
+                thanhTienSanPham(valueCount_1.value, i);
                 if (valueCount_1.value > 1) {
                     document.getElementsByClassName("quantity__minus")[i].removeAttribute("disabled");
                     document.getElementsByClassName("quantity__minus")[i].classList.remove("disabled");
                 }
-                SaveItemListCart($(this).data('product-id'), valueCount_1.value);
-
-                thanhTienSanPham(valueCount_1.value, i);
 
 
             });
@@ -193,7 +194,6 @@
 
     function giamSanPham() {
         let btnMinus = document.getElementsByClassName('quantity__minus');
-
         for (let i = 0; i < btnMinus.length; i++) {
             btnMinus[i].addEventListener('click', function(e) {
                 e.preventDefault();
@@ -202,11 +202,11 @@
 
                 // Tăng giá trị lên 1
                 valueCount_1.value--;
+                SaveItemListCart($(this).data('product-id'), valueCount_1.value);
+                thanhTienSanPham(valueCount_1.value, i);
                 if (valueCount_1.value == 1) {
                     document.getElementsByClassName('quantity__minus')[i].setAttribute("disabled", "disabled");
                 }
-                SaveItemListCart($(this).data('product-id'), valueCount_1.value);
-                thanhTienSanPham(valueCount_1.value, i);
             });
         }
     }

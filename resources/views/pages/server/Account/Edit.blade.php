@@ -81,11 +81,11 @@
               <div class="col-sm-9">
                 <select class="form-select" name="gender" id="gender" aria-label="select example">
                   @if ($account->gender == 1)
-                  <option value="">Open this select menu</option>
+                  <option value="">---Chọn---</option>
                   <option selected="selected" value="1">Nam</option>
                   <option value="0">Nữ</option>
                   @else
-                  <option value="">Open this select menu</option>
+                  <option value="">---Chọn---</option>
                   <option value="1">Nam</option>
                   <option selected="selected" value="0">Nữ</option>
                   @endif
@@ -97,11 +97,11 @@
               <div class="col-sm-9">
                 <select class="form-select" name="level" id="level" aria-label="select example">
                   @if($account->level == 1)
-                  <option value="">Open this select menu</option>
+                  <option value="">---Chọn---</option>
                   <option selected="selected" value="1">Admin</option>
                   <option value="0">Người dùng</option>
                   @else
-                  <option value="">Open this select menu</option>
+                  <option value="">---Chọn---</option>
                   <option value="1">Admin</option>
                   <option selected="selected" value="0">Người dùng</option>
                   @endif
@@ -113,11 +113,11 @@
               <div class="col-sm-9">
                 <select class="form-select" name="status" id="status" aria-label="select example">
                   @if ($account->status == 1)
-                  <option value="">Open this select menu</option>
+                  <option value="">---Chọn---</option>
                   <option selected="selected" value="1">Hiển Thị</option>
                   <option value="0">Ẩn</option>
                   @else
-                  <option value="">Open this select menu</option>
+                  <option value="">---Chọn---</option>
                   <option value="1">Hiển Thị</option>
                   <option selected="selected" value="0">Ẩn</option>
                   @endif
@@ -144,7 +144,7 @@
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
           <button class="btn btn-primary" type="submit">Thay Đổi</button>
-          <input class="btn btn-light" type="reset" value="Cancel">
+          <input class="btn btn-light" type="reset" value="Đặt Lại">
         </div>
       </div>
     </form>

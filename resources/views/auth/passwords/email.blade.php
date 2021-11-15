@@ -9,22 +9,16 @@
         {{ Session::put('status',null) }}
     </div>
     @endif
-    <h4>Lấy Lại Mật Khẩu</h4>
+    <h4 class="text-center">Lấy Lại Mật Khẩu</h4>
     <hr>    
-    <form method="POST" action="{{ route('postQuenMatKhau') }}">
+    <form method="POST" action="{{ route('postQuenMatKhau') }}" id="email-check">
         @csrf
 
-        <div class="form-group row">
-            <label for="email" class="col-form-label">Nhập Địa Chỉ Email</label>
+        <div class="form-group row" id="noti-validated-email">
+            <label for="email" class="col-form-label">Nhập Địa Chỉ Email <abbr class="required">*</abbr></label>
 
             <div class="form-input position-relative">
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                <input id="email" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" autofocus>
             </div>
         </div>
 

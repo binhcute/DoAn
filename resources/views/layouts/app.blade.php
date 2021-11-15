@@ -13,7 +13,7 @@
   <link rel="icon" href="{{asset('server/assets/images/favicon.png')}}" type="image/x-icon">
   <link rel="shortcut icon" href="{{asset('server/assets/images/favicon.png')}}" type="image/x-icon">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <title>Đăng Nhập</title>
+  <title>Lấy Lại Mật Khẩu</title>
   <!-- Google font-->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{asset('server/assets/css/font-awesome/css/font-awesome.css')}}">
@@ -41,12 +41,12 @@
   <!-- login page start-->
   <div class="container-fluid">
   <div class="row">
-      <div class="col-xl-7"><img class="bg-img-cover bg-center" src="{{asset('server/assets/images/login/2.jpg')}}" alt="looginpage"></div>
+      <div class="col-xl-7"><img class="bg-img-cover bg-center" src="{{asset('image/example/login.jpg')}}" alt="looginpage"></div>
       <div class="col-xl-5 p-0">
         <div class="login-card">
           <div>
-            <div><a class="logo text-start" href="{{route('index')}}"><img class="img-fluid for-light" src="{{asset('client/images/logo/logo-2.png')}}" alt="Learts Logo"><img class="img-fluid for-dark" src="{{asset('server/assets/images/logo/logo_dark.png')}}" alt="looginpage"></a></div>
             <div class="login-main">
+            <div><a class="logo text-start text-center" href="{{route('index')}}"><img class="img-fluid for-light" src="{{asset('client/images/logo/logo-2.png')}}" alt="Learts Logo"><img class="img-fluid for-dark" src="{{asset('server/assets/images/logo/logo_dark.png')}}" alt="looginpage"></a></div>
 
             @yield('content')
             </div>
@@ -77,7 +77,7 @@
 
     <script src="{{asset('sweetarlet2/node_modules/sweetalert2/dist/sweetalert2.js')}}"></script>
     <script>
-      $('#login-check-tri').submit(function(event) {
+      $('#email-check').submit(function(event) {
         event.preventDefault();
         var form = $(this);
         var url = form.attr('action');
@@ -104,29 +104,21 @@
                 timer: 2500
               })
               window.setTimeout(function() {
-                window.location.replace("{{URL::to('/')}} ");
+                window.location.replace("{{URL::to('/QuenMatKhau-otp')}} ");
               }, 2500);
             }
           }, 
           error: function(response) {
             $.each(response.responseJSON.errors, function(field_name, error) {
-                $('#noti-validated').after('<p style="color:red" class="noti-alert-danger">' + error + '</p>');
-              }),
-              Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Thất bại',
-                text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
-                showConfirmButton: true,
-                timer: 2500
-              }),
+                $('#noti-validated-email').after('<p style="color:red" class="noti-alert-danger__email">' + error + '</p>');
+              })
               window.setTimeout(function() {
-                $('noti-alert-danger').remove();
-              }, 20000);
+                $('.noti-alert-danger__email').remove();
+              }, 15000);
           }
         });
       });
-      $('#register-check-tri').submit(function(event) {
+      $('#otp-check').submit(function(event) {
         event.preventDefault();
         var form = $(this);
         var url = form.attr('action');
@@ -155,25 +147,17 @@
                 timer: 2500
               })
               window.setTimeout(function() {
-                window.location.replace("{{route('login')}}");
+                window.location.replace("{{route('get.datmatkhau')}}");
               }, 2500);
             }
           },
           error: function(response) {
             $.each(response.responseJSON.errors, function(field_name, error) {
-                $('#noti-validate').before('<div class="alert alert-danger noti-alert-danger" role="alert" style="font-size: 1.5rem;">' + error + '</div>');
-              }),
-              Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Thất bại',
-                text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
-                showConfirmButton: true,
-                timer: 2500
-              }),
+                $('#noti-validate-reset').after('<p class="noti-alert-danger__otp" style="color:red">' + error + '</p>');
+              })
               window.setTimeout(function() {
-                $('.alert.alert-danger.noti-alert-danger').remove();
-              }, 20000);
+                $('.noti-alert-danger__otp').remove();
+              }, 15000);
           }
         });
       });
@@ -212,19 +196,11 @@
             },
             error: function(response) {
                 $.each(response.responseJSON.errors, function(field_name, error) {
-                        $('#noti-validated').after('<p style="color:red" class="noti-alert-danger">' + error + '</p>');
-                    }),
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        title: 'Thất bại',
-                        text: 'Vui lòng kiểm tra nhập đầy đủ các trường',
-                        showConfirmButton: true,
-                        timer: 2500
-                    }),
+                        $('#noti-validated-reset').after('<p style="color:red" class="noti-alert-danger_reset">' + error + '</p>');
+                    })
                     window.setTimeout(function() {
-                        $('noti-alert-danger').remove();
-                    }, 20000);
+                        $('.noti-alert-danger_reset').remove();
+                    }, 15000);
             }
         });
     });

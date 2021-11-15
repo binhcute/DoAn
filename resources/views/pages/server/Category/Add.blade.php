@@ -35,7 +35,7 @@
             <div class="mb-3 row">
               <label for="name" class="col-sm-3 col-form-label">Tên Danh Mục <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên Danh Mục" name="name" id="name" required>
+                <input class="form-control" type="text" placeholder="Nhập tên Danh Mục" name="name" id="name">
               </div>
             </div>
             <div class="mb-3 row">
@@ -48,8 +48,8 @@
             <div class="mb-3 row">
               <label for="status" class="col-sm-3 col-form-label">Trạng Thái <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <select class="form-select" name="status" id="status" required="" aria-label="select example">
-                  <option value="">Open this select menu</option>
+                <select class="form-select" name="status" id="status" aria-label="select example">
+                  <option value="">---Chọn---</option>
                   <option value="1">Hiển Thị</option>
                   <option value="0">Ẩn</option>
                 </select>
@@ -69,7 +69,7 @@
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
           <button class="btn btn-primary" type="submit">Thêm</button>
-          <input class="btn btn-light" type="reset" value="Cancel">
+          <input class="btn btn-light" type="reset" value="Đặt Lại">
         </div>
       </div>
     </form>

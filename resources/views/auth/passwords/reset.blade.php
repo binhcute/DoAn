@@ -12,14 +12,9 @@
             <label for="email" class="col-form-label">Địa Chỉ Email</label>
 
             <div class="form-input position-relative">
-                <input hidden id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email->email ?? old('email') }}" required autocomplete="email" autofocus>
-                <input disabled id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email->email ?? old('email') }}" required autocomplete="email" autofocus>
+                <input hidden id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ Session('Email') }}">
+                <input disabled id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ Session('Email') }}">
 
-                @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
             </div>
         </div>
 
@@ -27,17 +22,17 @@
             <label for="email" class="col-form-label">Tài Khoản</label>
 
             <div class="form-input position-relative">
-                <input disabled id="username" type="text" class="form-control" name="email" value="{{ $email->username }}" required>
+                <input disabled id="username" type="text" class="form-control" name="email" value="{{ $email->username }}">
 
 
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="password" class="col-form-label">Mật Khẩu</label>
+            <label for="password" class="col-form-label">Mật Khẩu <abbr class="required">*</abbr></label>
 
             <div class="form-input position-relative">
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password" autofocus>
 
                 @error('password')
                 <span class="invalid-feedback" role="alert">
@@ -47,11 +42,11 @@
             </div>
         </div>
 
-        <div class="form-group row">
-            <label for="password-confirm" class="col-form-label">Nhập Lại Mật Khẩu</label>
+        <div class="form-group row" id="noti-validated-reset">
+            <label for="password-confirm" class="col-form-label">Nhập Lại Mật Khẩu <abbr class="required">*</abbr></label>
 
             <div class="form-input position-relative">
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
             </div>
         </div>
 

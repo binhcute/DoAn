@@ -78,7 +78,7 @@
               <label class="col-sm-3 col-form-label">Giới tính</label>
               <div class="col-sm-9">
                 <select class="form-select" name="gender" id="gender" aria-label="select example">
-                  <option value="">Open this select menu</option>
+                  <option value="">---Chọn---</option>
                   <option value="1">Nam</option>
                   <option value="0">Nữ</option>
                 </select>
@@ -88,7 +88,7 @@
               <label class="col-sm-3 col-form-label">Cấp bật</label>
               <div class="col-sm-9">
                 <select class="form-select" name="level" id="level" required="" aria-label="select example">
-                  <option value="">Open this select menu</option>
+                  <option value="">---Chọn---</option>
                   <option value="1">Admin</option>
                   <option value="0">Người dùng</option>
                 </select>
@@ -98,7 +98,7 @@
               <label class="col-sm-3 col-form-label">Trạng Thái</label>
               <div class="col-sm-9">
                 <select class="form-select" name="status" id="status" required="" aria-label="select example">
-                  <option value="">Open this select menu</option>
+                  <option value="">---Chọn---</option>
                   <option value="1">Hiển Thị</option>
                   <option value="0">Ẩn</option>
                 </select>
@@ -119,7 +119,7 @@
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
           <button class="btn btn-primary" type="submit">Thêm</button>
-          <input class="btn btn-light" type="reset" value="Cancel">
+          <input class="btn btn-light" type="reset" value="Đặt Lại">
         </div>
       </div>
     </form>

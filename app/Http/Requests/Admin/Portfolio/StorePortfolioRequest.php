@@ -26,21 +26,23 @@ class StorePortfolioRequest extends FormRequest
         return [
             'name' => 'required|max:100|unique:tpl_portfolio,port_name',
             'avatar' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'img' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'img' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required'
         ];
     }
     public function messages()
     {
         return [
             'name.required' => 'Tên nhà cung cấp không được bỏ trống',
-            'name.max' => 'Tên nhà cung cấp phải ít hơn 255 ký tự',
+            'name.max' => 'Tên nhà cung cấp phải ít hơn 100 ký tự',
             'name.unique' => 'Tên nhà cung cấp này đã tồn tại',
-            'img.required' => 'Ảnh nhà cung cấp không được bỏ trống',
+            'img.required' => 'Hình ảnh nhà cung cấp không được bỏ trống',
             'img.mimes' => 'Hình ảnh không đúng định dạng',
             'img.max' => 'Hình ảnh có kích cỡ quá khổ',
             'avatar.required' => 'Avatar nhà cung cấp không được bỏ trống',
             'avatar.mimes' => 'Avatar không đúng định dạng',
-            'avatar.max' => 'Avatar có kích cỡ quá khổ'
+            'avatar.max' => 'Avatar có kích cỡ quá khổ',
+            'status.required' => 'Trạng thái danh mục không được bỏ trống'
         ];
     }
 }

@@ -18,14 +18,14 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
             <button class="btn btn-outline-light" type="submit" title="Đang Hiển Thị Click để Ẩn"><i class="icofont icofont-ui-check" style="font-size:35px;color:blue"></i></button>
-            <p>Đang hiển thị</p>
+            <p style="color:blue">Đang hiển thị</p>
         </form>
         @else
         <form action="{{URL::to('/SanPham/change_status/'.$item->product_id)}}" class="change_status_tri" method="post">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="_method" value="put" />
             <button class="btn btn-outline-light" type="submit" title="Đang Ẩn Click để Hiển Thị"><i class="icofont icofont-ui-close" style="font-size:35px;color:red"></i></button>
-            <p>Đang ẩn</p>
+            <p style="color:red">Đang ẩn</p>
         </form>
         @endif
     </td>

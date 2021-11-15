@@ -55,7 +55,7 @@
             <label for="status" class="col-sm-3 col-form-label">Trạng Thái <abbr class="required">*</abbr></label>
             <div class="col-sm-9">
               <select class="form-select" name="status" id="status" required="" aria-label="select example">
-                <option value="">Open this select menu</option>
+                <option value="">---Chọn---</option>
                 <option value="1">Hiển Thị</option>
                 <option value="0">Ẩn</option>
               </select>
@@ -82,7 +82,7 @@
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
           <button class="btn btn-primary" type="submit">Thêm</button>
-          <input class="btn btn-light" type="reset" value="Cancel">
+          <input class="btn btn-light" type="reset" value="Đặt Lại">
         </div>
       </div>
     </form>

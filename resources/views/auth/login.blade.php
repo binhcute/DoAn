@@ -41,42 +41,35 @@
   <!-- login page start-->
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xl-7"><img class="bg-img-cover bg-center" src="{{asset('server/assets/images/login/2.jpg')}}" alt="looginpage"></div>
+      <div class="col-xl-7"><img class="bg-img-cover bg-center" src="{{asset('image/example/login.jpg')}}" alt="looginpage"></div>
       <div class="col-xl-5 p-0">
         <div class="login-card">
           <div>
-            <div><a class="logo text-start" href="{{route('index')}}"><img class="img-fluid for-light" src="{{asset('client/images/logo/logo-2.png')}}" alt="Learts Logo"><img class="img-fluid for-dark" src="{{asset('server/assets/images/logo/logo_dark.png')}}" alt="looginpage"></a></div>
             <div class="login-main">
+              <div><a class="logo text-start text-center" href="{{route('index')}}"><img class="img-fluid for-light" src="{{asset('client/images/logo/logo-2.png')}}" alt="Learts Logo"><img class="img-fluid for-dark" src="{{asset('server/assets/images/logo/logo_dark.png')}}" alt="looginpage"></a></div>
 
               <form class="theme-form" method="POST" action="{{ url('/LoginCheck') }}" id="login-check-tri">
                 {{ csrf_field() }}
-                <h4 id="noti-validated">Đăng nhập</h4>
-                <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
-                  <label class="col-form-label">Tài khoản</label>
-                  <input type="text" class="form-control" name="username" placeholder="Username" value="{{ old('username') }}" autofocus>
+                <h4 id="noti-validated" class="text-center">Đăng nhập</h4>
+                <div class="form-group">
+                  <label for="username" class="col-form-label">Tài khoản</label>
+                  <input type="text" class="form-control" name="username" placeholder="Tài Khoản" value="{{ old('username') }}" autofocus>
                 </div>
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                <div class="form-group">
                   <label class="col-form-label">Mật khẩu</label>
                   <div class="form-input position-relative">
-                    <input type="password" class="form-control" name="password" placeholder="*********" >
+                    <input type="password" class="form-control" name="password" placeholder="*********">
                     <div class="show-hide"><span class="show"> </span></div>
                   </div>
                 </div>
-                <div class="form-group mb-0">
-                  <div class="checkbox p-0">
-                    <input id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : ''}}>
-                    <label class="text-muted" for="remember">Ghi nhớ mật khẩu</label>
-                  </div>
+                <div class="form-group mt-4">
                   <button class="btn btn-info btn-block w-100" type="submit">Đăng nhập</button>
                 </div>
-                <h6 class="text-muted mt-4 or">Hoặc đăng nhập </h6>
-                <div class="social mt-4">
-                  <div class="btn-showcase"><a class="btn btn-light" href="https://www.linkedin.com/login" target="_blank"><i class="txt-linkedin" data-feather="linkedin"></i> LinkedIn </a><a class="btn btn-light" href="https://twitter.com/login?lang=en" target="_blank"><i class="txt-twitter" data-feather="twitter"></i>twitter</a><a class="btn btn-light" href="https://www.facebook.com/" target="_blank"><i class="txt-fb" data-feather="facebook"></i>facebook</a></div>
-                </div>
               </form>
-              <p class="mt-4 mb-0 text-center">Bạn không có tài khoản?<a class="ms-2" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Tạo tài khoản</a></p>
-             
-              <p class="mt-4 mb-0 text-center">Bạn quên mật khẩu?<a class="btn btn-link" href="{{ route('getQuenMatKhau') }}">Click vào đây</a></p>
+              <hr>
+              <p class="mt-4">Bạn không có tài khoản?<a class="ms-2" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Tạo tài khoản</a></p>
+
+              <p class="mt-4">Bạn quên mật khẩu?<a class="btn btn-link" href="{{ route('getQuenMatKhau') }}">Click vào đây</a></p>
 
             </div>
           </div>
@@ -190,8 +183,7 @@
                 position: 'center',
                 icon: 'error',
                 title: 'Thất Bại',
-                text: data.message,
-                timer: 2500
+                text: data.message
               })
             }
             if (data.status == 'success') {
@@ -206,10 +198,10 @@
                 window.location.replace("{{URL::to('/')}} ");
               }, 2500);
             }
-          }, 
+          },
           error: function(response) {
             $.each(response.responseJSON.errors, function(field_name, error) {
-                $('#noti-validated').after('<p style="color:red" class="noti-alert-danger">' + error + '</p>');
+                $('#noti-validated').after('<p style="color:red" class="noti-alert-danger__1">' + error + '</p>');
               }),
               Swal.fire({
                 position: 'center',
@@ -220,8 +212,8 @@
                 timer: 2500
               }),
               window.setTimeout(function() {
-                $('noti-alert-danger').remove();
-              }, 20000);
+                $('.noti-alert-danger__1').remove();
+              }, 15000);
           }
         });
       });

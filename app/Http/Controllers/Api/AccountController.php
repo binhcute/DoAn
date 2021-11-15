@@ -155,19 +155,24 @@ class AccountController extends Controller
 
     public function update(Request $request)
     {
-        $account = User::findOrFail(Auth::user()->id);
+        $user = User::findOrFail(Auth::user()->id);
+        $user->firstName = $request->firstName;
+        $user->lastName = $request->lastName;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
         $avatar = '';
         if($request->avatar != ''){
             $avatar = time() .'.jpg';
             file_put_contents('image/account/'.$avatar,base64_decode($request->avatar));
-            $account->avatar = $avatar;
+            $user->avatar = $avatar;
         }
-        $account->update();
+        $user->update();
+        $user->save();
         return response()->json([
             'success'=>true,
-            'user'=>$account,
+            'user'=>$user,
             'avatar' =>$avatar
         ]);
     }
-
 }

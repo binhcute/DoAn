@@ -91,20 +91,23 @@ Route::group(['middleware' => 'KiemTraLoginIndex'], function () {
 
     Route::get('/login', 'AuthController@index')->name('login');
     Route::post('/login', 'AuthController@login');
-    Route::get('/logout', 'AuthController@logout')->name('logout');
     Route::post('/register', 'AuthController@register')->name('register');
-
+    
     Route::get('/verifyAccount', 'AuthController@verifyAccount')->name('verifyAccount');
 
     Route::get('/QuenMatKhau', 'AuthController@getQuenMatKhau')->name('getQuenMatKhau');
     Route::post('/QuenMatKhau', 'AuthController@postQuenMatKhau')->name('postQuenMatKhau');
+    Route::get('/QuenMatKhau-otp','AuthController@getNhapOtp')->name('get.otp');
     Route::post('/LayLaiMatKhau', 'AuthController@postNhapOtp')->name('post.otp');
+    Route::get('/QuenMatKhau-reset', 'AuthController@getDatLaiMatKhau')->name('get.datmatkhau');
     Route::post('/DatLaiMatKhau', 'AuthController@postDatLaiMatKhau')->name('post.datmatkhau');
-
+    
     // Route::get('Dang-Ky','AuthController@registerContinue')->name('registerContinue');
-    // Route::get('/QuenMatKhau-otp','AuthController@getQuenMatKhau')->name('get.otp');
     //
 });
+Route::get('/logout', 'AuthController@logout')->name('logout');
+
+
 Route::post('/DatHang', 'CheckOutController@store')->name('Dat-Hang');
 Route::resource('/BinhLuan', 'CommentController')->only('store');
 //Client

@@ -35,24 +35,14 @@
             <div class="mb-3 row">
               <label for="name" class="col-sm-3 col-form-label">Tên Bài Viết <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Nhập tên Bài Viết" id="name" name="name" required>
+                <input class="form-control" type="text" placeholder="Nhập tên Bài Viết" id="name" name="name">
               </div>
-              @error('name')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-              @enderror
             </div>
             <div class="mb-3 row">
               <label for="description" class="col-sm-3 col-form-label">Mô Tả <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Mô tả ngắn 1000 từ" id="description" name="description" required>
+                <input class="form-control" type="text" placeholder="Mô tả ngắn 1000 từ" id="description" name="description">
               </div>
-              @error('description')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-              @enderror
             </div>
             <div class="mb-3 row">
               <label for="keyword" class="col-sm-3 col-form-label">Từ Khóa</label>
@@ -61,21 +51,16 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label for="detail" class="col-sm-3 col-form-label">Chi Tiết <abbr class="required">*</abbr></label>
+              <label for="detail" class="col-sm-3 col-form-label">Nội Dung Bài Viết <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="detail" required></textarea>
-                @error('detail')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="detail"></textarea>
               </div>
             </div>
             <div class="mb-3 row">
-              <label for="status" class="col-sm-3 col-form-label">Trạng Thái</label>
+              <label for="status" class="col-sm-3 col-form-label">Trạng Thái <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
-                <select class="form-select" id="status" name="status" required="" aria-label="select example">
-                  <option value="">Open this select menu</option>
+                <select class="form-select" id="status" name="status" aria-label="select example">
+                  <option value="">---Chọn---</option>
                   <option value="1">Hiển Thị</option>
                   <option value="0">Ẩn</option>
                 </select>
@@ -96,7 +81,7 @@
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
           <button class="btn btn-primary" type="submit">Thêm</button>
-          <input class="btn btn-light" type="reset" value="Cancel">
+          <input class="btn btn-light" type="reset" value="Đặt Lại">
         </div>
       </div>
     </form>

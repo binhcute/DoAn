@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Session;
+use App\Http\Requests\ForgetPasswordRequest;
+use App\Http\Requests\OtpPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
+
 
 class AuthController extends Controller
 {
@@ -100,14 +104,12 @@ class AuthController extends Controller
     }
     public function getQuenMatKhau()
     {
+        Session()->forget('Email');
         return view('auth.passwords.email');
     }
-    public function postQuenMatKhau(Request $request)
+    public function postQuenMatKhau(ForgetPasswordRequest $request)
     {
 
-        $request->validate([
-            'email' => 'required|email|exists:users',
-        ]);
         $kiemtraEmail = DB::table('users')
             ->where('email', '=', $request->email)->first();
         if (!$kiemtraEmail) {
@@ -116,7 +118,6 @@ class AuthController extends Controller
                 'message' => 'Email sai'
             ]);
         } else {
-
             // dd($kiemtraEmail);
             $token = Str::random(6);
             // dd($token);
@@ -146,12 +147,20 @@ class AuthController extends Controller
                 'email' => $request->email,
             ];
             Mail::to($request->email)->send(new \App\Mail\ResetMatKhau($data));
-            Session::put('status', 'Đã gửi mã OTP về email của bạn');
-            return view('auth.passwords.otp')->with('email', $request->email);
+            Session('Email') ? Session('Email') : null;
+            $email = $request->email;
+            $request->session()->put('Email', $email);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Đã gửi mã OTP về email của bạn'
+            ]);
         }
     }
-
-    public function postNhapOtp(Request $request)
+    public function getNhapOtp(Request $request)
+    {
+        return view('auth.passwords.otp');
+    }
+    public function postNhapOtp(OtpPasswordRequest $request)
     {
         $request->validate([
             'token' => 'required|exists:tpl_reset_password',
@@ -162,15 +171,26 @@ class AuthController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
         if ($check) {
-            $email = DB::table('users')
-                ->where('email', '=', $request->email)->first();
-            return view('auth.passwords.reset', compact(['email']));
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Nhập OTP thành công'
+            ]);
         }
-        Session::put('status', 'Sai mã OTP');
-        return view('auth.passwords.reset');
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Sai mã OTP'
+        ]);
     }
 
-    public function postDatLaiMatKhau(Request $request)
+    public function getDatLaiMatKhau(Request $request)
+    {
+        $email = DB::table('users')
+            ->where('email', '=', Session('Email'))->first();
+        return view('auth.passwords.reset')->with('email', $email);
+    }
+
+    public function postDatLaiMatKhau(ResetPasswordRequest $request)
     {
         DB::table('users')
             ->where('email', '=', $request->email)
@@ -182,6 +202,8 @@ class AuthController extends Controller
             ->update([
                 'token' => NULL
             ]);
+
+        $request->Session()->forget('Email');
         return response()->json([
             'status' => 'success',
             'message' => 'Thay Đổi Mật Khẩu Thành Công'

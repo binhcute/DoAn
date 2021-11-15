@@ -22465,10 +22465,10 @@ footer {
     color: var(--theme-deafult);
 }
 .show-hide span.show:before {
-    content: "show";
+    content: "Hiển Thị";
 }
 .show-hide span:before {
-    content: "hide";
+    content: "Ẩn";
 }
 .needs-validation .invalid-feedback {
     color: #898989;

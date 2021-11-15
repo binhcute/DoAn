@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-3 col-form-label">Chi Tiết <abbr class="required">*</abbr></label>
+              <label class="col-sm-3 col-form-label">Nội Dung Bài Viết <abbr class="required">*</abbr></label>
               <div class="col-sm-9">
                 <textarea class="form-control" id="ckeditor" rows="5" cols="5" placeholder="Nội dung chi tiết..." name="detail" required>{{$article->article_detail}}</textarea>
               </div>
@@ -70,7 +70,7 @@
       <div class="card-footer text-end">
         <div class="col-sm-9 offset-sm-3">
           <button class="btn btn-primary" type="submit">Thay Đổi</button>
-          <input class="btn btn-light" type="reset" value="Cancel">
+          <input class="btn btn-light" type="reset" value="Đặt Lại">
         </div>
       </div>
     </form>
