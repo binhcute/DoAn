@@ -17,17 +17,17 @@
     </div>
   </div>
   <div>
-    <div class="w3-bar w3-black">
-      <button class="w3-bar-item w3-button" onclick="openCity('London')">London</button>
-      <button class="w3-bar-item w3-button" onclick="openCity('Paris')">Paris</button>
-      <button class="w3-bar-item w3-button" onclick="openCity('Tokyo')">Tokyo</button>
-    </div>
 
     <div class="card">
-      @if(count($order)!=0)
-      <div class="card-body">
-        <div id="London" class="city">
-          <h3>Hóa Đơn Chờ Xác Nhận</h3>
+      <section class="tab__custom">
+        <a class="tab__item_custom" href="{{route('HoaDon.wait')}}">Chờ xác nhận</a>
+        <a class="tab__item_custom" href="{{route('HoaDon.ship')}}">Vận Chuyển</a>
+        <a class="tab__item_custom" href="{{route('HoaDon.success')}}">Thành Công</a>
+        <a class="tab__item_custom" href="{{route('HoaDon.cancel')}}">Bị Hủy</a>
+      </section>
+      <div class="card-body" id="change_layout">
+        <h3>Danh Sách Tổng Thể Hóa Đơn</h3>
+        @if(count($order)!=0)
           <div class="table-responsive">
             <table class="display" id="basic-1">
               <thead>
@@ -52,76 +52,13 @@
                 </tr>
               </tfoot>
             </table>
-          </div>
         </div>
+        @else
+        <div class="text-center">
+          <img width="50%" src="{{ asset('image/example/list-empty.png') }}" alt="">
 
-        <div id="Paris" class="city" style="display:none">
-          <h3>Hóa Đơn Đang Vận Chuyển</h3>
-          <div class="table-responsive">
-            <table class="display" id="basic-1">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Người Mua</th>
-                  <th scope="col">Ngày Mua</th>
-                  <th scope="col">Trạng Thái</th>
-                  <th scope="col">Tác Vụ</th>
-                </tr>
-              </thead>
-              <tbody id="change-layout">
-                @include('pages.server.Order.list-item')
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Tên</th>
-                  <th scope="col">Hình Ảnh</th>
-                  <th scope="col">Trạng Thái</th>
-                  <th scope="col">Tác Vụ</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
         </div>
-
-        <div id="Tokyo" class="city" style="display:none">
-          <h3>Hóa Đơn Đã Giao Thành Công</h3>
-          <div class="table-responsive">
-            <table class="display" id="basic-1">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Người Mua</th>
-                  <th scope="col">Ngày Mua</th>
-                  <th scope="col">Trạng Thái</th>
-                  <th scope="col">Tác Vụ</th>
-                </tr>
-              </thead>
-              <tbody id="change-layout">
-                @include('pages.server.Order.list-item')
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Tên</th>
-                  <th scope="col">Hình Ảnh</th>
-                  <th scope="col">Trạng Thái</th>
-                  <th scope="col">Tác Vụ</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-        <script>
-          function openCity(cityName) {
-            var i;
-            var x = document.getElementsByClassName("city");
-            for (i = 0; i < x.length; i++) {
-              x[i].style.display = "none";
-            }
-            document.getElementById(cityName).style.display = "block";
-          }
-        </script>
+        @endif
 
       </div>
 
@@ -134,9 +71,7 @@
         </div>
       </div>
     </div>
-    @else
-    <img src="{{ asset('image/example/list-empty.png') }}" alt="">
-    @endif
+
   </div>
 </div>
 </div>

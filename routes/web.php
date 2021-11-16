@@ -39,6 +39,31 @@ Route::group(['middleware' => 'KiemTra_Admin_User'], function () {
     Route::put('/HoaDon/xuly/{HoaDon}', 'OrderController@update_status_1');
     Route::put('/HoaDon/thanhcong/{HoaDon}', 'OrderController@update_status_2');
     Route::put('/HoaDon/huy/{HoaDon}', 'OrderController@update_status_3');
+
+    Route::get('/HoaDon-choxuly','OrderController@choxuly')->name('HoaDon.wait');
+    Route::put('/HoaDon-choxuly/danggiao/{HoaDon}', 'OrderController@choxuly_update_status_0');
+    Route::put('/HoaDon-choxuly/xuly/{HoaDon}', 'OrderController@choxuly_update_status_1');
+    Route::put('/HoaDon-choxuly/thanhcong/{HoaDon}', 'OrderController@choxuly_update_status_2');
+    Route::put('/HoaDon-choxuly/huy/{HoaDon}', 'OrderController@choxuly_update_status_3');
+
+    Route::get('/HoaDon-danggiao','OrderController@danggiao')->name('HoaDon.ship');
+    Route::put('/HoaDon-danggiao/danggiao/{HoaDon}', 'OrderController@danggiao_update_status_0');
+    Route::put('/HoaDon-danggiao/xuly/{HoaDon}', 'OrderController@danggiao_update_status_1');
+    Route::put('/HoaDon-danggiao/thanhcong/{HoaDon}', 'OrderController@danggiao_update_status_2');
+    Route::put('/HoaDon-danggiao/huy/{HoaDon}', 'OrderController@danggiao_update_status_3');
+
+    Route::get('/HoaDon-hoanthanh','OrderController@hoanthanh')->name('HoaDon.success');
+    Route::put('/HoaDon-hoanthanh/danggiao/{HoaDon}', 'OrderController@hoanthanh_update_status_0');
+    Route::put('/HoaDon-hoanthanh/xuly/{HoaDon}', 'OrderController@hoanthanh_update_status_1');
+    Route::put('/HoaDon-hoanthanh/thanhcong/{HoaDon}', 'OrderController@hoanthanh_update_status_2');
+    Route::put('/HoaDon-hoanthanh/huy/{HoaDon}', 'OrderController@hoanthanh_update_status_3');
+
+    Route::get('/HoaDon-huybo','OrderController@huybo')->name('HoaDon.cancel');
+    Route::put('/HoaDon-huybo/danggiao/{HoaDon}', 'OrderController@huybo_update_status_0');
+    Route::put('/HoaDon-huybo/xuly/{HoaDon}', 'OrderController@huybo_update_status_1');
+    Route::put('/HoaDon-huybo/thanhcong/{HoaDon}', 'OrderController@huybo_update_status_2');
+    Route::put('/HoaDon-huybo/huy/{HoaDon}', 'OrderController@huybo_update_status_3');
+
     //Portfolio
     Route::resource('/NhaCungCap', 'PortfolioController');
     Route::get('/XoaNhaCungCap/{NhaCungCap}', 'PortfolioController@destroy');
