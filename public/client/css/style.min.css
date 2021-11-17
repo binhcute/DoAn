@@ -10128,3 +10128,23 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
+
+.pagination__custom li a{
+    color: black;
+    float: left;
+    text-decoration: none;
+}
+.pagination__custom .page-item.active .page-link {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .pagination__custom li:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .pagination__custom li:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }

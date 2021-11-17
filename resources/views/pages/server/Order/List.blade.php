@@ -18,40 +18,42 @@
   </div>
   <div>
 
+    <div class="text-center">
+      <ul class="nav nav-tabs search-list" id="top-tab" role="tablist">
+        <li class="nav-item nav_order"><a class="nav-link" href="{{route('HoaDon.wait')}}" ><i class="icon-time"></i>Chờ Xác Nhận</a></li>
+        <li class="nav-item nav_order"><a class="nav-link" href="{{route('HoaDon.ship')}}" ><i class="icon-truck"></i>Đang Giao</a></li>
+        <li class="nav-item nav_order"><a class="nav-link" href="{{route('HoaDon.success')}}" ><i class="icon-check-box"></i>Hoàn Thành</a></li>
+        <li class="nav-item nav_order"><a class="nav-link" href="{{route('HoaDon.cancel')}}" ><i class="icon-close"></i>Hủy Bỏ</a></li>
+        </ul>
+    </div>
     <div class="card">
-      <section class="tab__custom">
-        <a class="tab__item_custom" href="{{route('HoaDon.wait')}}">Chờ xác nhận</a>
-        <a class="tab__item_custom" href="{{route('HoaDon.ship')}}">Vận Chuyển</a>
-        <a class="tab__item_custom" href="{{route('HoaDon.success')}}">Thành Công</a>
-        <a class="tab__item_custom" href="{{route('HoaDon.cancel')}}">Bị Hủy</a>
-      </section>
       <div class="card-body" id="change_layout">
-        <h3>Danh Sách Tổng Thể Hóa Đơn</h3>
+        <h3>Danh Sách Hóa Đơn</h3>
         @if(count($order)!=0)
-          <div class="table-responsive">
-            <table class="display" id="basic-1">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Người Mua</th>
-                  <th scope="col">Ngày Mua</th>
-                  <th scope="col">Trạng Thái</th>
-                  <th scope="col">Tác Vụ</th>
-                </tr>
-              </thead>
-              <tbody id="change-layout">
-                @include('pages.server.Order.list-item')
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Tên</th>
-                  <th scope="col">Hình Ảnh</th>
-                  <th scope="col">Trạng Thái</th>
-                  <th scope="col">Tác Vụ</th>
-                </tr>
-              </tfoot>
-            </table>
+        <div class="table-responsive">
+          <table class="display" id="basic-1">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Người Mua</th>
+                <th scope="col">Ngày Mua</th>
+                <th scope="col">Trạng Thái</th>
+                <th scope="col">Tác Vụ</th>
+              </tr>
+            </thead>
+            <tbody id="change-layout">
+              @include('pages.server.Order.list-item')
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Hình Ảnh</th>
+                <th scope="col">Trạng Thái</th>
+                <th scope="col">Tác Vụ</th>
+              </tr>
+            </tfoot>
+          </table>
         </div>
         @else
         <div class="text-center">

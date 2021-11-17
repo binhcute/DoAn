@@ -72,8 +72,8 @@ class CheckOutController extends Controller
                         $order_dt->order_id = $order->order_id;
                         $order_dt->product_id = $item['product_info']->product_id;
                         $order_dt->quantity = $item['qty'];
-                        $order_dt->price = $item['price'];
-                        $order_dt->amount = $item['qty'] *  $item['price'];
+                        $order_dt->price = $item['product_info']->product_price;
+                        $order_dt->amount = $item['qty'] *  $item['product_info']->product_price;
 
                         $san_pham_ton = Product::where('product_id', $order_dt->product_id)->first();
                         $san_pham_ton->product_quantity -= $item['qty'];

@@ -12,9 +12,9 @@ class Order extends Model
     protected $table = 'tpl_order';
 
     protected $primaryKey = 'order_id';
-    
+
     protected $connection = 'mysql';
-    
+
     protected $fillable = [
         'user_id',
         'status',
@@ -26,21 +26,25 @@ class Order extends Model
         'deleted_at'
     ];
 
-    public function orderDetail(){
-        return $this->HasMany('App\Models\OrderDetail','order_id','order_id');
+    public function orderDetail()
+    {
+        return $this->HasMany('App\Models\OrderDetail', 'order_id', 'order_id');
     }
 
-    public function scopeQueryDSDonHangMoi($query, $req){
-        return $query   ->select(
-                                    'tpl_order.order_id',
-                                    'tpl_order.updated_at',
-                                    'tpl_order.status',
-                                    'users.username',
-                                    'users.email',
-                                    'tpl_order.note'
-                                )
-                        ->where('tpl_order.status', $req)
-                        ->join('users', 'users.id', '=', 'tpl_order.user_id')
-                        ->orderBy('tpl_order.order_id', 'desc');
+    public function scopeQueryDSDonHangMoi($query, $req)
+    {
+        return $query->select(
+            'tpl_order.order_id',
+            'tpl_order.updated_at',
+            'tpl_order.status',
+            'users.username',
+            'users.email',
+            'tpl_order.note'
+        )
+            ->where('tpl_order.status', $req)
+            ->join('users', 'users.id', '=', 'tpl_order.user_id')
+            ->orderBy('tpl_order.order_id', 'desc');
     }
+
+    
 }

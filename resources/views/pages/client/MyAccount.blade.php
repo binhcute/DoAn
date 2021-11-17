@@ -206,8 +206,9 @@
                                             <div class="account-client text-center">
                                                 <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadBannerFile(this, 0)" accept=".jpg, .png">
 
-                                                <img id="event__img-hover-0" alt="slider" src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="">
+                                                <img id="event__img-0" alt="slider" src="{{URL::to('/') }}/image/account/{{Auth::user()->avatar }}" alt="">
 
+                                                <label id="id-label-0" for="event__input-0">Chọn Ảnh</label>
                                             </div>
 
                                         </div>
@@ -220,7 +221,7 @@
 
                                                 <img id="event__img-0" alt="slider" src="{{URL::to('/') }}/image/account/1.png" alt="">
 
-                                                <label id="id-label-0" for="event__input-0">Chọn Ảnh <abbr class="required">*</abbr></label>
+                                                <label id="id-label-0" for="event__input-0">Chọn Ảnh</label>
                                             </div>
 
                                         </div>
@@ -228,26 +229,26 @@
                                         <div class="col-md-6 col-12 learts-mb-30">
                                             <div class="single-input-item">
                                                 <label for="first-name">Họ <abbr class="required">*</abbr></label>
-                                                <input type="text" name="firstName" value="{{Auth::user()->firstName}}" required>
+                                                <input type="text" name="firstName" id="firstName" value="{{Auth::user()->firstName}}" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12 learts-mb-30">
                                             <div class="single-input-item">
                                                 <label for="last-name">Tên <abbr class="required">*</abbr></label>
-                                                <input type="text" name="lastName" value="{{Auth::user()->lastName}}" required>
+                                                <input type="text" name="lastName" id="lastName" value="{{Auth::user()->lastName}}" required>
                                             </div>
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <label for="email">Email<abbr class="required">*</abbr></label>
-                                            <input type="email" name="email" value="{{Auth::user()->email}}" required>
+                                            <input type="email" name="email" id="email" value="{{Auth::user()->email}}" required>
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <label for="email">Số Điện Thoại<abbr class="required">*</abbr></label>
-                                            <input type="number" name="phone" value="{{Auth::user()->phone}}">
+                                            <input type="number" name="phone" id="phone" value="{{Auth::user()->phone}}">
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <label for="email">Địa Chỉ</label>
-                                            <input type="text" name="address" value="{{Auth::user()->address}}">
+                                            <input type="text" name="address" id="address" value="{{Auth::user()->address}}">
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <label for="gender">Giới tính</label>
@@ -264,7 +265,7 @@
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <label for="email">Ngày Sinh</label>
-                                            <input type="date" name="birthday" value="{{Auth::user()->birthday}}">
+                                            <input type="date" name="birthday" id="birthday" value="{{Auth::user()->birthday}}">
                                         </div>
                                         <div class="col-12 learts-mb-30">
                                             <button type="submit" class="btn btn-dark btn-hover-primary">Cập Nhật Thông Tin</button>
@@ -348,11 +349,25 @@
         event.preventDefault();
         var form = $(this);
         var url = form.attr('action');
+        let count_banner = document.getElementsByClassName('imageItem');
+        var formData = new FormData($(this)[0]);
+        formData.append('data_input_banner', count_banner[0].files[0]);
+        formData.append('firstName', $('#firstName').val());
+        formData.append('lastName', $('#lastName').val());
+        formData.append('email', $('#email').val());
+        formData.append('phone', $('#phone').val());
+        formData.append('address', $('#address').val());
+        formData.append('birthday', $('#birthday').val());
         console.log(form.serialize());
         $.ajax({
             type: "POST",
             url: url,
-            data: form.serialize(),
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
             success: function(data) {
                 if (data.status == 'error') {
                     Swal.fire({

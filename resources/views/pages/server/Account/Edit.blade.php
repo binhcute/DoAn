@@ -55,12 +55,13 @@
               <label for="password" class="col-sm-3 col-form-label">Mật Khẩu</label>
               <div class="col-sm-9">
                 <input class="form-control" type="password" placeholder="**********" name="password" id="password">
+                <div class="show-hide"><span class="show"> </span></div>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="email" class="col-sm-3 col-form-label">Email</label>
               <div class="col-sm-9">
-                <input class="form-control" type="email" placeholder="Nhập email" name="email" for="email" value="{{$account->email}}">
+                <input class="form-control" type="email" placeholder="Nhập email" name="email" id="email" for="email" value="{{$account->email}}">
               </div>
             </div>
             <div class="mb-3 row">
@@ -129,7 +130,7 @@
               
               <div class="col-sm-9">
                 <label id="id-label-0" for="event__input-0" class="form-control">Thêm ảnh</label>
-                <input hidden class="form-control imageItem" id="event__input-0" name="img" type="file" onchange="uploadFile(this, 0)" accept=".jpg, .png">
+                <input hidden class="form-control imageItem" id="event__input-0" name="avatar" type="file" onchange="uploadFile(this, 0)" accept=".jpg, .png">
                 @if($account->avatar != null)
                 <img id="event__img-0" src="{{URL::to('/')}}/image/account/{{$account->avatar}}" alt="slider" height="250px" style="border-radius:50%">
                 @else
@@ -179,8 +180,6 @@
     var from = $(this);
     var url = from.attr('action');
     let imageItem = document.getElementsByClassName('imageItem');
-    //CKEDITOR
-    var data_ckeditor = CKEDITOR.instances.ckeditor.getData();
     //FormData
     var formData = new FormData($(this)[0]);
     if (imageItem[0].files[0] != undefined) {

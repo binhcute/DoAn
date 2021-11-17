@@ -1,5 +1,5 @@
 
-<div>{{$comment ->links()}}</div>
+<div class="pagination__custom">{{$comment ->links()}}</div>
 <span class="title">Hiển thị {{count($comment)}} reviews sản phẩm {{$product_detail->product_name}}</span>
     <ul class="product-review-list">
         @foreach($comment as $cmt)
